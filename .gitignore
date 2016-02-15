@@ -1,0 +1,10 @@
+cincodias/data/
+elpais/data/
+expansion/data/
+settings.py
+*.png
+*.txt
+*.html
+*.pdf
+*.csv
+*.pyc
