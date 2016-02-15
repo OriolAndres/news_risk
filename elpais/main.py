@@ -183,13 +183,9 @@ def match_file(inpstr):
             out.append(False)
     return out
     
-def build_index(section = 'economia'):
-    
-    new_format = False
+def build_index(section = 'economia', new_format = True):
     #r'\bdiputad',r'\bminist',r'gobiern',r'\blegisla',r'\bley(es)?\b'
     
-    
-    new_format = True
     if new_format:
         y = 2012
         t0 = datetime.datetime(y,2,1)
@@ -268,7 +264,7 @@ def retrieve_old_archive():
     for sect in ['espana','economia']:
         for y in range(1976,2013):
             create_archive(y,0,sect)
-        build_index(sect)
+        
         
 def retrieve_new_archive():
     url_tem = 'http://elpais.com/tag/economia/a/{page}'
@@ -324,9 +320,12 @@ def retrieve_new_archive():
                         outf.write(content.encode('utf8'))
                 except:
                     continue
-            
-            
-    
+                
+if __name__ == '__main__':
+    retrieve_old_archive()
+    build_index(section = 'economia', new_format = False)
+    retrieve_new_archive()
+    build_index(section = 'economia', new_format = True)
 '''
 '19760504',10, diumenge 15
 '19770104',15, diumenge 20
