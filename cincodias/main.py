@@ -25,7 +25,7 @@ def create_archive():
     url_tem = 'http://cincodias.com/tag/economia/a/{page}'
     
     newindices = os.path.join(datadir,'newindices')
-    for page in range(1000,num_pages+1):
+    for page in range(1,num_pages+1):
         fname = '%s.html' % page
         
         if fname not in os.listdir(newindices):

@@ -193,7 +193,7 @@ def build_index(section = 'economia', new_format = True):
     else:
         y = 1976
         t0 = datetime.datetime(y,5,4)
-        num_days =  13056 # days until 31 january 2012, 4th may included
+        num_days = 13056 # days until 31 january 2012, 4th may included
     
     
     rng = pd.date_range(t0.strftime('%m/%d/%Y'), periods=num_days, freq='D')
@@ -238,6 +238,7 @@ def build_index(section = 'economia', new_format = True):
                     combo_f = [False]*b_n
                     for j in range(c_n):
                         if m[1+j]:
+                            
                             rest[j] += 1
                             for k in range(b_n):
                                 if j in combos[k]:
@@ -247,13 +248,14 @@ def build_index(section = 'economia', new_format = True):
                             rest[c_n + k] += 1
                 w_n += len(inpstr.split())
                 a_n += 1
+
             with open(os.path.join(ddir,rfile),'w') as outf:
                 outf.write('%d,%d,%d,%s' % (m_n, a_n, w_n,','.join(['%d' % x for x in rest]) ))
         df.matches[i] += m_n
         df.articles[i] += a_n
         df.words[i] += w_n
-        for j in range(len(add_conds)):
-            df[colnames[j]][i] += rest[j]
+        for j in range(c_n + b_n):
+            df[(colnames+combo_names)[j]][i] += rest[j]
     if not new_format:
         df.to_csv('daily_data_{0}.csv'.format(section))
     else:
@@ -313,7 +315,10 @@ def retrieve_new_archive():
             txtf = '%s.txt' % art_fname
             if txtf not in os.listdir(path):
                 try:
-                    title = artsoup.find('h1',{'id':'titulo_noticia'}).text
+                    try:
+                        title = artsoup.find('h1',{'id':'titulo_noticia'}).text
+                    except:
+                        title = ''
                     content = artsoup.find('div',{'id':'cuerpo_noticia'}).text
                     with open(os.path.join(path, txtf), 'w') as outf:
                         outf.write(title.encode('utf8') + '\n')
@@ -322,10 +327,11 @@ def retrieve_new_archive():
                     continue
                 
 if __name__ == '__main__':
-    retrieve_old_archive()
-    build_index(section = 'economia', new_format = False)
-    retrieve_new_archive()
-    build_index(section = 'economia', new_format = True)
+    pass
+    #retrieve_old_archive()
+    #build_index(section = 'economia', new_format = False)
+    #retrieve_new_archive()
+    #build_index(section = 'economia', new_format = True)
 '''
 '19760504',10, diumenge 15
 '19770104',15, diumenge 20

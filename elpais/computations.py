@@ -4,16 +4,10 @@ Created on Tue Feb 09 23:31:15 2016
 
 @author: OriolAndres
 
-
 cement BE.IE_3_3_1402A5.M.ES
 electricity BE.BE_23_6_70257.M.ES
 gdp spain ESE.90GV0VANUENL259D.Q.ES
-
-
 IBEX 35 ESE.854200259D.M.ES
-
-
-http://www.meff.com/aspx/Financiero/DescargaFicheros.aspx?id=esp
 """
 
 
@@ -31,9 +25,8 @@ from statsmodels.tsa.api import VAR
 from settings import token
 
 def load_external():
-
     #http://www.policyuncertainty.com/europe_monthly.html
-    fedea = 'FEEA.SMOOTH064A.M.ES'
+    fedea = 'FEEA.PURE064A.M.ES' #'FEEA.SMOOTH064A.M.ES'
     ipri = 'ESE.425000259D.M.ES'
     
     ## government bonds:
@@ -48,8 +41,10 @@ def load_external():
     am = arch_model(returns, p=1, o=0, q=1)
     res = am.fit(update_freq=1, disp='off')
     df['cv'] = res.conditional_volatility
-
     return df
+
+colnames = ['ingreso','gasto','money','sanidad','seguridad','banca','othregula','deuda','bienestar','arancel','autonomia','fiscal','regula']
+
 
 def load_es_uncertainty():
     df_ec = pd.read_csv('daily_data_economia.csv',parse_dates = True,index_col=0)
@@ -101,7 +96,7 @@ def transform_data(nd):
     nd['europe'] = nd['euro_news'].diff(periods = 1)
     nd['differential'] = (nd['BE.BE_26_25_10294.M.ES'] - nd['BE.IE_2_6_402A1.M.DE']).diff(periods = 1)
     nd['inflation'] = nd['ESE.425000259D.M.ES'].apply(np.log).diff(periods = 1)
-    nd['fedea'] = nd['FEEA.SMOOTH064A.M.ES'].diff(periods = 1)
+    nd['fedea'] = nd['FEEA.PURE064A.M.ES'].diff(periods = 1)
     '''
     nd.cv.plot()
     nd.economia.plot(secondary_y = True)
@@ -122,8 +117,9 @@ nd = d.join(df).join(df1)
 plot_index_comparison(nd)
 
 nd = transform_data(nd)
-
-subset = ['ibex','vol','resid','europe', 'fedea', 'inflation', 'differential' ]
+full_sset = ['ibex','vol','resid','europe', 'fedea', 'inflation', 'differential' ]
+subset = ['auto','europe', 'fedea', 'inflation', 'differential' ]
+nd['auto'] = nd.autonomia /nd.words
 def get_irf(nd, subset):
     '''
     http://statsmodels.sourceforge.net/0.6.0/vector_ar.html
@@ -135,11 +131,18 @@ def get_irf(nd, subset):
     results = model.fit(6)
 
     irf = results.irf(24)
-    irf.plot_cum_effects(orth=True, subplot_params = {'fontsize' : 10}) #, impulse='spain'
+    #irf.plot_cum_effects(orth=True, subplot_params = {'fontsize' : 10}) #, impulse='spain'
 
     cum_effects = irf.orth_lr_effects
+    return cum_effects
 
-aa = d.mean()[['matches','ingreso','gasto','money','sanidad','seguridad','banca','regula','deuda','bienestar','arancel']]
+for colname in colnames:
+    nd['uncert'] = (nd[colname] / nd.words).diff(periods = 1)
+    subset = ['uncert','europe', 'fedea', 'inflation', 'differential' ]
+    cum_effects= get_irf(nd, subset)
+    print colname, cum_effects[2,0]
+
+aa = d.mean()[['matches'] + colnames]
 plt.figure(1)
 h = plt.bar(range(len(aa)),aa,label = list(aa.index) )
 plt.subplots_adjust(bottom=0.3)

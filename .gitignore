@@ -1,6 +1,8 @@
 cincodias/data/
 elpais/data/
 expansion/data/
+boe/data/
+accounts/data/
 settings.py
 *.png
 *.txt
