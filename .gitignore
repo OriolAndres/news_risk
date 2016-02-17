@@ -3,6 +3,7 @@ elpais/data/
 expansion/data/
 boe/data/
 accounts/data/
+accounts/unzip/
 settings.py
 *.png
 *.txt

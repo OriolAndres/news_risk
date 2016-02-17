@@ -14,7 +14,7 @@ import time
 import shutil
 from re import sub
 
-rootdir = os.path.dirname(__file__)
+rootdir = r'C:/users/oriolandres/desktop/news_risk/accounts'
 datadir = os.path.join(rootdir,'data')
 download_dir = r'C:/users/oriolandres/downloads'
 def fetch_folder():
@@ -37,9 +37,9 @@ def fetch_folder():
     while 1:
         elm = driver.find_element_by_xpath("//select[@id='wuc_Descargas_drpEntidades']")
         for option in elm.find_elements_by_tag_name('option'):
-            name = option.text
-            name = sub('[\.,\s]','_',name)
-            if name not in seen:
+            name = option.text.encode('utf8')
+            name = sub('[\.,\s\*]','_',name)
+            if name not in seen and name + '.zip' not in os.listdir(datadir):
                 seen.add(name)
                 break
         else:
@@ -68,4 +68,6 @@ def fetch_folder():
                 else:
                     s = ns
 
+
+fetch_folder()
             
