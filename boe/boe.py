@@ -17,7 +17,7 @@ datadir = os.path.join(rootdir,'data')
 error_msg = 'No se encontró el documento original.'
 
 for y in range(2005,2016):
-    if y < 2008:
+    if y < 2015:
         continue
     
     t0 = datetime.datetime(y,1,1)
@@ -26,8 +26,7 @@ for y in range(2005,2016):
         os.makedirs(yeardir)
     doc_num = 0
     for i in range(366):
-        if y == 2008 and i < 150: 
-            continue
+        if i < 180: continue
         t = t0 + datetime.timedelta(days = i)
         try:
             url = 'http://www.boe.es/boe/dias/{y}/{m:02d}/{d:02d}/index.php?s=5'.format(y = str(y),m = t.month,d = t.day)

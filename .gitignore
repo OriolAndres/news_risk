@@ -4,6 +4,7 @@ expansion/data/
 boe/data/
 accounts/data/
 accounts/unzip/
+stocks/data/
 settings.py
 *.png
 *.txt
