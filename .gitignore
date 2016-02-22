@@ -5,11 +5,9 @@ boe/data/
 accounts/data/
 accounts/unzip/
 stocks/data/
-figures/
 settings.py
 *.png
 *.txt
 *.html
-*.pdf
 *.csv
 *.pyc
