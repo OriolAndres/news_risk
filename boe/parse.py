@@ -12,19 +12,21 @@ import csv
 import datetime
 
 romans = {'i':'1','ii':'2','iii':'3','iv':'4','v':'5','vi':'6','vii':'7'}
-dirroot = r'C:\Users\OriolAndres\Desktop\news_risk\boe\data\%s'
+from news_risk.settings import rootdir
+datadir = os.path.join(rootdir,'boe','data')
+
 
 for i in range(2005, 2016):
 
     y = str(i)
-    datadir = dirroot % y
+    yeardir = os.path.join(datadir,'%s' % y)
     outlist = []
     
     fails_n = 0
     corpus_n = 0
-    for fname in os.listdir(datadir):
+    for fname in os.listdir(yeardir):
         if fname.endswith('csv'): continue
-        fpath  = os.path.join(datadir, fname)
+        fpath  = os.path.join(yeardir, fname)
         with open(fpath, 'r') as inf:
             xml = etree.parse(inf)
         analisis = xml.find('analisis')
@@ -145,7 +147,7 @@ for i in range(2005, 2016):
     trans = []
     for r in outlist:
         trans.append([c.encode('utf8') if c is not None else 'NA' for c in r])
-    with open(os.path.join(datadir,'catches.csv'),'wb') as outf:
+    with open(os.path.join(yeardir,'catches.csv'),'wb') as outf:
         stream = csv.writer(outf)
         stream.writerows(trans)
         

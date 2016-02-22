@@ -14,10 +14,10 @@ import urllib2
 import datetime
 from bs4 import BeautifulSoup
 import os
-import pandas as pd
 
-rootdir = os.path.dirname(__file__)#r'C:/users/oriolandres/desktop/news_risk/elpais'
-datadir = os.path.join(rootdir,'data')
+
+from news_risk.settings import rootdir
+datadir = os.path.join(rootdir,'cincodias','data')
 if not os.path.exists(datadir):
     os.makedirs(datadir)
 
