@@ -4,18 +4,18 @@ Created on Wed Feb 17 16:08:03 2016
 
 @author: OriolAndres
 """
-rootdir = r'C:/users/oriolandres/desktop/news_risk/accounts'
+from news_risk.settings import rootdir
 import csv
 import os
 from re import match, I,sub
 
 def create_entity_list():
     names = set()
-    with open(os.path.join(rootdir,'stats_table.csv'),'rb') as inf:
+    with open(os.path.join(rootdir,'accounts','stats_table.csv'),'rb') as inf:
         for line in csv.reader(inf):
             names.add(line[0])
             
-    with open(os.path.join(rootdir,'biz_meta.csv'),'wb') as outf:
+    with open(os.path.join(rootdir,'accounts','biz_meta.csv'),'wb') as outf:
         for name in sorted(list(names)):
             outf.write('"{0}"\n'.format(name))
             
@@ -28,7 +28,7 @@ def lower_case(instring):
     return instring
 
 def test_regex():    
-    with open(os.path.join(rootdir,'biz_meta_regex.csv'),'rb') as inf:
+    with open(os.path.join(rootdir,'accounts','biz_meta_regex.csv'),'rb') as inf:
         instream = csv.reader(inf)
         lines = list(instream)
         

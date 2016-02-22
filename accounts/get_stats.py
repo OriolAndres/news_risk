@@ -14,10 +14,9 @@ from lxml import etree
 from StringIO import StringIO
 from re import compile
 import csv
-
-rootdir = r'C:/users/oriolandres/desktop/news_risk/accounts'
-unzipdir = os.path.join(rootdir,'unzip')
-datadir = os.path.join(rootdir,'data')
+from news_risk.settings import rootdir
+unzipdir = os.path.join(rootdir,'accounts','unzip')
+datadir = os.path.join(rootdir,'accounts','data')
 
 import datetime
 
@@ -37,15 +36,17 @@ def unzip():
             zipf.extract(name, folder)
         zipf.close()
 
-
 def parse_xml():
     p = compile(r'[A-Za-z0-9+/]{300,}')
     outdict = {}
 
+    short_long_names = []
     for folder in os.listdir(unzipdir):
         #print folder
         outarray = []
         biz_name = folder
+        
+        seen_dates = set()
         for fname in os.listdir(os.path.join(unzipdir,folder)):
             fpath = os.path.join(unzipdir,folder, fname)
             full_string = ''
@@ -77,7 +78,7 @@ def parse_xml():
                     #print 'what represents wages'
                     continue
                 max_t = datetime.datetime(2000,1,1)
-                wage = None
+                value = None
                 ending = ''
                 for entry in xml.iter(tag):
                     date_ph = entry.attrib['contextRef']
@@ -87,17 +88,31 @@ def parse_xml():
                         continue
                     elif cur_t > max_t:
                         max_t = cur_t
-                        wage = entry.text
+                        value = entry.text
                         ending = date_ph[-3:]
                     else:
                         # consolidated balance
                         if (date_ph.endswith('dci') and ending!='dcc') or date_ph.endswith('dcc'): 
-                            wage = entry.text
+                            value = entry.text
                             ending = date_ph[-3:]
-                value_dict.update({'t':max_t.strftime('%Y%m%d'),sections[section_i]: wage})
+                value_dict.update({'t':max_t.strftime('%Y%m%d'),sections[section_i]: value})
+            
+            '''
+            Annoying repetition of reports for the same period
+            '''            
+            if max_t.strftime('%Y%m%d') in seen_dates:
+                continue
+            else:
+                seen_dates.add(max_t.strftime('%Y%m%d'))
+            if not value_dict.get('Revenues',None) or value_dict.get('Revenues') == '0':
+                continue
             outarray.append(value_dict)
+        short_long_names.append([folder, biz_name])
         outdict[biz_name] = outarray
-    with open(os.path.join(rootdir,'stats_table.csv'),'wb') as outf:
+    with open(os.path.join(rootdir,'accounts','short_long.csv'),'wb') as outf:
+        outstream  = csv.writer(outf)
+        outstream.writerows(short_long_names)
+    with open(os.path.join(rootdir,'accounts','stats_table.csv'),'wb') as outf:
         outstream  = csv.writer(outf)
         for k, array in outdict.items():
             for entry in array:

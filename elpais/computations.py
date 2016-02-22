@@ -6,8 +6,11 @@ Created on Tue Feb 09 23:31:15 2016
 
 cement BE.IE_3_3_1402A5.M.ES
 electricity BE.BE_23_6_70257.M.ES
-gdp spain ESE.90GV0VANUENL259D.Q.ES
+spain gdp ESE.990000D259D.Q.ES
 IBEX 35 ESE.854200259D.M.ES
+
+
+public consumption ESE.991200D259D.Q.ES
 """
 
 
@@ -22,7 +25,8 @@ import numpy as np
 
 from pandas.stats.api import ols
 from statsmodels.tsa.api import VAR
-from settings import token
+from news_risk.settings import token, rootdir
+import os
 
 def load_external():
     #http://www.policyuncertainty.com/europe_monthly.html
@@ -36,7 +40,7 @@ def load_external():
     df = qbuilder.series(ticker = [fedea, ipri] + gb)
     
     
-    returns = df['ESE.854200259D.M.ES'].pct_change().dropna()
+    returns = df['ESE.854200259D.M.ES'].pct_change().dropna()*100
     returns = returns.sub(returns.mean())['19890101':]
     am = arch_model(returns, p=1, o=0, q=1)
     res = am.fit(update_freq=1, disp='off')
@@ -110,43 +114,63 @@ def transform_data(nd):
     nd['vol'] = nd['cv'].diff(periods = 1)
     return nd
 
-df = load_external()
-d = load_es_uncertainty()
-df1 = load_eu_uncertainty()
-nd = d.join(df).join(df1)
-plot_index_comparison(nd)
-
-nd = transform_data(nd)
-full_sset = ['ibex','vol','resid','europe', 'fedea', 'inflation', 'differential' ]
-subset = ['auto','europe', 'fedea', 'inflation', 'differential' ]
-nd['auto'] = nd.autonomia /nd.words
-def get_irf(nd, subset):
-    '''
-    http://statsmodels.sourceforge.net/0.6.0/vector_ar.html
-    '''
-    data = nd.reindex(columns=subset)
-    data = data.dropna()
-    #data.describe()
-    model = VAR(data)
-    results = model.fit(6)
-
-    irf = results.irf(24)
-    #irf.plot_cum_effects(orth=True, subplot_params = {'fontsize' : 10}) #, impulse='spain'
-
-    cum_effects = irf.orth_lr_effects
-    return cum_effects
-
-for colname in colnames:
-    nd['uncert'] = (nd[colname] / nd.words).diff(periods = 1)
-    subset = ['uncert','europe', 'fedea', 'inflation', 'differential' ]
-    cum_effects= get_irf(nd, subset)
-    print colname, cum_effects[2,0]
-
-aa = d.mean()[['matches'] + colnames]
-plt.figure(1)
-h = plt.bar(range(len(aa)),aa,label = list(aa.index) )
-plt.subplots_adjust(bottom=0.3)
-
-xticks_pos = [0.65*patch.get_width() + patch.get_xy()[0] for patch in h]
-
-plt.xticks(xticks_pos, list(aa.index),  ha='right', rotation=45)
+def get_quarterly_regressors():
+    df_eu = load_eu_uncertainty()
+    df_es = load_es_uncertainty()
+    df_es['epu'] = df_es.matches / df_es.articles
+    df_es['epu'] = df_es['epu'] / df_es['epu'].mean() *100
+    nd = df_eu.join(df_es)
+    nd = nd.resample("6M", how='mean')
+    
+    qbuilder = inquisitor.Inquisitor(token)
+    df_macro = qbuilder.series(ticker = ['ESE.991200D259D.Q.ES', 'ESE.990000D259D.Q.ES'])
+    df_macro = df_macro.resample("6M", how='sum')
+    df_macro['spending'] = df_macro['ESE.991200D259D.Q.ES'] / df_macro['ESE.990000D259D.Q.ES']
+    
+    df_macro.index = df_macro.index.map(lambda t: t.replace(year=t.year, month=6*((t.month-1)//6+1), day=1))
+    nd.index = nd.index.map(lambda t: t.replace(year=t.year, month=6*((t.month-1)//6+1), day=1))
+    nd = nd.join(df_macro)
+    nd[['spending','epu','euro_news']].to_csv(os.path.join(rootdir, 'regressors.csv'))
+    return nd
+    
+if False:
+    df = load_external()
+    d = load_es_uncertainty()
+    df1 = load_eu_uncertainty()
+    nd = d.join(df).join(df1)
+    plot_index_comparison(nd)
+    
+    nd = transform_data(nd)
+    full_sset = ['ibex','vol','resid','europe', 'fedea', 'inflation', 'differential' ]
+    subset = ['auto','europe', 'fedea', 'inflation', 'differential' ]
+    nd['auto'] = nd.autonomia /nd.words
+    def get_irf(nd, subset):
+        '''
+        http://statsmodels.sourceforge.net/0.6.0/vector_ar.html
+        '''
+        data = nd.reindex(columns=subset)
+        data = data.dropna()
+        #data.describe()
+        model = VAR(data)
+        results = model.fit(6)
+    
+        irf = results.irf(24)
+        #irf.plot_cum_effects(orth=True, subplot_params = {'fontsize' : 10}) #, impulse='spain'
+    
+        cum_effects = irf.orth_lr_effects
+        return cum_effects
+    
+    for colname in colnames:
+        nd['uncert'] = (nd[colname] / nd.words).diff(periods = 1)
+        subset = ['uncert','europe', 'fedea', 'inflation', 'differential' ]
+        cum_effects= get_irf(nd, subset)
+        print colname, cum_effects[2,0]
+    
+    aa = d.mean()[['matches'] + colnames]
+    plt.figure(1)
+    h = plt.bar(range(len(aa)),aa,label = list(aa.index) )
+    plt.subplots_adjust(bottom=0.3)
+    
+    xticks_pos = [0.65*patch.get_width() + patch.get_xy()[0] for patch in h]
+    
+    plt.xticks(xticks_pos, list(aa.index),  ha='right', rotation=45)

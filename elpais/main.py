@@ -164,15 +164,18 @@ def create_archive(y = 1978, offset = 0, sect = 'economia'):
                     outf.write(content.encode('utf8'))  
 
 def match_file(inpstr):
-    for cond in conds:
+    for j, cond in enumerate(conds):
         for p in cond:
             m = p(inpstr)
             if m:
                 break
         else:
-            return [False]
+            if j == 2:
+                return [True, False] ## economic uncertainty, not political
+            else:
+                return [False, False]
             
-    out = [True]
+    out = [True,True]
     for cond in add_conds:
         for p in cond:
             m = p(inpstr)
@@ -197,7 +200,7 @@ def build_index(section = 'economia', new_format = True):
     
     
     rng = pd.date_range(t0.strftime('%m/%d/%Y'), periods=num_days, freq='D')
-    df = pd.DataFrame(np.zeros((num_days,3 + c_n + b_n)), index=rng,columns=['matches','articles','words'] + colnames + combo_names)
+    df = pd.DataFrame(np.zeros((num_days,4 + c_n + b_n)), index=rng,columns=['eumatches','matches','articles','words'] + colnames + combo_names)
     
     for i in range(num_days):
         t = t0 + datetime.timedelta(days = i)
@@ -214,15 +217,16 @@ def build_index(section = 'economia', new_format = True):
         else:
             txtfiles = [x for x in os.listdir(ddir) if match(r'^ec_.*\.txt$',x,I)]
             rfile = 'res.txt'
-        m_n = 0; a_n = 0; w_n = 0
+        m_n = 0; a_n = 0; w_n = 0; eu_n = 0;
         
         if rfile in os.listdir(ddir) and False:
             with open(os.path.join(ddir,rfile),'r') as inf:
                 res = inf.read().split(',')
-                m_n = int(res[0])
-                a_n = int(res[1])
-                w_n = int(res[2])
-                rest = [int(res[3+k]) for k in range(c_n + b_n)]
+                eu_n = int(res[0])
+                m_n = int(res[1])
+                a_n = int(res[2])
+                w_n = int(res[3])
+                rest = [int(res[4+k]) for k in range(c_n + b_n)]
         
         if a_n == 0:
             
@@ -233,11 +237,13 @@ def build_index(section = 'economia', new_format = True):
                 
                 m = match_file(inpstr)
                 if m[0]:
+                    eu_n += 1
+                if m[1]:
                     
                     m_n +=1
                     combo_f = [False]*b_n
                     for j in range(c_n):
-                        if m[1+j]:
+                        if m[2+j]:
                             
                             rest[j] += 1
                             for k in range(b_n):
@@ -250,7 +256,8 @@ def build_index(section = 'economia', new_format = True):
                 a_n += 1
 
             with open(os.path.join(ddir,rfile),'w') as outf:
-                outf.write('%d,%d,%d,%s' % (m_n, a_n, w_n,','.join(['%d' % x for x in rest]) ))
+                outf.write('%d,%d,%d,%d,%s' % (eu_n, m_n, a_n, w_n,','.join(['%d' % x for x in rest]) ))
+        df.eumatches[i] += eu_n
         df.matches[i] += m_n
         df.articles[i] += a_n
         df.words[i] += w_n
@@ -327,11 +334,11 @@ def retrieve_new_archive():
                     continue
                 
 if __name__ == '__main__':
-    pass
+
     #retrieve_old_archive()
-    #build_index(section = 'economia', new_format = False)
+    build_index(section = 'economia', new_format = False)
     #retrieve_new_archive()
-    #build_index(section = 'economia', new_format = True)
+    build_index(section = 'economia', new_format = True)
 '''
 '19760504',10, diumenge 15
 '19770104',15, diumenge 20

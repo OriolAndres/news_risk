@@ -13,10 +13,9 @@ from zipfile import ZipFile
 import time
 import shutil
 from re import sub
+from news_risk.settings import rootdir, download_dir
+datadir = os.path.join(rootdir,'accounts','data')
 
-rootdir = r'C:/users/oriolandres/desktop/news_risk/accounts'
-datadir = os.path.join(rootdir,'data')
-download_dir = r'C:/users/oriolandres/downloads'
 def fetch_folder():
     profile = webdriver.FirefoxProfile()
     

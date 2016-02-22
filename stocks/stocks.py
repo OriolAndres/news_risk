@@ -9,16 +9,15 @@ import os
 import shutil
 import time
 from selenium import webdriver
-from zipfile import ZipFile
-import time
-import shutil
 from re import sub
 from links import links
+from news_risk.settings import chromedriver, download_dir
+
 
 rootdir = r'C:/users/oriolandres/desktop/news_risk/stocks'
 datadir = os.path.join(rootdir,'data')
-download_dir = r'C:/users/oriolandres/downloads'
-chromedriver = r"C:\Users\oriolandres\Downloads\chromedriver.exe"
+
+
 def fetch_folder():
     #profile = webdriver.FirefoxProfile()
     

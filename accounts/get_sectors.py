@@ -19,9 +19,9 @@ import shutil
 from re import sub
 import csv
 
-rootdir = r'C:/users/oriolandres/desktop/news_risk/accounts'
-datadir = os.path.join(rootdir,'data')
-download_dir = r'C:/users/oriolandres/downloads'
+from news_risk.settings import rootdir
+datadir = os.path.join(rootdir,'accounts','data')
+
 def fetch_list_by_sector():
     profile = webdriver.FirefoxProfile()
     
@@ -47,10 +47,15 @@ def fetch_list_by_sector():
             for mem in members.find_elements_by_tag_name('option'):
                 mem_list.append(mem.text.encode('utf8'))
             sector_dict[sector] = mem_list
-    with open(os.path.join(rootdir,'sector_members.csv'),'wb') as outf:
+    with open(os.path.join(rootdir,'accounts','sector_members.csv'),'wb') as outf:
         outstream = csv.writer(outf)
         for k,v in sector_dict.items():
             for el in v:
+                if el == '(No existen entidades)':
+                    continue
                 outstream.writerow([k,el])
     driver.quit()
-fetch_list_by_sector()
+    
+
+if __name__ == '__main__':
+    fetch_list_by_sector()
