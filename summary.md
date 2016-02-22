@@ -21,4 +21,4 @@ fiscal | 3129 | -0.0358
 regula | 1986 | -0.0771
 
 
-![](figures/spain_v_europe.pdf?raw=true)
+![](figures/spain_v_europe.png?raw=true)
