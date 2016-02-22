@@ -6,7 +6,6 @@ accounts/data/
 accounts/unzip/
 stocks/data/
 settings.py
-*.png
 *.txt
 *.html
 *.csv

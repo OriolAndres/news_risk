@@ -28,6 +28,8 @@ from statsmodels.tsa.api import VAR
 from news_risk.settings import token, rootdir
 import os
 
+fig_fmt = 'png'
+
 def load_external():
     #http://www.policyuncertainty.com/europe_monthly.html
     fedea = 'FEEA.PURE064A.M.ES' #'FEEA.SMOOTH064A.M.ES'
@@ -92,7 +94,7 @@ def plot_index_comparison(nd):
     ax.legend(lns, labs, loc=0)
     ax.grid()
     fig.tight_layout()
-    plt.savefig(os.path.join(rootdir, 'figures','spain_v_europe.pdf'), format='pdf')
+    plt.savefig(os.path.join(rootdir, 'figures','spain_v_europe.%s' % fig_fmt), format=fig_fmt)
     return
     
 def plot_eu_epu(nd):
@@ -111,7 +113,7 @@ def plot_eu_epu(nd):
     ax.legend(lns, labs, loc=0)
     ax.grid()
     fig.tight_layout()
-    plt.savefig(os.path.join(rootdir, 'figures','policy_v_general.pdf'), format='pdf')
+    plt.savefig(os.path.join(rootdir, 'figures','policy_v_general.%s' % fig_fmt), format=fig_fmt)
     return
 
 def transform_data(nd):
@@ -193,4 +195,4 @@ if False or True:
     xticks_pos = [0.65*patch.get_width() + patch.get_xy()[0] for patch in h]
     
     plt.xticks(xticks_pos, list(aa.index),  ha='right', rotation=45)
-    plt.savefig(os.path.join(rootdir, 'figures','policy_v_general.pdf'), format='pdf')
+    plt.savefig(os.path.join(rootdir, 'figures','policy_v_general.%s' % fig_fmt), format=fig_fmt)
