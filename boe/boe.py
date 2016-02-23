@@ -12,8 +12,6 @@ from bs4 import BeautifulSoup
 rootdir = os.path.dirname(__file__)
 datadir = os.path.join(rootdir,'data')
 
-
-
 error_msg = 'No se encontró el documento original.'
 
 def download_boe():

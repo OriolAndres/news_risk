@@ -14,8 +14,8 @@ from links import links
 from news_risk.settings import chromedriver, download_dir
 
 
-rootdir = r'C:/users/oriolandres/desktop/news_risk/stocks'
-datadir = os.path.join(rootdir,'data')
+from news_risk.settings import rootdir
+datadir = os.path.join(rootdir,'stocks','data')
 
 
 def fetch_folder():

@@ -8,7 +8,7 @@ http://stackoverflow.com/questions/23600582/concatenate-pandas-columns-under-new
 import os
 import csv
 from news_risk.settings import rootdir
-from re import match, I,sub, DOTALL, compile
+from re import I,sub, DOTALL, compile
 import pandas as pd
 import datetime
 import numpy as np
