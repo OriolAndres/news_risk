@@ -100,7 +100,7 @@ def plot_index_comparison(nd):
 def plot_eu_epu(nd):
     fig = plt.figure(2,[8,6])
     ax = fig.add_subplot(111)
-    nd['policy'] =  d.eumatches / d.articles
+    nd['policy'] =  nd.eumatches / nd.articles
     nd['policy'] = nd['policy'] / nd['policy'].mean()*100
     left = ax.plot(nd['economia']/nd['economia'].mean()*100, 'r', label='Política'.decode('utf8'))
     ax2 = ax.twinx()
@@ -158,8 +158,8 @@ def estimate_VAR():
     d = load_es_uncertainty()
     df1 = load_eu_uncertainty()
     nd = d.join(df).join(df1)
-    #plot_index_comparison(nd)
-    #plot_eu_epu(nd)
+    plot_index_comparison(nd)
+    plot_eu_epu(nd)
     nd = transform_data(nd)
     full_sset = ['ibex','vol','resid','europe', 'fedea', 'inflation', 'differential' ]
     subset = ['auto','europe', 'fedea', 'inflation', 'differential' ]
@@ -219,4 +219,4 @@ def main():
     estimate_VAR()
 
 if __name__ == '__main__':
-    main()
+    pass#main()

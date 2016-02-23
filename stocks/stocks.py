@@ -19,13 +19,6 @@ datadir = os.path.join(rootdir,'stocks','data')
 
 
 def fetch_folder():
-    #profile = webdriver.FirefoxProfile()
-    
-    #profile.set_preference('browser.helperApps.neverAsk.saveToDisk', "application/zip, application/x-gzip, application/asp, application/aspx, text/plain, text/csv, application/csv, application/download, application/octet-stream")
-    #profile.set_preference("browser.helperApps.alwaysAsk.force", False)
-    #profile.set_preference("javascript.enabled", False)
-    #driver = webdriver.Firefox(firefox_profile= profile)
-    
 
     from selenium.webdriver.chrome.options import Options
     chrome_options = Options()
@@ -37,8 +30,6 @@ def fetch_folder():
     os.environ["webdriver.chrome.driver"] = chromedriver    
     driver = webdriver.Chrome(chromedriver,chrome_options=chrome_options)
     for j,link in enumerate(links):
-        if j <120:
-            continue
         if link.startswith('funesp') or link.startswith('lar-es') or link.startswith('prim-') or link.startswith('mediaset'): ## seems to not be working, the enye, must be done manual
             continue
         link = sub('portada','historico',link)

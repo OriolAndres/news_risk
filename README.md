@@ -36,9 +36,10 @@ Second, we assemble a panel of stock quoted firm data including sectoral weight 
   * inquisitor
   * python-levenshtein
   
-3. chromedriver.exe
+3. chromedriver.  
 
-  [Download site](https://sites.google.com/a/chromium.org/chromedriver/downloads).
+  [Download site](https://sites.google.com/a/chromium.org/chromedriver/downloads).  
+  Note: Selenium-Firefox issues a prompt each time a .asp file is downloaded for confirmation. Changing 'browser.helperApps.neverAsk.saveToDisk' profile option didn't make effect.
 
 4. Inquirim API token
 
@@ -61,6 +62,9 @@ rootdir = os.path.abspath(os.path.dirname(__file__))
 ```
 
 #### Download El Pais files and find keywords: 
+
+Caveat: Downloading the full archive generates 60 GB of files and may take several days depending on your internet connection and the behavior of the servers of elpais. It is recommended to split the job in parallel instances.
+
 ```python
 from news_risk.elpais import start_from_scratch
 start_from_scratch() # downloads full economy archive from El Pais (1976-2016), matches articles against conditions
@@ -77,7 +81,7 @@ fetch_list_by_sector() # list companies in each sector
 
 #### Intermediate step
 
-Write regular expressions for each company to match company strings extracted from BOE. Patterns have been stored already in accounts/biz_meta_regex.csv.
+Write regular expressions for each company to match the company strings extracted from BOE. Patterns have been stored already in accounts/biz_meta_regex.csv.
 
 #### Get BOE
 ```python
@@ -102,7 +106,7 @@ estimate_VAR()
 
 #### Run firm level regressions
 
-European uncertainty index has previously been saved in [euro_news.csv](../blob/master/euro_news.csv). [Original xlsx file](http://www.policyuncertainty.com/media/Europe_Policy_Uncertainty_Data.xlsx) (policyuncertainty.com).
+European uncertainty index has previously been saved in [euro_news.csv](../master/euro_news.csv). [Original xlsx file](http://www.policyuncertainty.com/media/Europe_Policy_Uncertainty_Data.xlsx) (policyuncertainty.com).
 
 ```python
 from news_risk.elpais import get_quarterly_regressors
@@ -122,8 +126,26 @@ In a first stage, we collect all the economy related articles from El Pais archi
 
 ### Definig the indices.
 
-We create a script to download the archive of El Pais, that runs from 4th May 1976 to today. The archive is split in two parts. The first system divides the daily editions into a handful of sections, including Economía, España and International. We focus on Economía. Each edition contains between 20 and 40 articles in the section.
+We create a script to download the archive of El Pais, that runs from 4th May 1976 to today. The archive is split in two parts. The first system ([May 4th 1976 to February 7th 2012](http://elpais.com/diario/)) divides the daily editions into a handful of sections, including Economía, España and International. We focus on Economía. 71% of the editions contain between 10 and 30 articles in this section. In the second system ([February 7th 2012 to today](http://elpais.com/archivo/)) sections do not exist and instead they carry a number of tags, which we can easily use to filter the archive, and in particular we can filter the articles tagged with "Economía". In 70% of the days between 20 and 60 articles have the tag. We cannot assume that all the articles in the old Economía section would be tagged with "Economía" and that all the tagged articles with "Economía" would be filed in the Economía section. This adds noise to the index if the propensity of articles to show uncertainty changes across the systems.
 
+We identify an article as showing economic uncertainty if it matches *both* of the following two conditions:
+
+  * Contains *either* one of the regular expressions 'incertidumbre' and '\binciert'.
+  * Contains the regular expression 'econ(o|ó)m(i|í)'
+
+We identify an article as showing economic policy uncertainty if it matches both of the conditions above and it satisfies this condition:
+
+  * Contains *either* of '\bimp(uesto|ositiv|onib)', '\btarifa', '\bregula(ci|ti|to)', '\bpol(i|í)tica', '\bgast(ar|o|a|os)\b', '\bpresupuest', '\bd(e|é)ficit', '\bbanc(o|a)[s]?[\s]*central', '\bbanco de españa', '\btribut'.
+  
+Then for both indices we sum all the matched articles in the month and divide by total number of articles in the month and escale the results to average 100.  
+The third condition is rather broad and as a result the monthly correlation between both indices is 95.7%.
+
+#### Additional decomposition
+
+We create a number of categories to divide the uncertainty. These require the fulfilment of the EPU and the additional constraints that follow:
+
+  * **Ingreso** '\bimp(uesto|ositiv|onib)','\btarifa','\brecauda','\btribut','\biva\b','\birpf\b'
+  
 ---
 
 Concept | Count | Cumulative effect
