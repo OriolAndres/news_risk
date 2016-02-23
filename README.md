@@ -38,8 +38,7 @@ Second, we assemble a panel of stock quoted firm data including sectoral weight 
   
 3. chromedriver.  
 
-  [Download site](https://sites.google.com/a/chromium.org/chromedriver/downloads).  
-  Note: Selenium-Firefox issues a prompt each time a .asp file is downloaded for confirmation. Changing 'browser.helperApps.neverAsk.saveToDisk' profile option didn't make effect.
+  [Download site](https://sites.google.com/a/chromium.org/chromedriver/downloads).
 
 4. Inquirim API token
 
@@ -124,7 +123,7 @@ In this project we estimate a political uncertainty index for Spain.
 In a first stage, we collect all the economy related articles from El Pais archives. We parse the body of articles and subset those that contain words related to both economy, policy, and uncertainty.
 
 
-### Definig the indices.
+### Defining the indices.
 
 We create a script to download the archive of El Pais, that runs from 4th May 1976 to today. The archive is split in two parts. The first system ([May 4th 1976 to February 7th 2012](http://elpais.com/diario/)) divides the daily editions into a handful of sections, including Economía, España and International. We focus on Economía. 71% of the editions contain between 10 and 30 articles in this section. In the second system ([February 7th 2012 to today](http://elpais.com/archivo/)) sections do not exist and instead they carry a number of tags, which we can easily use to filter the archive, and in particular we can filter the articles tagged with "Economía". In 70% of the days between 20 and 60 articles have the tag. We cannot assume that all the articles in the old Economía section would be tagged with "Economía" and that all the tagged articles with "Economía" would be filed in the Economía section. This adds noise to the index if the propensity of articles to show uncertainty changes across the systems.
 
@@ -150,21 +149,21 @@ We create a number of categories to divide the uncertainty. These require the fu
 
 Concept | Count | Cumulative effect
 --- | --- | ---
-matches | 5288 | -0.0469
-eumatches | 6758 | -0.0564
-ingreso | 1466 | 0.0082
-gasto | 2624 | -0.0377
-money | 2331 | -0.0425
-sanidad | 396 | -0.0015
-seguridad | 241 | -0.0029
-banca | 292 | -0.0898
-othregula | 1842 | -0.0714
-deuda | 1491 | -0.0231
-bienestar | 549 | -0.0221
-arancel | 136 | -0.0052
-autonomia | 337 | 0.0260
-fiscal | 3129 | -0.0358
-regula | 1986 | -0.0771
+**Econ policy** | 5288 | -0.0469
+**Econ general** | 6758 | -0.0564
+**ingreso** | 1466 | 0.0082
+**gasto** | 2624 | -0.0377
+**money** | 2331 | -0.0425
+**sanidad** | 396 | -0.0015
+**seguridad** | 241 | -0.0029
+**banca** | 292 | -0.0898
+**othregula** | 1842 | -0.0714
+**deuda** | 1491 | -0.0231
+**bienestar** | 549 | -0.0221
+**arancel** | 136 | -0.0052
+**autonomia** | 337 | 0.0260
+**fiscal** | 3129 | -0.0358
+**regula** | 1986 | -0.0771
 
 
 ![](figures/spain_v_europe.png?raw=true)

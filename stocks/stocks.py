@@ -3,6 +3,11 @@
 Created on Fri Feb 19 00:59:20 2016
 
 @author: OriolAndres
+
+
+Note: Selenium-Firefox issues a prompt each time a .asp file is downloaded for confirmation. 
+Changing 'browser.helperApps.neverAsk.saveToDisk' profile option didn't make effect.
+
 """
 
 import os
