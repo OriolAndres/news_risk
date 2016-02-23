@@ -1,6 +1,14 @@
 
 Constructing an uncertainty index for Spain and assessing the predictive value on economic activity.
 
+We construct an economic uncertainty index (EU) and an economic policy uncertainty (EPU) index for Spain following the [policyuncertainty.com methodology](http://www.policyuncertainty.com/methodology.html) exploited in [Baker, Bloom and Davis][1] [BBD].
+
+We base the index on the archives of [El Pais](http://elpais.com/), which is split between [1976 to 2012 editions](http://elpais.com/diario/) and [post 2012](http://elpais.com/archivo/).
+
+Following [BBD][1], we conduct two different exercises to explore the impact of policy uncertainty on economic activity.
+  First, we run a Vector Autoregression containing indicators for activity, inflation, government bond premium and european uncertainty. We see that uncertainty has a negative and prolonged effect on activity. 
+  Second, we assemble a panel of stock quoted firm data including sectoral weight of public contracts, firm wage expenses, firm volatility and the EPU index, and run regressions that show that companies in sectors exposed to policy suffer increased correlation between stock volatility and the EPU index, and also they show less wage expenses growth when this uncertainty increases compared to less exposed companies.
+
 ---
 
 # Project documentation
@@ -69,7 +77,7 @@ Write regular expressions for each company to match company strings extracted fr
 #### Get BOE
 ```python
 from news_risk.boe import download_boe, catch_entities
-download_boe() # get awarded public works per year
+download_boe() # download raw files containing awarded public works. Starts at 2005, ends at 2016.
 catch_contractor_money() # extract who are awarded and how much they are paid
 ```
 
@@ -82,7 +90,7 @@ calculate_cv() ## Uses GARCH(1,1) to get semi-annual conditional daily volatilit
 
 #### Run regressions
 
-European uncertainty index has previously been saved in /euro_news.csv. [Original xlsx file](http://www.policyuncertainty.com/media/Europe_Policy_Uncertainty_Data.xlsx) (policyuncertainty.com).
+European uncertainty index has previously been saved in [euro_news.csv](../blob/master/euro_news.csv). [Original xlsx file](http://www.policyuncertainty.com/media/Europe_Policy_Uncertainty_Data.xlsx) (policyuncertainty.com).
 
 ```python
 from news_risk.elpais import get_quarterly_regressors
@@ -120,3 +128,6 @@ regula | 1986 | -0.0771
 
 
 ![](figures/spain_v_europe.png?raw=true)
+
+
+[1]: (http://www.policyuncertainty.com/media/BakerBloomDavis.pdf)
