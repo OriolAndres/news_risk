@@ -71,4 +71,5 @@ def create_archive():
                         outf.write(content.encode('utf8'))
                 except:
                     continue
-create_archive()
+if __name__ == '__main__':
+    create_archive()

@@ -82,21 +82,22 @@ def get_cv_from_file(f):
     d.index = d.index.map(lambda t: t.replace(year=t.year, month=((t.month -1) // 6 +1)*6, day=1))
     return d
 
-ibex_df = get_cv_from_file('ibex35.asp')
-'''
-Do not include entity in dataset if no quoted stock found
-'''
-cv_dict = {}
-for i,entity in enumerate(entity_regex_l):
-    f = pairs.get(i,'ibex35.asp')
-    if f == 'ibex35.asp':
-        df = ibex_df
-    else:
-        df =  get_cv_from_file(f)
-        cv_dict[entity[0]] = zip(df.index.map(lambda x: x.strftime('%Y%m%d')).tolist(),df.cv)
-cv_dict['ibex35'] = zip(ibex_df.index.map(lambda x: x.strftime('%Y%m%d')).tolist(),ibex_df.cv)
-with open(os.path.join(rootdir,'stocks', 'cond_vol.csv'),'wb') as outf:
-    outstream = csv.writer(outf)
-    for k,v in cv_dict.items():
-        for entry in v:
-            outstream.writerow([k,entry[0],entry[1]])
+def calculate_cv():
+    ibex_df = get_cv_from_file('ibex35.asp')
+    '''
+    Do not include entity in dataset if no quoted stock found
+    '''
+    cv_dict = {}
+    for i,entity in enumerate(entity_regex_l):
+        f = pairs.get(i,'ibex35.asp')
+        if f == 'ibex35.asp':
+            df = ibex_df
+        else:
+            df =  get_cv_from_file(f)
+            cv_dict[entity[0]] = zip(df.index.map(lambda x: x.strftime('%Y%m%d')).tolist(),df.cv)
+    cv_dict['ibex35'] = zip(ibex_df.index.map(lambda x: x.strftime('%Y%m%d')).tolist(),ibex_df.cv)
+    with open(os.path.join(rootdir,'stocks', 'cond_vol.csv'),'wb') as outf:
+        outstream = csv.writer(outf)
+        for k,v in cv_dict.items():
+            for entry in v:
+                outstream.writerow([k,entry[0],entry[1]])

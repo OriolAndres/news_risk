@@ -66,7 +66,7 @@ def load_es_uncertainty():
     return d
 
 def load_eu_uncertainty():
-    with open(os.path.join(rootdir,'elpais','euro_news.csv'),'r') as inf:
+    with open(os.path.join(rootdir,'euro_news.csv'),'r') as inf:
         lines = [sub(r'\n','',line).split(',') for line in inf.readlines()]
         idx = []
         vals = []
@@ -158,8 +158,8 @@ if False or True:
     d = load_es_uncertainty()
     df1 = load_eu_uncertainty()
     nd = d.join(df).join(df1)
-    plot_index_comparison(nd)
-    plot_eu_epu(nd)
+    #plot_index_comparison(nd)
+    #plot_eu_epu(nd)
     nd = transform_data(nd)
     full_sset = ['ibex','vol','resid','europe', 'fedea', 'inflation', 'differential' ]
     subset = ['auto','europe', 'fedea', 'inflation', 'differential' ]

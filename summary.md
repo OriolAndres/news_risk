@@ -8,7 +8,6 @@ Constructing an uncertainty index for Spain and assessing the predictive value o
 1. How to replicate
 2. Presenting results
 
-
 ---
 
 ## 1. How to replicate
@@ -26,11 +25,11 @@ Constructing an uncertainty index for Spain and assessing the predictive value o
 
 3. chromedriver.exe
 
-  Downloadable [here](https://sites.google.com/a/chromium.org/chromedriver/downloads).
+  [Download site](https://sites.google.com/a/chromium.org/chromedriver/downloads).
 
 4. Inquirim API token
 
-  [Here](https://www.inquirim.com/account/api/) to create one. Used to retrieve macro data for the VAR computations.
+  [Create token](https://www.inquirim.com/account/api/). Used to retrieve macro data for the VAR computations.
 
 ### Project configuration
 
@@ -38,7 +37,7 @@ Constructing an uncertainty index for Spain and assessing the predictive value o
 git clone https://github.com/OriolAndres/news_risk
 ```
 
-create settings.py file in top directory ("news_risk/settings.py") and define the following lines:
+Create settings.py file in top directory ("news_risk/settings.py") and define the following lines:
 
 ```python
 import os
@@ -65,7 +64,7 @@ fetch_list_by_sector() # list companies in each sector
 
 #### Intermediate step
 
-Write regular expressions for each company to use to match companies extracted from BOE. Patterns in accounts/biz_meta_regex.csv.
+Write regular expressions for each company to match company strings extracted from BOE. Patterns have been stored already in accounts/biz_meta_regex.csv.
 
 #### Get BOE
 ```python
@@ -78,9 +77,19 @@ catch_contractor_money() # extract who are awarded and how much they are paid
 ```python
 from news_risk.stocks import fetch_folder
 fetch_folder() ## selenium (chrome) to fetch stock price data for all components of Mercado Continuo
+calculate_cv() ## Uses GARCH(1,1) to get semi-annual conditional daily volatilities
 ```
 
-#### Run 
+#### Run regressions
+
+European uncertainty index has previously been saved in /euro_news.csv. [Original xlsx file](http://www.policyuncertainty.com/media/Europe_Policy_Uncertainty_Data.xlsx) (policyuncertainty.com).
+
+```python
+from news_risk.elpais import get_quarterly_regressors
+get_quarterly_regressors() ## get macro data from Inquirim, load European uncertainty index / build Spain indices (EPU & EU) 
+from news_risk.accounts import run_regressions
+run_regressions() ## Counts the projects each entity is awarded. Loads entity accounts data. Loads macro data. Runs firm level regressions
+```
 
 ## 2. Presenting results
 

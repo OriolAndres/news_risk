@@ -13,4 +13,6 @@ settings.py
 !accounts/stats_table.csv
 !accounts/sector_members.csv
 !accounts/short_long.csv
+!stocks/cond_vol.csv
+!regressors.csv
 *.pyc
