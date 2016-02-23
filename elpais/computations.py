@@ -51,7 +51,7 @@ def load_external():
 
 colnames = ['matches','eumatches','ingreso','gasto','money','sanidad','seguridad','banca','othregula','deuda','bienestar','arancel','autonomia','fiscal','regula']
 
-#test
+#test 2
 def load_es_uncertainty():
     df_ec = pd.read_csv(os.path.join(rootdir,'elpais','daily_data_economia.csv'),parse_dates = True,index_col=0)
     df_new = pd.read_csv(os.path.join(rootdir,'elpais','daily_data_economia_new.csv'),parse_dates = True,index_col=0)
