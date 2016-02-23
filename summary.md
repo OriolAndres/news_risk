@@ -31,19 +31,20 @@ regula | 1986 | -0.0771
 
 #### Requirements
 
-1. Python 2.7
+1  Python 2.7
 
-2. Libraries
-..* bs4
-..* lxml
-..* selenium
-..* pandas
-..* statsmodels
+2  Libraries
+  * bs4
+  * lxml
+  * selenium
+  * pandas
+  * statsmodels
 
-3. chromedriver.exe
-... Downloadable [here](https://sites.google.com/a/chromium.org/chromedriver/downloads).
-4. Inquirim API token. 
-... [Here](https://www.inquirim.com/account/api/) to create one. Used to retrieve macro data for the VAR computations.
+3  chromedriver.exe
+    Downloadable [here](https://sites.google.com/a/chromium.org/chromedriver/downloads).
+
+4  Inquirim API token. 
+    [Here](https://www.inquirim.com/account/api/) to create one. Used to retrieve macro data for the VAR computations.
 
 #### Project configuration
 
