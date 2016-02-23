@@ -116,16 +116,9 @@ run_regressions() ## Counts the projects each entity is awarded. Loads entity ac
 
 ## 2. Presenting results
 
-### Abstract
-
-In this project we estimate a political uncertainty index for Spain.
-
-In a first stage, we collect all the economy related articles from El Pais archives. We parse the body of articles and subset those that contain words related to both economy, policy, and uncertainty.
-
-
 ### Defining the indices.
 
-We create a script to download the archive of El Pais, that runs from 4th May 1976 to today. The archive is split in two parts. The first system ([May 4th 1976 to February 7th 2012](http://elpais.com/diario/)) divides the daily editions into a handful of sections, including Economía, España and International. We focus on Economía. 71% of the editions contain between 10 and 30 articles in this section. In the second system ([February 7th 2012 to today](http://elpais.com/archivo/)) sections do not exist and instead they carry a number of tags, which we can easily use to filter the archive, and in particular we can filter the articles tagged with "Economía". In 70% of the days between 20 and 60 articles have the tag. We cannot assume that all the articles in the old Economía section would be tagged with "Economía" and that all the tagged articles with "Economía" would be filed in the Economía section. This adds noise to the index if the propensity of articles to show uncertainty changes across the systems.
+We create a script to download the archive of El Pais, that runs from 4th May 1976 to today. The archive is split in two parts. The first system ([May 4th 1976 to February 7th 2012](http://elpais.com/diario/)) divides the daily editions into a handful of sections, including Economía, España and International. We focus on Economía. 71% of the editions contain between 10 and 30 articles in this section. In the second system ([February 7th 2012 to today](http://elpais.com/archivo/)) sections do not exist and instead they carry a number of tags, which we can easily use to filter the archive, and in particular we can filter the articles tagged with "Economía". In 70% of the days between 20 and 60 articles have the tag. We cannot assume that all the articles in the old Economía section would be tagged with "Economía" and that all the tagged articles with "Economía" would be filed in the Economía section. If the propensity to show uncertainty changed the index would be distorted.
 
 We identify an article as showing economic uncertainty if it matches *both* of the following two conditions:
 
@@ -143,9 +136,23 @@ The third condition is rather broad and as a result the monthly correlation betw
 
 We create a number of categories to divide the uncertainty. These require the fulfilment of the EPU and the additional constraints that follow:
 
-  * **Ingreso** '\bimp(uesto|ositiv|onib)','\btarifa','\brecauda','\btribut','\biva\b','\birpf\b'
+  * **Ingreso público**; '\bimp(uesto|ositiv|onib)','\btarifa','\brecauda','\btribut','\biva\b','\birpf\b'
+  * **Gasto público**; '\bgast(ar|o|a|os)\b', '\bpresupuest', '(deuda|d(é|e)ficit) p(u|ú)blic', '\berario', 'pacto de estabilidad'
+  * **Política monetaria**; '\bbanc(o|a)[s]?[\s]*central', '\bbce\b', '\bbde\b', '\bbanco de españa', 'pol(i|í)tica monetaria'
+  * **Política sanidad**; '\bsani(tari|dad)', '\bhospital', '\bfarmac(ia|eu)', '\bm(e|é)dic(o|in)'
+  * **Seguridad**; 'seguridad nacional', '\bmilitar', '\bterrorismo', '\beta\b', 'minist(erio|ro) de defensa', 'fuerzas armadas'
+  * **Regulación bancaria**; 'supervis(ión|or) bancar', 'reformas? financiera', 'tests? de estrés', 'stress test', 'comisi(o|ó)n nacional', 'cnmv', 'fondo de (garant(i|í)a de )?dep(o|ó)sito', 'basilea'
+  * **Regulación no bancaria**; '\bregula(ci|ti|to)', 'convenio', '\blegisla', '\bley(es)?\b', 'monopol', '\bc(a|á)rtel', '\bderecho'
+  * **Sostenibilidad deuda**; 'deuda (sobera|p(ú|u)blic)', 'crisis de deuda', '\bdevalu', 'tipos? de cambio', '\bcambiari', '\beuro.?zona', '\brublo'
+  * **Estado bienestar**; 'seguridad social', 'asuntos? social', 'estado del bienestar', 'subsidi(o|a)', 'fondos? estructural'
+  * **Política comercial**; '\barancel', '\baduan(a|e)', 'tarifas?.{1,6}\b(expor|impor)', 'tratados?.{1,6}(libre.{1,6})?\bcomerc'
+  * **Territorial**;  '\bdescentraliz', '\bindependent', '\bseparati', '\bsecesi(o|ó)n', '\bibarretx', '\bnacionalis', '\bterritorial'
+  * **Política fiscal**; Match if **Ingreso público** and/or **Gasto público** are a match.
+  * **Regulación**; Match if **Regulación bancaria** and/or **Regulación no bancaria** are a match.
   
----
+ 
+ 
+--- 
 
 Concept | Count | Cumulative effect
 --- | --- | ---
