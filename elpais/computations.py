@@ -153,7 +153,7 @@ def get_quarterly_regressors():
     nd[['spending','epu','euro_news']].to_csv(os.path.join(rootdir, 'regressors.csv'))
     return nd
     
-if False or True:
+def estimate_VAR():
     df = load_external()
     d = load_es_uncertainty()
     df1 = load_eu_uncertainty()
@@ -195,3 +195,28 @@ if False or True:
     
     plt.xticks(xticks_pos, list(aa.index),  ha='right', rotation=45)
     plt.savefig(os.path.join(rootdir, 'figures','policy_v_general.%s' % fig_fmt), format=fig_fmt)
+    
+    
+def articles_per_day():
+    for s in ['Old', 'New']:
+        if s == 'Old':
+            a = 10; b = 30
+        else:
+            a = 20; b = 60
+        df_ec = pd.read_csv(os.path.join(rootdir,'elpais','daily_data_economia%s.csv' % ('' if s == 'Old' else '_new')),parse_dates = True,index_col=0)
+        hist, bins = np.histogram(df_ec.articles, bins = 50, density=True)
+        center = (bins[:-1] + bins[1:]) / 2
+        width = 0.7 * (bins[1] - bins[0])
+        plt.bar(center, hist, align='center', width=width)
+        plt.show()
+        plt.savefig(os.path.join(rootdir, 'figures','articles_day_%s.%s' % (s,fig_fmt)), format=fig_fmt)
+        r = float(sum([1 if a < x< b else 0 for x in df_ec.articles])) / len(df_ec)
+        print s + ' system: %.1f%% of editions contain between %d and %d articles identified as economy related' % (r*100,a,b)
+
+
+def main():
+    articles_per_day()
+    estimate_VAR()
+
+if __name__ == '__main__':
+    main()

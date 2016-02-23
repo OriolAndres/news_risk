@@ -42,12 +42,12 @@ Second, we assemble a panel of stock quoted firm data including sectoral weight 
 
 4. Inquirim API token
 
-  [Create token](https://www.inquirim.com/account/api/). Used to retrieve macro data for the VAR computations.
+  [Create token](https://www.inquirim.com/account/api/). Used to retrieve macro data for the VAR estimation.
 
 ### Project configuration
 
 ```
-git clone https://github.com/OriolAndres/news_risk
+$ git clone https://github.com/OriolAndres/news_risk
 ```
 
 Create settings.py file in top directory ("news_risk/settings.py") and define the following lines:
@@ -56,7 +56,7 @@ Create settings.py file in top directory ("news_risk/settings.py") and define th
 import os
 token = '<inquirim_api_token>' ## https://www.inquirim.com/account/api/ 
 chromedriver = r"<path_to_chromedriver>\chromedriver.exe" 
-download_dir = r'<default_download_directory_chrome/firefox>'
+download_dir = r'<download_directory_chrome_and_firefox>'
 rootdir = os.path.abspath(os.path.dirname(__file__))
 ```
 
@@ -93,7 +93,14 @@ fetch_folder() ## selenium (chrome) to fetch stock price data for all components
 calculate_cv() ## Uses GARCH(1,1) to get semi-annual conditional daily volatilities
 ```
 
-#### Run regressions
+#### Estimate VAR
+
+```python
+from news_risk.elpais import estimate_VAR
+estimate_VAR()
+```
+
+#### Run firm level regressions
 
 European uncertainty index has previously been saved in [euro_news.csv](../blob/master/euro_news.csv). [Original xlsx file](http://www.policyuncertainty.com/media/Europe_Policy_Uncertainty_Data.xlsx) (policyuncertainty.com).
 
@@ -111,6 +118,11 @@ run_regressions() ## Counts the projects each entity is awarded. Loads entity ac
 In this project we estimate a political uncertainty index for Spain.
 
 In a first stage, we collect all the economy related articles from El Pais archives. We parse the body of articles and subset those that contain words related to both economy, policy, and uncertainty.
+
+
+### Definig the indices.
+
+We create a script to download the archive of El Pais, that runs from 4th May 1976 to today. The archive is split in two parts. The first system divides the daily editions into a handful of sections, including Economía, España and International. We focus on Economía. Each edition contains between 20 and 40 articles in the section.
 
 ---
 
