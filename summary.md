@@ -1,52 +1,38 @@
-## Abstract
 
-In this project we estimate a political uncertainty index for Spain.
+Constructing an uncertainty index for Spain and assessing the predictive value on economic activity.
 
 ---
 
-Concept | Count | Cumulative effect
---- | --- | ---
-matches | 5288 | -0.0469
-eumatches | 6758 | -0.0564
-ingreso | 1466 | 0.0082
-gasto | 2624 | -0.0377
-money | 2331 | -0.0425
-sanidad | 396 | -0.0015
-seguridad | 241 | -0.0029
-banca | 292 | -0.0898
-othregula | 1842 | -0.0714
-deuda | 1491 | -0.0231
-bienestar | 549 | -0.0221
-arancel | 136 | -0.0052
-autonomia | 337 | 0.0260
-fiscal | 3129 | -0.0358
-regula | 1986 | -0.0771
+# Project documentation
+
+1. How to replicate
+2. Presenting results
 
 
-![](figures/spain_v_europe.png?raw=true)
+---
 
+## 1. How to replicate
 
-### How to replicate
+### Requirements
 
+1. Python 2.7
 
-#### Requirements
-
-1  Python 2.7
-
-2  Libraries
+2. Libraries
   * bs4
   * lxml
   * selenium
   * pandas
   * statsmodels
 
-3  chromedriver.exe
-    Downloadable [here](https://sites.google.com/a/chromium.org/chromedriver/downloads).
+3. chromedriver.exe
 
-4  Inquirim API token. 
-    [Here](https://www.inquirim.com/account/api/) to create one. Used to retrieve macro data for the VAR computations.
+  Downloadable [here](https://sites.google.com/a/chromium.org/chromedriver/downloads).
 
-#### Project configuration
+4. Inquirim API token
+
+  [Here](https://www.inquirim.com/account/api/) to create one. Used to retrieve macro data for the VAR computations.
+
+### Project configuration
 
 ```
 git clone https://github.com/OriolAndres/news_risk
@@ -94,4 +80,34 @@ from news_risk.stocks import fetch_folder
 fetch_folder() ## selenium (chrome) to fetch stock price data for all components of Mercado Continuo
 ```
 
-### Run 
+#### Run 
+
+## 2. Presenting results
+
+### Abstract
+
+In this project we estimate a political uncertainty index for Spain.
+
+
+---
+
+Concept | Count | Cumulative effect
+--- | --- | ---
+matches | 5288 | -0.0469
+eumatches | 6758 | -0.0564
+ingreso | 1466 | 0.0082
+gasto | 2624 | -0.0377
+money | 2331 | -0.0425
+sanidad | 396 | -0.0015
+seguridad | 241 | -0.0029
+banca | 292 | -0.0898
+othregula | 1842 | -0.0714
+deuda | 1491 | -0.0231
+bienestar | 549 | -0.0221
+arancel | 136 | -0.0052
+autonomia | 337 | 0.0260
+fiscal | 3129 | -0.0358
+regula | 1986 | -0.0771
+
+
+![](figures/spain_v_europe.png?raw=true)
