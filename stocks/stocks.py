@@ -78,4 +78,5 @@ def fetch_folder():
                     s = ns
                     
     driver.quit()
-fetch_folder()
+if __name__ == '__main__':
+    fetch_folder()

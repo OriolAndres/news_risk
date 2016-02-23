@@ -9,4 +9,8 @@ settings.py
 *.txt
 *.html
 *.csv
+!accounts/biz_meta_regex.csv
+!accounts/stats_table.csv
+!accounts/sector_members.csv
+!accounts/short_long.csv
 *.pyc

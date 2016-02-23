@@ -1,0 +1,345 @@
+"ABANCA CORPORACION BANCARIA, S.A.",.*\babanca.*
+"ABENGOA, S.A.",.*\babengoa.*
+"ABERTIS INFRAESTRUCTURAS, S.A.",.*\babertis.*
+"ACCIONA, S.A.",.*\bacciona\b.*
+"ACERINOX, S.A.",.*\bacerinox.*
+"ACS, ACTIVIDADES DE CONSTRUCCION Y SERVICIOS, S.A.",.*\b(acs|actividades de construcci(o|ó)n y servicios)\b.*
+"ADOLFO DOMINGUEZ, S.A.",.*\badolfo dom(i|í)nguez.*
+"ADVEO GROUP INTERNATIONAL, S.A.",.*\badveo\b.*
+"AENA, S.A.",.*\baena\b.*
+"AGUAS DE VALENCIA, S.A.",.*aguas de valencia.*
+"AHORRO FAMILIAR, S.A.",.*\bahorro familiar.*
+"ALCINVER,S.A.",.*\balcinver\b.*
+"ALDEASA, S.A.",.*\baldeasa\b.*
+"ALMIRALL, S.A.",.*\balmirall\b.*
+"ALTADIS, S.A.",.*\baltadis\b.*
+"ALZA REAL ESTATE, S.A.",.*\balza real\b.*
+"AMADEUS GLOBAL TRAVEL DISTRIBUTION, S.A.",.*\bamadeus\b.*
+"AMADEUS IT HOLDING, S.A.",.*\bamadeus i.*
+"AMCI HABITAT, S.A. (EN LIQUIDACIÓN)",.*\bamci\b.*
+"AMPER, S.A.",.*\bamper\b.*
+"APPLUS SERVICES, S.A.",.*\bapplus\b.*
+"ARCELOR, S.A.",.*\barcelor\b.*
+"ATRESMEDIA CORPORACION DE MEDIOS DE COMUNICACION, S.A.",.*\batresmedia\b.*
+"AUTOPISTA CONCESIONARIA ASTUR-LEONESA, S.A.",.*autopista.*astur\-?leonesa.*
+"AUTOPISTA VASCO-ARAGONESA, CONCESIONARIA ESPAÑOLA, S.A.",.*autopista.*vasco\-?aragonesa.*
+"AUTOPISTAS DE NAVARRA, S.A.",.*autopistas (de )?navarra.*
+"AUTOPISTAS DEL ATLANTICO, CONCESIONARIA ESPAÑOLA, S.A",.*autopistas (del )?atl(a|á)ntico.*
+"AUTOVIA DE LOS VIÑEDOS, S.A.",.*autov(i|í)a (de los )?vi(ñ|n)edos.*
+"AXIARE PATRIMONIO SOCIMI, S.A.",.*\baxia(re)?\b.*
+"AYCO GRUPO INMOBILIARIO, S.A.",.*\bayco\b.*
+"AZKOYEN, S.A.",.*\bazkoyen\b.*
+"BANCA CIVICA, S.A.",.*\bbanca c(i|í)vica\b.*
+"BANCA MARCH, S.A.",.*\bbanca march\b.*
+"BANCA PUEYO, S.A.",.*\bbanca pueyo\b.*
+"BANCO CAM, S.A.",.*\bbanco cam\b.*
+"BANCO COOPERATIVO ESPAÑOL, S.A.",.*\bbanco cooperativo espa(ñ|n)ol\b.*
+"BANCO DE ANDALUCIA, S.A.",.*\bbanco de andaluc.*
+"BANCO DE CAJA ESPAÑA DE INVERSIONES, SALAMANCA Y SORIA, S.A.",.*\bbanco de caja espa.*
+"BANCO DE CASTILLA, S.A.",.*\bbanco de castilla\b.*
+"BANCO DE CASTILLA-LA MANCHA, S.A.",.*\bbanco de castilla\-.*
+"BANCO DE CREDITO BALEAR, S.A.",.*\bbanco? de cr(e|é|è)dito? balear\b.*
+"BANCO DE CREDITO LOCAL DE ESPAÑA, S.A.",.*\bbanco de cr(e|é)dito local de esp.*
+"BANCO DE GALICIA, S.A.",.*\bbanco de gal(i|í)cia.*
+"BANCO DE PROMOCIÓN DE NEGOCIOS, S.A.	",.*\bbanco de promoci(o|ó)n de neg.*
+"BANCO DE SABADELL, S.A.",.*\bbanco? (de )?sabadell.*
+"BANCO DE VALENCIA, S.A.",.*\bbanco? (de )?val(e|é|è)ncia.*
+"BANCO DE VASCONIA, S.A.",.*\bbanco (de )?vasconia.*
+"BANCO ESPAÑOL DE CREDITO, S.A.",.*\bbanco espa(ñ|n)ol de cr(e|é)dito.*
+"BANCO ETCHEVERRIA, S.A.",.*\bbanco etcheverria.*
+"BANCO GALLEGO, S.A.",.*\bbanco gallego.*
+"BANCO GRUPO CAJATRES, S.A.",.*\bbanco.*cajatres.*
+"BANCO GUIPUZCOANO, S.A.",.*\bbanco guipuzcoano.*
+"BANCO MARE NOSTRUM, S.A.",.*\bbanco mare nostrum.*
+"BANCO PASTOR, S.A.",.*\bbanco pastor.*
+"BANCO POPULAR ESPAÑOL, S.A.",.*\bbanco popular.*
+"BANCO SANTANDER, S.A.",.*\b(banco|grupo) santander.*
+"BANKIA, S.A",.*\bbankia.*
+"BANKINTER EMISIONES, S.A.",.*\bbankinter emis.*
+"BANKINTER SOCIEDAD DE FINANCIACION, S.A.",.*\bbankinter sociedad de fi.*
+"BANKINTER, S.A.",.*\bbankinter((?!( sociedad de fi.*| emis.*)).*)
+"BANKOA, S.A.",.*\bbankoa\b.*
+"BARCLAYS BANK, S.A.",.*\bbarclays.*
+"BARON DE LEY, S.A.",.*\bbar(o|ó)n de ley\b.*
+"BBVA BANCO DE FINANCIACION, S.A.",.*\bbbva\b.*
+"BEFESA MEDIO AMBIENTE, S.A.",.*\bbefesa\b.*
+"BFA TENEDORA DE ACCIONES, S.A.",.*\bbfa\b.*
+"BIOSEARCH, S.A.",.*\bbiosearch\b.*
+"BODEGAS BILBAINAS, S.A.",.*\bbodegas bilba.*
+"BODEGAS RIOJANAS, S.A.",.*\bbodegas riojan.*
+"BOLSAS Y MERCADOS ESPAÑOLES, SDAD HOLDING DE MDOS Y STMAS FIN., S.A.",.*\b(bolsas y mercados|bme)\b.*
+"BORGES AGRICULTURAL & INDUSTRIAL NUTS, S.A.",.*\bborges\b.*
+"BPE PREFERENCE INTERNATIONAL",.*\bbpe.*
+"BYADA S.A.",.*\bbyada\b.*
+"CAIXA CATALUNYA PREFERENTS, S.A.",.*\bcaixa catalunya prefe.*
+"CAIXA DE AFORROS DE GALICIA, VIGO, OURENSE E PONTEVEDRA",.*\bcaixa.*gal(i|í)cia.*\bvigo.*
+"CAIXA DE AFORROS DE VIGO, OURENSE E PONTEVEDRA (CAIXANOVA)",.*\bcaixanova\b.*
+"CAIXA D´ESTALVIS COMARCAL DE MANLLEU",.*\bcaixa.*manlleu.*
+"CAIXA D´ESTALVIS DE CATALUNYA",.*\bcaixa.*estalvis.*catalunya((?!.*tarragona.*).*)
+"CAIXA D´ESTALVIS DE CATALUNYA, TARRAGONA I MANRESA",.*\bcaixa.*estalvis.*catalunya.*tarragona.*
+"CAIXA D´ESTALVIS DE GIRONA",.*\bcaixa.*girona.*
+"CAIXA D´ESTALVIS DE MANRESA",.*\bcaixa((?!.*catalunya.*).*)manresa.*
+"CAIXA D´ESTALVIS DE SABADELL",.*\bcaixa.*sabadell.*
+"CAIXA D´ESTALVIS DE TARRAGONA",.*\bcaixa((?!.*catalunya.*).*)tarragona.*
+"CAIXA D´ESTALVIS DE TERRASSA",.*\bcaixa.*terrassa.*
+"CAIXA D´ESTALVIS DEL PENEDES",.*\bcaixa.*pened(e|é|è)s.*
+"CAIXA D´ESTALVIS LAIETANA",.*\bcaixa.*laietana.*
+"CAIXA D´ESTALVIS UNIO DE CAIXES DE MANLLEU, SABADELL I TERRASSA",.*\bcaix.*manlleu.*sabadell.*terrassa.*
+"CAIXA MANRESA PREFERENTS, S.A.",.*\bcaixa.*manresa.*prefere.*
+"CAIXA PREFERENCE, S.A.",.*\bcaixa.*preference.*
+"CAIXA TERRASSA, SOCIETAT DE PARTICIPATIONS PREFERENTS, S.A.U.",.*\bcaixa.*terrassa.*prefere.*
+"CAIXABANK, S.A.",.*\bcaixabank.*
+"CAJA DE AHORRO PROVINCIAL DE GUADALAJARA",.*\bcaja.*guadalajara.*
+"CAJA DE AHORROS DE ASTURIAS",.*\bcaja.*ast(u|ú)rias.*
+"CAJA DE AHORROS DE CASTILLA-LA MANCHA",.*\bcaja((?!.*\brural.*).*)mancha.*
+"CAJA DE AHORROS DE GALICIA",.*\bcaja.*gal(i|í)cia.*
+"CAJA DE AHORROS DE LA INMACULADA DE ARAGON",.*\bcaja.*arag(o|ó)n.*
+"CAJA DE AHORROS DE MURCIA",.*\bcaja.*m(u|ú)rcia.*
+"CAJA DE AHORROS DE SALAMANCA Y SORIA",.*\bcaja.*salamanca.*
+"CAJA DE AHORROS DE SANTANDER Y CANTABRIA",(?!.*banco.*).*\bcaja.*santander.*
+"CAJA DE AHORROS DE VALENCIA, CASTELLON Y ALICANTE, BANCAJA",.*\b(caja.*valencia|bancaja).*
+"CAJA DE AHORROS DE VITORIA Y ALAVA- ARABA ETA GASTEIZKO AURREZKI KUTXA",.*\b(caja.*vitoria|gasteiz.*kutxa).*
+"CAJA DE AHORROS DEL MEDITERRANEO",.*\b(caja((?!.*\brural.*).*)mediterr(a|á)|cam\b((?!.*capital.*).*)).*
+"CAJA DE AHORROS MUNICIPAL DE BURGOS",.*\bcaja.*burgos.*
+"CAJA DE AHORROS Y MONTE DE PIEDAD DE CORDOBA",.*\bcaja.*c(o|ó)rdoba.*
+"CAJA DE AHORROS Y MONTE DE PIEDAD DE EXTREMADURA",.*\bcaja.*extremadura.*
+"CAJA DE AHORROS Y MONTE DE PIEDAD DE LAS BALEARES",.*\bcaja.*baleares.*
+"CAJA DE AHORROS Y MONTE DE PIEDAD DE MADRID",.*\bcaja.*madrid.*
+"CAJA DE AHORROS Y MONTE DE PIEDAD DE NAVARRA",.*\bcaja((?!.*\brural.*).*)navarra.*
+"CAJA DE AHORROS Y MONTE DE PIEDAD DE ONTINYENT",.*\bcaja.*\bont(inyent|eni).*
+"CAJA DE AHORROS Y MONTE DE PIEDAD DE SEGOVIA",.*\bcaja.*segovia.*
+"CAJA DE AHORROS Y MONTE DE PIEDAD DE ZARAGOZA, ARAGON Y RIOJA (IBERCAJA)",.*\b(caja.*zaragoza|ibercaja\b)((?!.*banco.*).*)
+"CAJA DE AVILA PREFERENTES, S.A.",.*\bcaja.*\b(a|á)vila.*
+"CAJA DUERO CAPITAL, S.A.",.*\bcaja.*\bduero.*
+"CAJA ESPAÑA DE INVERSIONES, CAJA DE AHORROS Y MONTE DE PIEDAD",.*\bcaja espa(n|ñ)a((?!.*(salamanca|soria|prefer).*).*)
+"CAJA ESPAÑA DE INVERSIONES, SALAMANCA Y SORIA, CAJA DE AHORROS Y MONTE DE PIEDAD",.*\bcaja espa(n|ñ)a.*(salamanca|soria).*
+"CAJA ESPAÑA DE INVERSIONES, SOCIEDAD DE PARTICIPACIONES PREFERENTES, S.A.",.*\bcaja espa(n|ñ)a.*preferen.*
+"CAJA GENERAL DE AHORROS DE CANARIAS",.*\bcaja((?!.*\bins.*).*)\bcanarias.*
+"CAJA GENERAL DE AHORROS DE GRANADA",.*\bcaja.*\bgranada.*
+"CAJA INSULAR DE AHORROS DE CANARIAS",.*\bcaja.*\binsular.*
+"CAJA LABORAL POPULAR COOP. DE CREDITO",.*\bcaja.*\blaboral.*
+"CAJA RURAL DE CASTILLA-LA MANCHA, SOCIEDAD COOPERATIVA DE CREDITO",.*\bcaja.*\brural.*mancha.*
+"CAJA RURAL DE NAVARRA, S. COOP. DE CREDITO",.*\bcaja.*\brural.*navarra.*
+"CAJA RURAL DEL MEDITERRANEO, RURALCAJA, S. COOP. DE CREDITO",.*\b(caja.*\brural.*mediterr.neo|ruralcaja)\b.*
+"CAJAMAR CAJA RURAL, SOCIEDAD COOPERATIVA DE CREDITO",.*\bcajamar.*
+"CAJASUR BANCO, S.A.U.",.*\bcajasur.*
+"CALPE INVEST, S.A.",.*\bcalpe\b.*
+"CAM CAPITAL, S.A.",.*\bcam\b.*capital.*
+"CAMPOFRIO FOOD GROUP, S.A.",.*\bcampofr(i|í)o\b.*
+"CARROGGIO, S.A. DE EDICIONES",.*\bcarroggio.*
+"CARTERA INDUSTRIAL REA, S.A.",.*\bcartera.*\brea\b.*
+"CATALUNYA BANC, S.A.",.*\bcatalunya ban(c|k)\b.*
+"CCM DE PARTICIPACIONES PREFERENTES, S.A., SOCIEDAD UNIPERSONAL",.*\bccm\b.*partic.*
+"CCM PREFERENTES, S.A.",.*\bccm\b((?!.*partic.*).*)prefer.*
+"CELLNEX TELECOM, S.A.",.*\bcellnex\b.*
+"CEMENTOS LEMONA, S.A.",.*\bcement.*\blemona\b.*
+"CEMENTOS MOLINS, S.A.",.*\bcement.*\bmolins\b.*
+"CEMENTOS PORTLAND VALDERRIVAS, S.A.",.*\bcement.*\b(portland|valderrivas).*
+"CIE AUTOMOTIVE, S.A.",.*\bcie autom.*
+"CIRCULO DE VALORES MOBILIARIOS, S.A.",.*\bc(i|í)rculo de valores mob.*
+"CLINICA BAVIERA, S.A.",.*\bcl(i|í)nica baviera.*
+"CODERE, S.A.",.*\bcodere\b.*
+"COMPANYIA D´AIGÜES DE SABADELL, S.A.",.*\baig(u|ü)es\b.*sabadell.*
+"COMPAÑIA DE INVERSIONES CINSA, S.A.",.*\binvers.*\bcinsa\b.*
+"COMPAÑIA DE INVERSIONES MOBILIARIAS BARCINO, S.A.",.*\binvers.*\bbarcino\b.*
+"COMPAÑIA ESPAÑOLA DE PETROLEOS, S.A.",.*\b(espa(n|ñ)ola.*\bpetr(o|ó)leos|cepsa)\b.*
+"COMPAÑIA ESPAÑOLA DE VIVIENDAS EN ALQUILER, S.A.",.*\bcompa(n|ñ)(i|í)a.*\bviviendas.*alquil.*
+"COMPAÑIA ESPAÑOLA PARA LA FABRICACION MECANICA DEL VIDRIO, S.A.",.*\bcompa(n|ñ)(i|í)a.*\bmec(a|á)n.*\bvidri.*
+"COMPAÑIA LEVANTINA DE EDIFICACION Y OBRAS PUBLICAS, S.A.",.*\b(levantina\b.*\bedific|cleop\b).*
+"COMPAÑIA LOGISTICA DE HIDROCARBUROS CLH, S.A.",.*\b(log(i|í)stica\b.*\bhidrocar|clh\b).*
+"COMPAÑIA VINICOLA DEL NORTE DE ESPAÑA, S.A.",.*\b(vin(i|í)cola.*\bnorte|cvne\b).*
+"COMPAÑÍA DE DISTRIBUCIÓN INTEGRAL LOGISTA, S.A.",.*\blogista\b.*
+"CONSTRUCCIONES Y AUXILIAR DE FERROCARRILES, S.A",.*\b(caf\b|cons.*\bauxili.*ferroc).*
+"CORPORACION DERMOESTETICA, S.A.",.*\bcorpor.*\bdermoest.*
+"CORPORACION EMPRESARIAL DE MATERIALES DE CONSTRUCCION, S.A.",.*\b(coemac\b|corpo.*\bmaterial.*\bconstr).*
+"CORPORACION FINANCIERA ALBA, S.A.",.*\bfinan.*\balba\b.*
+"CORTEFIEL S.A.",.*\bcortefiel\b.*
+"CRITERIA CAIXAHOLDING, S.A.U.",.*\bcriteria\b.*
+"DEOLEO, S.A.",.*\bdeoleo\b.*
+"DESARROLLO MOBILIARIO S.A.",.*\bdesarrollo mobiliario\b.*
+"DESARROLLOS ESPECIALES DE SISTEMAS DE ANCLAJES, S.A.",.*\b(desa\b|desarrollos.*\banclajes).*
+"DEUTSCHE BANK, SOCIEDAD ANONIMA ESPAÑOLA",.*\bdeutsche bank.*
+"DEXIA SABADELL, S.A.",.*\bdexia\b.*
+"DISTRIBUIDORA INTERNACIONAL DE ALIMENTACION, S.A.",.*\bdistr.*\bint.*\balim.*
+"DOGI INTERNATIONAL FABRICS, S.A.",.*\bdogi\b.*
+"DURO FELGUERA, S.A.",.*\bduro felguera.*
+"EADS NV",.*\b(eads|airbus)\b.*
+"EBRO FOODS, S.A.",.*\bebro foods.*
+"ECOLUMBER, S.A.",.*\becolumber.*
+"EDP RENOVAVEIS, S.A.",.*\bedp renov.*
+"ELECNOR, S.A.",.*\belecnor\b.*
+"ENAGAS, S.A.",.*\benagas\b.*
+"ENCE ENERGIA Y CELULOSA, S.A.",.*\bence\b.*
+"ENDESA CAPITAL FINANCE, LLC.",.*\bendesa capital.*
+"ENDESA, S.A.",.*\bendesa((?!.*capital.*).*)
+"ERCROS, S.A.",.*\bercros\b.*
+"EROSKI SOCIEDAD COOPERATIVA",.*\beroski\b.*
+"ESPAÑOLA DEL ZINC, S.A.",.*\bespa(n|ñ)ola\b.*\bzinc.*
+"ESTABANELL Y PAHISA, S.A.",.*\bestabanell\b.*
+"EUSKALTEL, S.A.",.*\beuskaltel\b.*
+"EXIDE TECHNOLOGIES, S.A.",.*\bexide\b.*
+"FADESA INMOBILIARIA, S.A.",.*\bfadesa\b.*
+"FAES FARMA, S.A.",.*\bfaes\b.*
+"FAGOR ELECTRODOMESTICOS, SOCIEDAD COOPERATIVA (EN LIQUIDACION)",.*\bfagor\b.*
+"FEDERICO PATERNINA, S.A.",.*\bfederico paternina.*
+"FERGO AISA, S.A.",.*\bfergo aisa.*
+"FERROVIAL, S.A.",((?!.*grupo.*).*)\bferrovial\b.*
+"FERSA ENERGIAS RENOVABLES, S.A.",.*\bfersa\b.*
+"FINANZAS E INVERSIONES VALENCIANAS, S.A.",.*\bfinanz.*\binvers.*\bvalencian.*
+"FLETAMENT0S MARITIMOS S.A.",.*\bfletament.*\bmar(i|í)tim.*
+"FLUIDRA, S.A.",.*\bfluidra\b.*
+"FOMENTO DE CONSTRUCCIONES Y CONTRATAS, S.A.",.*\b(fcc\b|fomento.*\bconstr.*\bcontr).*
+"FORUM INMOBILIARIO CISNEROS, S.A.",.*\b(f(o|ó)rum|inmobili).*\bcisneros.*
+"FUNDACION BANCARIA CAIXA D ESTALVIS I PENSIONS DE BARCELONA",.*\bfundaci.*\bcaixa.*\bestalvis.*\bbarce.*
+"FUNESPAÑA, S.A.",.*\bfunespa(n|ñ)a\b.*
+"GAMESA CORPORACION TECNOLOGICA, S.A.",.*\bgamesa\b.*
+"GAS NATURAL SDG, S.A.",.*\bgas natural\b.*
+"GENERAL DE ALQUILER DE MAQUINARIA, S.A.",.*\b(general.*\balquiler.*\bmaquinaria|gam\b).*
+"GRIFOLS, S.A.",.*\bgr(i|í)fols\b.*
+"GRUPO EMPRESARIAL SAN JOSE, S.A.",.*\bsan jose.*
+"GRUPO EZENTIS, S.A.",.*\bezentis\b.*
+"GRUPO FERROVIAL, S.A.",.*\bgrupo ferrovial\b.*
+"GRUPO TAVEX, S.A.",.*\btavex\b.*
+"GUIPUZCOANO CAPITAL, S.A.",.*\bguipuzcoano capital\b.*
+"HIDROELECTRICA DEL CANTABRICO, S.A.",.*\bhidroe.*\bcant(a|á)brico.*
+"HISPANA HOLDING, S.A.",.*\bhispana.*\bholding.*
+"HULLAS DEL COTO CORTES, S.A.",.*\b(hccsa\b|hullas.*\bcoto.*\bcort).*
+"IBERCAJA BANCO, S.A.",.*\bibercaja banco.*
+"IBERDROLA RENOVABLES, S.A.",.*\biberdrola renov.*
+"IBERDROLA, S.A.",.*\biberdrola((?!.*\brenovab.*).*)
+"IBERIA LINEAS AEREAS DE ESPAÑA, S.A.",.*\biberia\b.*
+"IBERPAPEL GESTION, S.A.",.*\biberpapel\b.*
+"INCASA Inmobiliaria Carroggio, S.A.",.*\bincasa\b.*
+"INDO INTERNACIONAL, S.A (EN LIQUIDACION)",.*\bindo\b.*
+"INDRA SISTEMAS, S.A.",.*\bindra\b.*
+"INDUSTRIA DE DISEÑO TEXTIL, S.A.",.*\b(inditex\b|ind(u|ú)stria.*\bdise(n|ñ)o textil).*
+"INDUSTRIAS DEL ACETATO DE CELULOSA, S.A.",.*\b(inacsa\b|ind(u|ú)stria.*\bacetato.*\bcelulo).*
+"INDUSTRIAS DEL CURTIDO, S.A.",.*\bind(u|ú)stria.*\bcurtido.*
+"INMO DEALER, S.A.",.*\binmo dealer.*
+"INMOBILIARIA COLONIAL, S.A.",.*\binmobi.*\bcolonial.*
+"INMOBILIARIA DEL SUR, S.A.",.*\binmobi.*\bdel sur
+"INMOBILIARIA URBIS, S.A.",.*\binmob.*\burbis.*
+"INMOCAHISPA, S.A.",.*\binmocahispa.*
+"INMOFIBAN, S.A.",.*\binmofiban.*
+"INMOLEVANTE, S.A.",.*\binmolevante.*
+"INSTITUTO DE CREDITO OFICIAL",.*\b(ico\b|instituto del? cr(e|é)dito oficial).*
+"INTERNATIONAL CONSOLIDATED AIRLINES GROUP, S.A.",.*\b(iag\b|international.*\bairlines.*\bgroup).*
+"INVERFIATC, S.A.",.*\binverfiatc.*
+"INVERPYME, S.A.(EN LIQUIDACION)",.*\binverpyme.*
+"INVERSIONES AZALBA, S.A.",.*\bazalba\b.*
+"INYPSA INFORMES Y PROYECTOS, S.A.",.*\binypsa.*
+"ITINERE INFRAESTRUCTURAS, S.A.",.*\bitinere\b.*
+"JAZZTEL, PLC.",.*\bjazztel\b.*
+"JOAQUIM ALBERTI, S.A.",.*\bjoaquim alberti.*
+"KUTXABANK EMPRESTITOS, S.A.",.*\bkutxabank empr(e|é)st.*
+"KUTXABANK, S.A.",.*\bkutxabank((?!.*empr(e|é)st.*).*)
+"LA SEDA DE BARCELONA, S.A.(EN LIQUIDACION)",.*\bla seda\b.*\bbarc.*
+"LABORATORIO REIG JOFRE, S.A.",.*\breig jof.*
+"LABORATORIOS FARMACEUTICOS ROVI, S.A.",.*\brovi\b.*
+"LAR ESPAÑA REAL ESTATE SOCIMI, S.A.",.*\blar espa(n|ñ)a.*
+"LEFA, S.A.",.*\blefa\b.*
+"LEUCAN,S.A.",.*\bleucan\b.*
+"LIBERBANK, S.A.",.*\bliberbank\b.*
+"LIBERTAS 7, S.A.",.*\blibertas\b.*
+"LINGOTES ESPECIALES, S.A.",.*\blingotes especiales\b.*
+"LIWE ESPAÑOLA, S.A.",.*\bliwe\b.*
+"Lehamn Brothers Finance, S.A.",.*\b(lehman|lehamn)\b.*
+"MARTINSA-FADESA, S.A.",.*\bmartinsa\b.*
+"MECALUX, S.A.",.*\bmecalux\b.*
+"MEDIASET ESPAÑA COMUNICACION, S.A.",.*\bmediaset\b.*
+"MELIA HOTELS INTERNATIONAL S.A.",.*\bmeli(a|á)\b.*
+"MERLIN PROPERTIES, SOCIMI, S.A.",.*\bmerl(i|í)n\b.*
+"METROVACESA, S.A.",.*\bmetrovacesa\b.*
+"MINERALES Y PRODUCTOS DERIVADOS, S.A.",.*\bminerales.*productos.*derivad.*
+"MINERO SIDERURGICA DE PONFERRADA, S.A.",.*\bsider.*\bponferr,*
+"MINICENTRALES DOS, S.A.	",.*\bminicentr.*\bdos\b.*
+"MIQUEL Y COSTAS & MIQUEL, S.A.",.*\bmiquel.*\bcostas.*
+"MOBILIARIA MONESA, S.A.",.*\bmonesa\b.*
+"MONTE DE PIEDAD Y CAJA DE AHORROS DE HUELVA Y SEVILLA",.*\bpiedad\b.*\bsevilla.*
+"MONTE DE PIEDAD Y CAJA DE AHORROS SAN FERNANDO DE GUADALAJARA, HUELVA, JEREZ",.*\bpiedad\b.*\bfernando.*
+"MONTE DE PIEDAD Y CAJA GENERAL DE AHORROS DE BADAJOZ",.*\bpiedad\b.*\bbadajoz.*
+"MONTEBALITO, S.A.",.*\bmontebalito\b.*
+"MONTES DE PIEDAD Y CAJA DE AHORROS DE RONDA, CADIZ, ALMERIA, MALAGA Y ANTEQ",.*\bpiedad\b.*\bronda.*
+"NATRA, S.A.",.*\bnatra\b.*
+"NATURHOUSE HEALTH, S.A.",.*\bnaturhouse\b.*
+"NAVIERA MURUETA S.A.	",.*\bnaviera\b.*murueta.*
+"NH HOTEL GROUP, S.A.",.*\bnh hotel.*
+"NICOLAS CORREA, S.A.",.*\bnicol(a|á)s correa.*
+"NMAS1 DINAMIA, S.A.",.*\b(nmas1|n\+1)\b.*
+"NYESA VALORES CORPORACION, S.A.",.*\bnyesa\b.*
+"OBRASCON HUARTE LAIN, S.A.",.*\b(ohl\b|obrasc.*\bhuarte).*
+"PAPELES Y CARTONES DE EUROPA, S.A.",.*\b(papeles.*cartones.*europa|europac).*
+"PARQUESOL INMOBILIARIA Y PROYECTOS, S.A.",.*\bparquesol.*
+"PESCANOVA, S.A.",.*\bpescanova.*
+"PLARREGA INVEST 2000, S.A.",.*\bplarrega.*
+"POPULARINSA S.A.",.*\bpopularinsa.*
+"PRIM, S.A.",.*\bprim\b.*
+"PROMOCIONES Y CONCIERTOS INMOBILIARIOS S.A.",.*\b(procisa\b|promociones.*\bconciert.*\binmo).*
+"PROMOTORA DE INFORMACIONES, S.A.",.*\b(prisa\b|promotora.*\binformac).*
+"PROSEGUR, COMPAÑIA DE SEGURIDAD, S.A.",.*\bprosegur\b.*
+"QUABIT INMOBILIARIA, S.A.",.*\bquabit\b.*
+"REALIA BUSINESS, S.A.",.*\brealia\b.*
+"RED ELECTRICA CORPORACION, S.A.",.*\b(red el(e|é)ctrica|ree\b).*
+"RENTA 4 BANCO, S.A.",.*\brenta\s?(4|cuatro).*
+"RENTA CORPORACION REAL ESTATE, S.A.",.*\brenta corp.*
+"REPSOL INTERNATIONAL CAPITAL LIMITED",.*\brepsol.*capital.*
+"REPSOL, S.A",.*\brepsol((?!.*capital.*).*)
+"REYAL URBIS, S.A.",.*\breyal\b.*
+"RIOFISA, S.A.",.*\briofisa\b.*
+"RUSTICAS, S.A.",.*\br(u|ú)sticas\b.*
+"Reno De Medici S.p.A.",.*\breno\b.*\bmedici.*
+"S.A. PLAYA DE ALBORAYA",.*\bplaya\b.*alboraya.*
+"S.A. RONSA",.*\bronsa\b.*
+"SA NOSTRA SOCIEDAD DE PARTICIPACIONES PREFERENTES S.A.U.",.*\bsa nostra\b.*preferent.*
+"SABADELL INTERNATIONAL EQUITY, LTD",.*\bsabadell\b.*equity.*
+"SACYR, S.A.",.*\bsacyr\b.*
+"SAETA YIELD, S.A.",.*\bsaeta\b.*
+"SAINT CROIX HOLDING IMMOBILIER, SOCIMI, S.A.",.*\bsaint croix.*
+"SANTANDER CONSUMER FINANCE, S.A.",.*\bsantander consum.*
+"SANTANDER EMISORA 150, S.A. UNIPERSONAL",.*\bsantander emisor.*
+"SANTANDER FINANCE CAPITAL, S.A. UNIPERSONAL",.*\bsantander finance cap.*
+"SANTANDER FINANCE PREFERRED, S.A. UNIPERSONAL",.*\bsantander finance pref.*
+"SANTANDER INTERNATIONAL PREFERRED  S.A. UNIPERSONAL",.*\bsantander internation.*
+"SANTANDER INVESTMENT SERVICES, S.A.		",.*\bsantander investme.*
+"SANTANDER SECURITIES SERVICES, S.A.",.*\bsantander securiti.*
+"SERVICE POINT SOLUTIONS, S.A.",.*\bservice point.*
+"SNIACE, S.A.",.*\bsniace\b.*
+"SOCIEDAD ANONIMA DAMM",.*\bdamm\b.*
+"SOCIEDAD ANONIMA HULLERA VASCO-LEONESA",.*\b(hullera vasco|sahvl\b).*
+"SOCIEDAD ESTATAL DE PARTICIPACIONES INDUSTRIALES",.*\b(estatal.*participa.*industri|sepi\b).*
+"SOCIEDAD GENERAL DE AGUAS DE BARCELONA, S.A.",.*(aguas|aig(u|ü)es) (de )?barcelona.*
+"SOCIETE GENERALE ACCEPTANCE NV",.*\bsociete generale.*
+"SOGECABLE, S.A.",.*\bsogecable.*
+"SOL MELIA FINANCE LIMITED",.*\bsol meli.*
+"SOLARIA ENERGIA Y MEDIOAMBIENTE, S.A.",.*\bsolaria.*
+"SOTOGRANDE, S.A.",.*\bsotogrande.*
+"TABLEROS DE FIBRAS, S.A.",.*\b(tafisa\b|tableros de fibras).*
+"TALGO, S.A.",.*\btalgo\b.*
+"TECNICAS REUNIDAS, S.A.",.*\bt(e|é)cnicas reunidas.*
+"TECNOCOM, TELECOMUNICACIONES Y ENERGIA, S.A.",.*\btecnocom\b.*
+"TELE PIZZA, S.A.",.*\btele\s?pizza.*
+"TELEFONICA MOVILES, S.A.",.*\btelef(o|ó)nica m(o|ó)vil.*
+"TELEFONICA, S.A.",.*\btelef(o|ó)nica((?!.*(m(o|ó)vil|publicidad).*).*)
+"TELEFÓNICA PUBLICIDAD E INFORMACIÓN, S.A.",.*\btelef(o|ó)nica publicidad.*
+"TESTA INMUEBLES EN RENTA, S.A.",.*\btesta\b.*
+"TR HOTEL JARDIN DEL MAR, S.A.",.*\bjard(i|í)n del mar\b.*
+"TRANSPORTES AZKAR, S.A.",.*\bazkar\b.*
+"TUBACEX, S.A.",.*\btubacex\b.*
+"TUBOS REUNIDOS, S.A.",.*\btubos reunidos\b.*
+"UNICAJA BANCO, S.A.",.*\bunicaja banco\b.*
+"UNION CATALANA DE VALORES, S.A.",.*\b(uncavasa\b|uni(o|ó)n catalana de valores).*
+"UNION EUROPEA DE INVERSIONES, S.A.",.*\buni(o|ó)n europea (de )?inversiones.*
+"UNION FENOSA FINANCIAL SERVICES USA, LLC.",.*\buni(o|ó)n fenosa financial.*
+"UNION FENOSA, S.A.",.*\buni(o|ó)n fenosa((?!\s+financial.*).*)
+"UNNIM BANC, S.A",.*\bunnim\b.*
+"URBAR INGENIEROS, S.A.",.*\burbar\b.*
+"URBAS GRUPO FINANCIERO, S.A.",.*\burbas\b.*
+"VALENCIANA DE NEGOCIOS, S.A.",.*\bvalenciana de negocios\b.*
+"VERTICE TRESCIENTOS SESENTA GRADOS, S.A.",.*\bv(e|é)rtice\b.*
+"VIDRALA, S.A.",.*\bvidrala\b.*
+"VISCOFAN, S.A.",.*\bviscofan\b.*
+"VOCENTO, S.A.",.*\bvocento\b.*
+"VUELING AIRLINES, S.A.",.*\bvueling\b.*
+"ZARDOYA OTIS, S.A.",.*\bzardoya\b.*
+"ZELTIA, S.A.",.*\bzeltia\b.*
+"ZINKIA ENTERTAINMENT, S.A.",.*\bzinkia\b.*

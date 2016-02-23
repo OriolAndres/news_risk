@@ -6,10 +6,8 @@ Created on Wed Feb 17 01:33:01 2016
 """
 
 import os
-import shutil
-import time
 from zipfile import ZipFile
-from re import sub, match
+from re import match
 from lxml import etree
 from StringIO import StringIO
 from re import compile
@@ -117,5 +115,7 @@ def parse_xml():
         for k, array in outdict.items():
             for entry in array:
                 outstream.writerow([k,entry.get('Pub','NA'),entry.get('t','NA'),entry.get('Wages','NA'),entry.get('Revenues','NA')])
-#unzip()
-parse_xml()
+
+if __name__ == '__main__':
+    unzip()
+    parse_xml()

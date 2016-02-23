@@ -13,10 +13,6 @@ import os
 import shutil
 import time
 from selenium import webdriver
-from zipfile import ZipFile
-import time
-import shutil
-from re import sub
 import csv
 
 from news_risk.settings import rootdir

@@ -12,7 +12,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import numpy as np
 import datetime
-rootdir = r'C:/users/oriolandres/desktop/news_risk'
+from news_risk.settings import rootdir
 datadir = os.path.join(rootdir,'stocks','data')
 
 

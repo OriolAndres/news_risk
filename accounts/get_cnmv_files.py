@@ -9,9 +9,6 @@ import os
 import shutil
 import time
 from selenium import webdriver
-from zipfile import ZipFile
-import time
-import shutil
 from re import sub
 from news_risk.settings import rootdir, download_dir
 datadir = os.path.join(rootdir,'accounts','data')
@@ -67,6 +64,6 @@ def fetch_folder():
                 else:
                     s = ns
 
-
-fetch_folder()
+if __name__ == '__main__':
+    fetch_folder()
             

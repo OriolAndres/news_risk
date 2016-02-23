@@ -127,7 +127,6 @@ def transform_data(nd):
     nd.economia.plot(secondary_y = True)
     plt.legend()
     plt.show() 
-    
     '''
     result = ols(y=nd['economia'], x=nd[['cv']])
     nd['resid'] = result.resid.diff(periods = 1)

@@ -332,13 +332,21 @@ def retrieve_new_archive():
                         outf.write(content.encode('utf8'))
                 except:
                     continue
-                
-if __name__ == '__main__':
+    
 
-    #retrieve_old_archive()
+def start_from_scratch():
+    retrieve_old_archive()
     build_index(section = 'economia', new_format = False)
-    #retrieve_new_archive()
+    retrieve_new_archive()
     build_index(section = 'economia', new_format = True)
+    return 
+    
+if __name__ == '__main__':
+    pass
+    #retrieve_old_archive()
+    #build_index(section = 'economia', new_format = False)
+    #retrieve_new_archive()
+    #build_index(section = 'economia', new_format = True)
 '''
 '19760504',10, diumenge 15
 '19770104',15, diumenge 20
