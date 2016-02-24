@@ -6,7 +6,7 @@ Created on Tue Feb 09 23:31:15 2016
 
 cement BE.IE_3_3_1402A5.M.ES
 electricity BE.BE_23_6_70257.M.ES
-spain gdp ESE.990000D259D.Q.ES
+spain gdp ESE.990000D259D.Q.ES <- nominal ESE.940000D259D.Q.ES <- real
 IBEX 35 ESE.854200259D.M.ES
 
 
@@ -29,6 +29,16 @@ from news_risk.settings import token, rootdir
 import os
 
 fig_fmt = 'png'
+
+
+qbuilder = inquisitor.Inquisitor(token)
+df = qbuilder.series(ticker = ['ESE.940000D259D.Q.ES','FEEA.PURE064A.M.ES'])
+df.dropna(inplace = True)
+df['fedea'] = df['FEEA.PURE064A.M.ES'].diff()
+df['gdp'] = np.log(df['ESE.940000D259D.Q.ES']).diff()
+ols(y=df['gdp'], x=df[['fedea']])
+
+# 0.0039*4 =  0.0156
 
 def load_external():
     #http://www.policyuncertainty.com/europe_monthly.html
@@ -123,10 +133,6 @@ def transform_data(nd):
     nd['inflation'] = nd['ESE.425000259D.M.ES'].apply(np.log).diff(periods = 1)
     nd['fedea'] = nd['FEEA.PURE064A.M.ES'].diff(periods = 1)
     '''
-    nd.cv.plot()
-    nd.economia.plot(secondary_y = True)
-    plt.legend()
-    plt.show() 
     '''
     result = ols(y=nd['economia'], x=nd[['cv']])
     nd['resid'] = result.resid.diff(periods = 1)
@@ -158,12 +164,31 @@ def estimate_VAR():
     d = load_es_uncertainty()
     df1 = load_eu_uncertainty()
     nd = d.join(df).join(df1)
-    plot_index_comparison(nd)
-    plot_eu_epu(nd)
+    #plot_index_comparison(nd)
+    #plot_eu_epu(nd)
     nd = transform_data(nd)
+    
+    benchmark_subset = ['EPU','europe', 'fedea', 'inflation', 'differential'] 
+    nd['EPU'] = nd['matches'] / nd.articles
+    nd['EPU'] = nd['EPU'] / nd['EPU'].mean() * 100
+    nd['EPU'] = nd['EPU'].diff(periods = 1)
+    data = nd.reindex(columns=benchmark_subset)
+    data = data.dropna()
+    data.describe()
+    model = VAR(data)
+    results = model.fit(6)
+
+    irf = results.irf(12)
+    irf.plot_cum_effects(orth=True, impulse='EPU', subplot_params = {'fontsize' : 12}) #
+
+    cum_effects = irf.orth_lr_effects 
+    
+    
+    
     full_sset = ['ibex','vol','resid','europe', 'fedea', 'inflation', 'differential' ]
-    subset = ['auto','europe', 'fedea', 'inflation', 'differential' ]
-    nd['auto'] = nd.autonomia /nd.words
+
+    
+
     def get_irf(nd, subset):
         '''
         http://statsmodels.sourceforge.net/0.6.0/vector_ar.html
@@ -181,7 +206,9 @@ def estimate_VAR():
         return cum_effects
     
     for colname in colnames:
-        nd['uncert'] = (nd[colname] / nd.words).diff(periods = 1)
+        nd['uncert'] = nd[colname] / nd.articles
+        nd['uncert'] = nd['uncert'] / nd['uncert'].mean() * 100
+        nd['uncert'] = nd['uncert'].diff(periods = 1)
         subset = ['uncert','europe', 'fedea', 'inflation', 'differential' ]
         cum_effects= get_irf(nd, subset)
         print '%s | %d | %.04f' % (colname, nd[colname].sum(), cum_effects[2,0])

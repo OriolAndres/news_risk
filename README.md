@@ -159,7 +159,18 @@ The objective of this section is evaluating the impact of uncertainty on activit
 
 2 Could it be that variance increasing policies are correlated with other policy features? Bad politicians are unpredictable.
 
-We address the endogeneity challenges by including in the analysis variables that would largely overshadow the uncertainty index if the hypothesis were correct. If hypothesis 1 is correct then the uncertainty effect would be reduced by adding stock index volatility. We see that the effect of the uncertainty index remains stable.
+We address the endogeneity challenges by including in the analysis variables that would largely overshadow the uncertainty index if the hypothesis were correct. If hypothesis 1 is correct then the uncertainty effect would be reduced by adding stock index volatility. We see that the effect of the uncertainty index remains stable across specifications.
+
+#### Benchmark specification
+
+We collect the European EPU from the [web](http://www.policyuncertainty.com) of the authors. Also data on long term government bonds rates for Spain and Germany assembled by Banco de España, we find the premium of spanish bonds and obtain the monthly change. Then we get from Base de datos de Series de Indicadores de Coyuntura Económica the producer price index for Spain and get monthly log changes. And finally we fetch the FEDEA index of the business cycle as a proxy for activity, and take the monthly change.
+
+We run a VAR with these 4 components and the EPU for Spain, adding 6 lags of data in the equation. Finally we make use of linear algebra to calculate the orhogonalized impulse response function, which describes the path of the system in response to an exogenous shock in a variable. In the figure below we plot the results of a standard deviation shock in the EPU in the ensuing 12 months.
+
+![](figures/cum_effects.png?raw=true)
+
+An increase in uncertainty of a standard deviation decreases the FEDEA index by 0.0491 after 12 months, a level which projected on real gdp would decrease growth by 0.0491*12*0.0039*4*100 = 0.91%. (0.0039 is the regression coefficient of quarterly growth on FEDEA index.)
+
 
 
 --- 
