@@ -150,8 +150,18 @@ We create a number of categories to divide the uncertainty. These require the fu
   * **Política fiscal**; Match if **Ingreso público** and/or **Gasto público** are a match.
   * **Regulación**; Match if **Regulación bancaria** and/or **Regulación no bancaria** are a match.
   
- 
- 
+
+### Vector Autoregressions
+
+The objective of this section is evaluating the impact of uncertainty on activity. There are threats on the validity of our analysis if the uncertainty index is an endogenous variable like in these scenarios:
+
+1 Lower GDP increases uncertainty. Lower gdp increases variance due to market discontinuities (sticky prices, debt and bankruptcy). In addition negative outcomes are psychologically difficult to assess.
+
+2 Could it be that variance increasing policies are correlated with other policy features? Bad politicians are unpredictable.
+
+We address the endogeneity challenges by including in the analysis variables that would largely overshadow the uncertainty index if the hypothesis were correct. If hypothesis 1 is correct then the uncertainty effect would be reduced by adding stock index volatility. We see that the effect of the uncertainty index remains stable.
+
+
 --- 
 
 Concept | Count | Cumulative effect
