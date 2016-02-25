@@ -82,7 +82,7 @@ fetch_list_by_sector() # list companies in each sector
 
 #### Intermediate step
 
-Write regular expressions for each company to match the company strings extracted from BOE. Patterns have been stored already in accounts/biz_meta_regex.csv.
+Write regular expressions for each company to match the company strings extracted from BOE. Patterns have been stored already in [biz_meta_regex.csv](../master/accounts/biz_meta_regex.csv).
 
 #### Get BOE
 ```python
