@@ -132,6 +132,10 @@ We identify an article as showing economic policy uncertainty if it matches both
 Then for both indices we sum all the matched articles in the month and divide by total number of articles in the month and escale the results to average 100.  
 The third condition is rather broad and as a result the monthly correlation between both indices is 95.7%.
 
+In the figure below we display the EPU index of Spain and of Europe.
+
+![](figures/spain_v_europe.png?raw=true)
+
 #### Additional decomposition
 
 We create a number of categories to divide the uncertainty. These require the fulfilment of the EPU and the additional constraints that follow:
@@ -169,9 +173,12 @@ We run a VAR with these 4 components and the EPU for Spain, adding 6 lags of dat
 
 ![](figures/impulse_response.png?raw=true)
 
-An increase in uncertainty of a standard deviation decreases the FEDEA index by 0.0441 after 12 months, a level which projected on real gdp would decrease growth by 0.0441\*0.043\*100 = 0.1914%. (4.3% is the cumulative effect of a full point shock in FEDEA on quarterly growth, estimated by VAR too.) The impact the shock of uncertainty in 2011 had in gdp growth was hence 0.63 %. ( (323 - 100) / 67 = 3.32; 3.32 \* 0.191 = 0.633 ).
+An increase in uncertainty of a standard deviation decreases the FEDEA index by 0.0441 after 12 months, a level which projected on real gdp would decrease growth by 0.0441\*0.043\*100 = 0.1914%. (4.3% is the cumulative effect of a full point shock in FEDEA on quarterly growth, estimated by VAR too.) The impact the shock of uncertainty in 2011 had in gdp growth was hence 0.63 %. ( (323 - 100) / 67 = 3.32; 3.32 \* 0.191 = 0.633 ).  
+In the same setting we find that a 1 std negative shock in uncertainty increases the bond spread by 8.2 basis points and increases inflation by 0.06%, both 12 months after the shock.
 
---- 
+#### Dissecting uncertainty
+
+We run the same specification for the EPU, EU, and each of the uncertainty variants. In the next table we display the effects on GDP of an uncertainty shock, and also the number of articles containing the particular terms. We find that regulatory related uncertainty has the largest impact on GDP, while territorial and public revenue issues have a positive impact on activity.
 
 Concept | Count | Effect on GDP (1 std negative shock)
 --- | --- | ---
@@ -191,7 +198,7 @@ Concept | Count | Effect on GDP (1 std negative shock)
 **fiscal** | 3129 | -0.1306
 **regula** | 1986 | -0.3093
 
-![](figures/spain_v_europe.png?raw=true)
+
 
 
 [1]: http://www.policyuncertainty.com/media/BakerBloomDavis.pdf

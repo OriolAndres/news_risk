@@ -194,7 +194,8 @@ def estimate_VAR():
     fedea_on_gdp = get_fedea_on_gdp()
     elasticity = -100*fedea_on_gdp*cum_effects[12,2,0]
     print 'Effects of a 1 sd uncertainty shock on gdp growth (negative): %0.3f%%' % elasticity
-    
+    print 'Inflation increases by %0.2f' % (100* cum_effects[12,3,0], )
+    print 'Bond spreads increase by %0.1f basis points' % (100* cum_effects[12,4,0], )
     full_sset = ['ibex','vol','resid','europe', 'fedea', 'inflation', 'differential' ]
     
 
