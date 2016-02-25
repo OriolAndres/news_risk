@@ -204,7 +204,7 @@ Given the complexity of claiming propositions based on VAR results, we set out t
 
 #### Preparing the dataset
 
-We are going to assemble a panel data for stock quoted companies in the Mercado Continuo of Bolsa de Madrid. We are going to assign them to a sector and find the relevance of public contracts in the sector. We will find stock volatility for each company, and also salary expenses.
+We are going to assemble a panel data for stock quoted companies in the Mercado Continuo of Bolsa de Madrid. We are going to assign them to a sector and find the relevance of public contracts in the sector. We will find stock volatility for each company, and also salary expenses and revenues. We will also include in some regressions government final consumption expenditure over gdp from BDSICE-MinEco.
 
 ##### Getting accounts
 
@@ -215,15 +215,56 @@ The resulting panel has 345 companies, where many do not have a figure for wages
 
 We download BOE from 2005 to 2015 and find data on public work contracts. We use text mining to extract the value of the contract and the contractor name. Then we write regular expressions for the list of companies in the previous section and add up the volume of public work for each semester and company. Then we calculate the public work awards for each sector, and the fraction that represent over sales for the full time interval.
 
-We find that real estate development has the largest public work weight (6.9% of sales) followed by construction sector (4.7%), communication and transports 2.5% and chemicals 0.8%. On the other side, insurance and trade companies have negligible figures. Numbers are likely to be significantly biased downwards due to the difficulty of extracting company names from unstructured BOE documents, but this bias occurs in all sectors.
+We find that real estate development has the largest public work weight (6.9% of sales) followed by construction sector (4.7%), communication and transports 2.5% and chemicals 0.8%. On the other side, insurance and trade companies have negligible figures. Numbers are likely to be significantly biased downwards due to the difficulty of extracting company names from unstructured BOE documents, but this bias occurs in all sectors. It will be important to keep in mind that median sectoral public work accounts for 0.25% of total sales.
 
 #### Conditional volatility
 
-Finally, we get stock market returns for all quoted companies in the Mercado Continuo, and the IBEX 35. We do not include companies that have been unlisted. For each stock we calculate conditional volatility of each semester by estimating a GARCH(1,1) model on daily returns and averaging over the period.
+Finally, we get stock market returns for all quoted companies in the Mercado Continuo, and the IBEX 35. We do not have data on unlisted stocks. For each stock we calculate conditional volatility of each semester by estimating a GARCH(1,1) model on daily returns and averaging over the period.
 
 ### Panel regressions
 
-log_w | (1) | (2) | (3) | (4)
+We run two sets of regressions. 
+
+#### EPU index effects on stock volatility
+
+First we use conditional volatility as a dependent variable. As regressors we will choose among the logarithm of the EPU index, the logarithm of the EPU index weighted by sectoral public work, the volatility of the IBEX 35 (again proxied by a GARCH(1,1)), the volatility of the IBEX 35 weighted by sectoral public work, public spending over GDP, and public spending over GDP weighted by sectoral public work.
+
+If the EPU index increases, companies more exposed to public contracting should experience a larger increase in stock volatility, reflecting the concern that public contracting may decrease.
+
+We report coefficient estimates and p-values right below.
+
+Results show that, although not significatively, a 10% increase in EPU index raises daily stock volatility by 0.13 points. An increase of 1 percent point of public spending over gdp decreases daily stock volatility by 0.93 points although this coefficient is largely picking ommited time-effects. Results are not significative and R2 low when neither time-effects nor firm-effects are included.
+
+The coefficients for spend_weighted, which is very significant, suggest that a relative increase of 1% in public spending decreases daily volatility by 0.055. (The median of public expenditure / gdp * sector public work is 0.00251 and 0.0025*2200*0.01 = 0.055) Similar result if public work in the sector increases by relative 1%.
+
+The epu_weighted coefficient suggests that a 1% increase in either EPU index or public work fraction increases daily volatility by 0.0174 (median of epu_weighted is 0.0277 and 0.0277*0.01*63 = 0.0174), a result that is both important and significant. For instance a shock of 1 standard deviation in EPU index amounts to a 67% increase and an increase of 1.139 in daily volatility.
+
+Daily volatility | (1) | (2) | (3) | (4)
+--- | :---: | :---: | :---: | :---:
+**log_epu** | 1.322 |   | 1.484 |  
+ | 0.893 |   | 0.888 |  
+**epu_weighted** |   | 60.047 |   | 63.417
+ |   | 0.000 |   | 0.000
+**ibex35** |   |   | -0.382 |  
+ |   |   | 0.965 |  
+**ibex_weighted** |   |   |   | -7.958
+ |   |   |   | 0.590
+**spending** | -93.233 |   | -87.446 |  
+ | 0.816 |   | 0.836 |  
+**spend_weighted** |   | -2203.376 |   | -2088.215
+ |   | 0.002 |   | 0.004
+**lag_expend** |   |   |   |  
+ |   |   |   |  
+**r2** | 0.000 | 0.021 | 0.000 | 0.021
+**N** | 1925 | 1925 | 1925 | 1925
+**Time&firm eff.** | False | True | False | True
+
+
+#### EPU index effects on salary expenses growth
+
+In the second set of regressions, we will look at the evolution of variables in time. We use as dependent variable the firm semiannual log change in salary expenses. As regressors we modify slightly the previous variables. We use the first lag of EPU (therefore assuming that salary expenses react with 6 months of delay), the first lag of EPU weighted by sectorial public work, and the first lag of the change in public expenditure over gdp weighted by sector public work.
+
+Log salary expense | (1) | (2) | (3) | (4)
 --- | :---: | :---: | :---: | :---:
 **log_epu** | -0.708 |   | -0.750 |  
  | 0.000 |   | 0.000 |  
@@ -244,25 +285,7 @@ log_w | (1) | (2) | (3) | (4)
 **Time&firm eff.** | False | True | False | True
 
 
-CV | (1) | (2) | (3) | (4)
---- | :---: | :---: | :---: | :---:
-**log_epu** | 1.322 |   | 1.484 |  
- | 0.893 |   | 0.888 |  
-**epu_weighted** |   | 60.047 |   | 63.417
- |   | 0.000 |   | 0.000
-**ibex35** |   |   | -0.382 |  
- |   |   | 0.965 |  
-**ibex_weighted** |   |   |   | -7.958
- |   |   |   | 0.590
-**spending** | -93.233 |   | -87.446 |  
- | 0.816 |   | 0.836 |  
-**spend_weighted** |   | -2203.376 |   | -2088.215
- |   | 0.002 |   | 0.004
-**lag_expend** |   |   |   |  
- |   |   |   |  
-**r2** | 0.000 | 0.021 | 0.000 | 0.021
-**N** | 1925 | 1925 | 1925 | 1925
-**Time&firm eff.** | False | True | False | True
+
 
 118 entities
 

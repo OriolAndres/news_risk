@@ -223,7 +223,7 @@ def run_regressions():
     for v in xcand:
         rownames.extend([v,''])
     rownames += ['lag_expend', '','r2', 'N']
-    for dependent in ['log_w', 'CV']:
+    for dependent in ['CV', 'log_w']:
         #print '\n' + '-'*15 + ' Results for %s ' % dependent +  '-'*15 + '\n'
         ph = np.zeros(( (len(xcand)+2)*2, len(reglist)))
         for ix, regressors in enumerate(reglist):
@@ -246,11 +246,6 @@ def run_regressions():
                 ph[-3, ix] =  reg.p_value[o]
             ph[-2, ix] =  reg.r2
             ph[-1, ix] =  reg.nobs
-            #print reg.beta[:len(regressors)+len(optional)]
-            #print reg.p_value[:len(regressors)+len(optional)]
-            #print reg.nobs
-            #print reg.r2
-            #print '\n'*2
         
         print ' | '.join([dependent] + ['(%d)' % x for x in range(1,len(reglist)+1) ])
         print ' | '.join(['---' if j ==0 else ':---:' for j in range(len(reglist)+1)])
