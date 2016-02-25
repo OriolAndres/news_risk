@@ -198,7 +198,7 @@ Concept | Count | Effect on GDP (1 std negative shock)
 **fiscal** | 3129 | -0.1306
 **regula** | 1986 | -0.3093
 
-
+---
 
 
 [1]: http://www.policyuncertainty.com/media/BakerBloomDavis.pdf
