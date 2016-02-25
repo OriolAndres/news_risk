@@ -169,30 +169,27 @@ We run a VAR with these 4 components and the EPU for Spain, adding 6 lags of dat
 
 ![](figures/impulse_response.png?raw=true)
 
-An increase in uncertainty of a standard deviation decreases the FEDEA index by 0.0491 after 12 months, and 0.0265 in average the first year, a level which projected on real gdp would decrease growth by 0.0265*0.043*100 = 0.114%. (4.3% is the cumulative effect of a full point shock in FEDEA on quarterly growth.) The impact the shock of uncertainty in 2011 had in gdp growth was hence 0.38 %. ( (323 - 100) / 67 = 3.32; 3.32 * 0.114 = 0.378 ). Albeit a modest result, it is worth mentioning that uncertainty shocks disappear at the second month, and that longer uncertainty periods are represented as multiple shocks.
-
-
+An increase in uncertainty of a standard deviation decreases the FEDEA index by 0.0441 after 12 months, a level which projected on real gdp would decrease growth by 0.0441\*0.043\*100 = 0.1914%. (4.3% is the cumulative effect of a full point shock in FEDEA on quarterly growth, estimated by VAR too.) The impact the shock of uncertainty in 2011 had in gdp growth was hence 0.63 %. ( (323 - 100) / 67 = 3.32; 3.32 \* 0.191 = 0.633 ).
 
 --- 
 
-Concept | Count | Cumulative effect
+Concept | Count | Effect on GDP (1 std negative shock)
 --- | --- | ---
-**Econ policy** | 5288 | -0.0469
-**Econ general** | 6758 | -0.0564
-**ingreso** | 1466 | 0.0082
-**gasto** | 2624 | -0.0377
-**money** | 2331 | -0.0425
-**sanidad** | 396 | -0.0015
-**seguridad** | 241 | -0.0029
-**banca** | 292 | -0.0898
-**othregula** | 1842 | -0.0714
-**deuda** | 1491 | -0.0231
-**bienestar** | 549 | -0.0221
-**arancel** | 136 | -0.0052
-**autonomia** | 337 | 0.0260
-**fiscal** | 3129 | -0.0358
-**regula** | 1986 | -0.0771
-
+**Econ policy** | 5288 | -0.1915
+**Econ general** | 6758 | -0.2120
+**ingreso** | 1466 | 0.0554
+**gasto** | 2624 | -0.1484
+**money** | 2331 | -0.1737
+**sanidad** | 396 | 0.0098
+**seguridad** | 241 | -0.0230
+**banca** | 292 | -0.3521
+**othregula** | 1842 | -0.2853
+**deuda** | 1491 | -0.0896
+**bienestar** | 549 | -0.0068
+**arancel** | 136 | -0.0049
+**autonomia** | 337 | 0.1405
+**fiscal** | 3129 | -0.1306
+**regula** | 1986 | -0.3093
 
 ![](figures/spain_v_europe.png?raw=true)
 

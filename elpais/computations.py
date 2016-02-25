@@ -196,7 +196,6 @@ def estimate_VAR():
     print 'Effects of a 1 sd uncertainty shock on gdp growth (negative): %0.3f%%' % elasticity
     
     full_sset = ['ibex','vol','resid','europe', 'fedea', 'inflation', 'differential' ]
-
     
 
     def get_irf(nd, subset):
@@ -205,23 +204,23 @@ def estimate_VAR():
         '''
         data = nd.reindex(columns=subset)
         data = data.dropna()
-        #data.describe()
+        data.describe()
         model = VAR(data)
         results = model.fit(6)
     
-        irf = results.irf(24)
-        #irf.plot_cum_effects(orth=True, subplot_params = {'fontsize' : 10}) #, impulse='spain'
-    
-        cum_effects = irf.orth_lr_effects
-        return cum_effects
+        irf = results.irf(12)
+        
+        cum_effects = irf.orth_cum_effects 
+        
+        return cum_effects[12,2,0]
     
     for colname in colnames:
         nd['uncert'] = nd[colname] / nd.articles
         nd['uncert'] = nd['uncert'] / nd['uncert'].mean() * 100
         nd['uncert'] = nd['uncert'].diff(periods = 1)
         subset = ['uncert','europe', 'fedea', 'inflation', 'differential' ]
-        cum_effects= get_irf(nd, subset)
-        print '%s | %d | %.04f' % (colname, nd[colname].sum(), cum_effects[2,0])
+        cum_effect= get_irf(nd, subset)
+        print '%s | %d | %.04f' % (colname, nd[colname].sum(), 100*fedea_on_gdp*cum_effect)
     
     aa = d.mean()[colnames]
     plt.figure(1)
@@ -252,8 +251,8 @@ def articles_per_day():
 
 
 def main():
-    articles_per_day()
+    #articles_per_day()
     estimate_VAR()
 
 if __name__ == '__main__':
-    pass#main()
+    main()
