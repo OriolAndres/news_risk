@@ -167,9 +167,9 @@ We address the endogeneity challenges by including in the analysis variables tha
 
 #### Benchmark specification
 
-We collect the European EPU from the [web](http://www.policyuncertainty.com) of the authors. Also data on long term government bonds rates for Spain and Germany assembled by Banco de España, we find the premium of spanish bonds and obtain the monthly change. Then we get from Base de datos de Series de Indicadores de Coyuntura Económica the producer price index for Spain and get monthly log changes. And finally we fetch the FEDEA index of the business cycle as a proxy for activity, and take the monthly change.
+We collect the European EPU from the [web](http://www.policyuncertainty.com) of the authors. Also data on long term government bonds rates for Spain and Germany assembled by Banco de España, we find the premium of spanish bonds and obtain the monthly change. Then we get from Base de datos de Series de Indicadores de Coyuntura Económica the producer price index for Spain and get monthly log changes. And finally we fetch the FEDEA index of the business cycle as a proxy for activity, and take the monthly change. The time series vector runs from September 1987 to December 2015.
 
-We run a VAR with these 4 components and the EPU for Spain, adding 6 lags of data in the equation. Finally we make use of linear algebra to calculate the orhogonalized impulse response function, which describes the path of the system in response to an exogenous shock in a variable. That is accomplished by inverting the autoregressive system into a moving average representation. In the figure below we plot the results of a standard deviation shock in the EPU in the ensuing 12 months.
+We run a VAR with these 4 components and the EPU for Spain, adding 6 lags of data in the equation. Finally we make use of linear algebra to calculate the orthogonalized impulse response function, which describes the path of the system in response to an exogenous shock in a variable. That is accomplished by inverting the autoregressive system into a moving average representation. In the figure below we plot the results of a standard deviation shock in the EPU in the ensuing 12 months. Values refer to monthly changes.
 
 ![](figures/impulse_response.png?raw=true)
 
@@ -198,7 +198,72 @@ Concept | Count | Effect on GDP (1 std negative shock)
 **fiscal** | 3129 | -0.1306
 **regula** | 1986 | -0.3093
 
----
+### Firm-level regressions
 
+Given the complexity of claiming propositions based on VAR results, we set out to test again the implications of uncertainty on firm level data. We are going to ask whether sectors that are more exposed to public contracts reduce more activity in the face of policy uncertainty. Again, a company profit function may not be a linear function of sales, because of rigities in investment and labor, hence companies facing an increase in uncertainty scale back operations.
+
+#### Preparing the dataset
+
+We are going to assemble a panel data for stock quoted companies in the Mercado Continuo of Bolsa de Madrid. We are going to assign them to a sector and find the relevance of public contracts in the sector. We will find stock volatility for each company, and also salary expenses.
+
+##### Getting accounts
+
+We get H1 and FY accounts from CNMV and for each company we get the salary expenses in the semester and the sales. We use the sector classifications of CNMV.
+The resulting panel has 345 companies, where many do not have a figure for wages and will be excluded. The earliest accounts included are from 2005 and the latest are 2015, and companies reporting usually does not span the full interval.
+
+##### Reading Boletin Oficial del Estado
+
+We download BOE from 2005 to 2015 and find data on public work contracts. We use text mining to extract the value of the contract and the contractor name. Then we write regular expressions for the list of companies in the previous section and add up the volume of public work for each semester and company. Then we calculate the public work awards for each sector, and the fraction that represent over sales for the full time interval.
+
+We find that real estate development has the largest public work weight (6.9% of sales) followed by construction sector (4.7%), communication and transports 2.5% and chemicals 0.8%. On the other side, insurance and trade companies have negligible figures. Numbers are likely to be significantly biased downwards due to the difficulty of extracting company names from unstructured BOE documents, but this bias occurs in all sectors.
+
+#### Conditional volatility
+
+Finally, we get stock market returns for all quoted companies in the Mercado Continuo, and the IBEX 35. We do not include companies that have been unlisted. For each stock we calculate conditional volatility of each semester by estimating a GARCH(1,1) model on daily returns and averaging over the period.
+
+### Panel regressions
+
+log_w | (1) | (2) | (3) | (4)
+--- | :---: | :---: | :---: | :---:
+**log_epu** | -0.708 |   | -0.750 |  
+ | 0.000 |   | 0.000 |  
+**epu_weighted** |   | -3.175 |   | -4.888
+ |   | 0.099 |   | 0.035
+**ibex35** |   |   | 0.272 |  
+ |   |   | 0.000 |  
+**ibex_weighted** |   |   |   | 3.038
+ |   |   |   | 0.184
+**spending** | 21.757 |   | 15.391 |  
+ | 0.000 |   | 0.000 |  
+**spend_weighted** |   | -266.350 |   | -307.576
+ |   | 0.000 |   | 0.000
+**lag_expend** | 19.385 | 29.999 | 16.816 | 31.703
+ | 0.212 | 0.053 | 0.276 | 0.041
+**r2** | 0.063 | 0.228 | 0.075 | 0.229
+**N** | 1918 | 1918 | 1918 | 1918
+**Time&firm eff.** | False | True | False | True
+
+
+CV | (1) | (2) | (3) | (4)
+--- | :---: | :---: | :---: | :---:
+**log_epu** | 1.322 |   | 1.484 |  
+ | 0.893 |   | 0.888 |  
+**epu_weighted** |   | 60.047 |   | 63.417
+ |   | 0.000 |   | 0.000
+**ibex35** |   |   | -0.382 |  
+ |   |   | 0.965 |  
+**ibex_weighted** |   |   |   | -7.958
+ |   |   |   | 0.590
+**spending** | -93.233 |   | -87.446 |  
+ | 0.816 |   | 0.836 |  
+**spend_weighted** |   | -2203.376 |   | -2088.215
+ |   | 0.002 |   | 0.004
+**lag_expend** |   |   |   |  
+ |   |   |   |  
+**r2** | 0.000 | 0.021 | 0.000 | 0.021
+**N** | 1925 | 1925 | 1925 | 1925
+**Time&firm eff.** | False | True | False | True
+
+118 entities
 
 [1]: http://www.policyuncertainty.com/media/BakerBloomDavis.pdf

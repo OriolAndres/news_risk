@@ -181,6 +181,9 @@ def build_data_frame():
             sector_sales += datadict[entity_id]['Sales'].sum()
         sector_avg.append(public_eur / sector_sales if sector_sales > 0 else 0.)
 
+    #import operator
+    #sorted(zip(sectors,sector_avg), key = operator.itemgetter(1), reverse = True)
+
     macro_df = pd.DataFrame.from_csv(os.path.join(rootdir, 'regressors.csv'))
     bigdict = {}
     for entity_id in datadict.keys():
@@ -214,21 +217,48 @@ def run_regressions():
     xcand = ['log_epu','epu_weighted','ibex35','ibex_weighted','spending','spend_weighted']
     
     reglist = [[0,4],[1,5],[0,2,4],[1,3,5]]
+    
     dummies = [False, True, False, True]
-    dependent = 'log_w'#'CV'#'log_w' # 'CV'
-    for ix, regressors in enumerate(reglist):
-        if dependent == 'log_w':
-            df = bigdf[bigdf['Wages'] > 0]
-            df[['log_w','spend_weighted']] = df[['log_w','spend_weighted']].diff(periods = 1)
-            
-            df[['log_epu','epu_weighted','lag_exp']] = df[['log_epu','epu_weighted','spend_weighted']].shift(1)
-            optional = ['lag_exp']
-            df = df.dropna()
-        else:
-            df = bigdf
-            optional = []
-        reg  = PanelOLS(y=df[dependent],x=df[[xcand[i] for i in regressors]+optional],  time_effects=dummies[ix], entity_effects=dummies[ix])
-        print reg.beta[:len(regressors)+len(optional)]
-        print reg.p_value[:len(regressors)+len(optional)]
-        print reg.nobs
-        print reg.r2
+    rownames = []
+    for v in xcand:
+        rownames.extend([v,''])
+    rownames += ['lag_expend', '','r2', 'N']
+    for dependent in ['log_w', 'CV']:
+        #print '\n' + '-'*15 + ' Results for %s ' % dependent +  '-'*15 + '\n'
+        ph = np.zeros(( (len(xcand)+2)*2, len(reglist)))
+        for ix, regressors in enumerate(reglist):
+            if dependent == 'log_w':
+                df = bigdf[bigdf['Wages'] > 0]
+                df[['log_w','spend_weighted']] = df[['log_w','spend_weighted']].diff(periods = 1)
+                
+                df[['log_epu','epu_weighted','lag_exp']] = df[['log_epu','epu_weighted','spend_weighted']].shift(1)
+                optional = ['lag_exp']
+                df = df.dropna()
+            else:
+                df = bigdf
+                optional = []
+            reg  = PanelOLS(y=df[dependent],x=df[[xcand[i] for i in regressors]+optional],  time_effects=dummies[ix], entity_effects=dummies[ix])
+            for v in regressors:
+                ph[v*2, ix] =  reg.beta[xcand[v]]
+                ph[v*2 +1, ix] =  reg.p_value[xcand[v]]
+            for o in optional:
+                ph[-4, ix] =  reg.beta[o]
+                ph[-3, ix] =  reg.p_value[o]
+            ph[-2, ix] =  reg.r2
+            ph[-1, ix] =  reg.nobs
+            #print reg.beta[:len(regressors)+len(optional)]
+            #print reg.p_value[:len(regressors)+len(optional)]
+            #print reg.nobs
+            #print reg.r2
+            #print '\n'*2
+        
+        print ' | '.join([dependent] + ['(%d)' % x for x in range(1,len(reglist)+1) ])
+        print ' | '.join(['---' if j ==0 else ':---:' for j in range(len(reglist)+1)])
+        for i in range(len(ph)):
+            if i == len(ph) -1: ## number observations
+                vals = ['%d' % x if x!=0 else ' ' for x in ph[i,:]]
+            else:
+                vals = ['%0.3f' % x if x!=0 else ' ' for x in ph[i,:]]
+            print ' | '.join(['**'+rownames[i]+'**' if rownames[i] != '' else ''] + vals)
+        print ' | '.join(['**Time&firm eff.**'] + map(str,dummies))
+        print '\n'

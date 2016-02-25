@@ -83,7 +83,7 @@ def load_eu_uncertainty():
 def plot_index_comparison(nd):
     fig = plt.figure(1,[8,6])
     ax = fig.add_subplot(111)
-    left = ax.plot(nd['economia']/nd['economia'].mean()*100, 'r', label='España'.decode('utf8'))
+    left = ax.plot(nd['economia']/nd['economia'].mean()*100, 'r', label=u'España')
     ax2 = ax.twinx()
     rite = ax2.plot(nd['euro_news'], 'y', label='Europa')
     ax.set_ylabel("Índice Incertidumbre España".decode('utf8')) #,{'fontsize': 12}
@@ -171,8 +171,8 @@ def estimate_VAR():
     d = load_es_uncertainty()
     df1 = load_eu_uncertainty()
     nd = d.join(df).join(df1)
-    #plot_index_comparison(nd)
-    #plot_eu_epu(nd)
+    plot_index_comparison(nd)
+    plot_eu_epu(nd)
     nd = transform_data(nd)
     
     benchmark_subset = ['EPU','europe', 'fedea', 'inflation', 'differential'] 
@@ -252,7 +252,7 @@ def articles_per_day():
 
 
 def main():
-    #articles_per_day()
+    articles_per_day()
     estimate_VAR()
 
 if __name__ == '__main__':
