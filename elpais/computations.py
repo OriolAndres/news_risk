@@ -31,14 +31,6 @@ import os
 fig_fmt = 'png'
 
 
-qbuilder = inquisitor.Inquisitor(token)
-df = qbuilder.series(ticker = ['ESE.940000D259D.Q.ES','FEEA.PURE064A.M.ES'])
-df.dropna(inplace = True)
-df['fedea'] = df['FEEA.PURE064A.M.ES'].diff()
-df['gdp'] = np.log(df['ESE.940000D259D.Q.ES']).diff()
-ols(y=df['gdp'], x=df[['fedea']])
-
-# 0.0039*4 =  0.0156
 
 def load_external():
     #http://www.policyuncertainty.com/europe_monthly.html
@@ -47,10 +39,8 @@ def load_external():
     
     ## government bonds:
     gb = ['EU.IRT_H_CGBY_M.M.DE','BE.IE_2_6_502A1.M.DE','EU.IRT_H_CGBY_M.M.ES','BE.BE_26_25_10294.M.ES','ESE.854200259D.M.ES']
-    
     qbuilder = inquisitor.Inquisitor(token)
     df = qbuilder.series(ticker = [fedea, ipri] + gb)
-    
     
     returns = df['ESE.854200259D.M.ES'].pct_change().dropna()*100
     returns = returns.sub(returns.mean())['19890101':]
@@ -159,6 +149,23 @@ def get_quarterly_regressors():
     nd[['spending','epu','euro_news']].to_csv(os.path.join(rootdir, 'regressors.csv'))
     return nd
     
+    
+def get_fedea_on_gdp():
+    qbuilder = inquisitor.Inquisitor(token)
+    df = qbuilder.series(ticker = ['ESE.940000D259D.Q.ES','FEEA.PURE064A.M.ES'])
+    df.dropna(inplace = True)
+    df['fedea'] = df['FEEA.PURE064A.M.ES'].diff()
+    df['gdp'] = np.log(df['ESE.940000D259D.Q.ES']).diff()
+    data1 = df[['fedea','gdp']]
+    data1.dropna(inplace = True)
+    model1 = VAR(data1)
+    results1 = model1.fit(4)
+    
+    irf1 = results1.irf(8)
+    fedea_on_gdp = irf1.orth_lr_effects[1,0] / data1['fedea'].std()
+    return fedea_on_gdp
+    
+    
 def estimate_VAR():
     df = load_external()
     d = load_es_uncertainty()
@@ -179,11 +186,14 @@ def estimate_VAR():
     results = model.fit(6)
 
     irf = results.irf(12)
-    irf.plot_cum_effects(orth=True, impulse='EPU', subplot_params = {'fontsize' : 12}) #
+    irf.plot(orth=True, impulse='EPU', subplot_params = {'fontsize' : 12})
+    #irf.plot_cum_effects(orth=True, impulse='EPU', subplot_params = {'fontsize' : 12}) #
 
-    cum_effects = irf.orth_lr_effects 
+    cum_effects = irf.orth_cum_effects 
     
-    
+    fedea_on_gdp = get_fedea_on_gdp()
+    elasticity = -100*fedea_on_gdp*cum_effects[12,2,0]
+    print 'Effects of a 1 sd uncertainty shock on gdp growth (negative): %0.3f%%' % elasticity
     
     full_sset = ['ibex','vol','resid','europe', 'fedea', 'inflation', 'differential' ]
 
