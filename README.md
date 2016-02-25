@@ -3,11 +3,13 @@
 
 We construct an economic uncertainty index (EU) and an economic policy uncertainty (EPU) index for Spain following the [policyuncertainty.com methodology](http://www.policyuncertainty.com/methodology.html) exploited in [Baker, Bloom and Davis][1] [BBD].
 
-We base the index on the archives of [El Pais](http://elpais.com/), which is split between [1976 to 2012 editions](http://elpais.com/diario/) and [post 2012](http://elpais.com/archivo/).
+We base the index on the archives of [El Pais](http://elpais.com/).
 
-Following [BBD][1], we conduct two different exercises to explore the impact of policy uncertainty on economic activity.  
-First, we run a Vector Autoregression containing indicators for activity, inflation, government bond premium and Europe EPU index. We see that uncertainty has a negative and prolonged effect on activity. Uncertainty related to financial regulation and monetary policy have the largest impact.   
-Second, we assemble a panel of stock quoted firm data including sectoral weight of public contracts, firm wage expenses, firm volatility and the EPU index, and run regressions that show that companies in sectors exposed to policy suffer increased correlation between stock volatility and the EPU index, and also they show less wage expenses growth when this uncertainty increases compared to less exposed companies.
+Following [BBD][1], we conduct two different exercises to explore the impact of policy uncertainty on economic activity.
+
+First, we run a Vector Autoregression containing indicators for activity, inflation, sovereign spreads and European EPU index. We see that uncertainty has a negative and prolonged effect on activity. Uncertainty related to financial regulation and monetary policy have the largest impact. 
+
+Second, in a panel of stock quoted firm data including sectoral weight of public contracts, firm wage expenses, firm volatility and the EPU index, we see that companies in sectors exposed to policy suffer increased correlation between stock volatility and the EPU index, and also they show less wage expenses growth when this uncertainty increases compared to less exposed companies.
 
 ---
 
@@ -118,7 +120,7 @@ run_regressions() ## Counts the projects each entity is awarded. Loads entity ac
 
 ### Defining the indices.
 
-We create a script to download the archive of El Pais, that runs from 4th May 1976 to today. The archive is split in two parts. The first system ([May 4th 1976 to February 7th 2012](http://elpais.com/diario/)) divides the daily editions into a handful of sections, including Economía, España and International. We focus on Economía. 71% of the editions contain between 10 and 30 articles in this section. In the second system ([February 7th 2012 to today](http://elpais.com/archivo/)) sections do not exist and instead they carry a number of tags, which we can easily use to filter the archive, and in particular we can filter the articles tagged with "Economía". In 70% of the days between 20 and 60 articles have the tag. We cannot assume that all the articles in the old Economía section would be tagged with "Economía" and that all the tagged articles with "Economía" would be filed in the Economía section. If the propensity to show uncertainty changed the index would be distorted.
+We write a script to download the archive of El Pais, that runs from 4th May 1976 to today. The archive is split in two parts. The first system ([May 4th 1976 to February 7th 2012](http://elpais.com/diario/)) divides the daily editions into a handful of sections, including Economía, España and International. We focus on Economía. 71% of the editions contain between 10 and 30 articles in this section. In the second system ([February 7th 2012 to today](http://elpais.com/archivo/)) sections do not exist and instead they carry a number of tags, which we can easily use to filter the archive, and in particular we can filter the articles tagged with "Economía". In 70% of the days between 20 and 60 articles have the tag. We cannot assume that all the articles in the old Economía section would be tagged with "Economía" and that all the tagged articles with "Economía" would be filed in the Economía section. If the propensity to show uncertainty changed the index would be distorted.
 
 We identify an article as showing economic uncertainty if it matches *both* of the following two conditions:
 
@@ -198,26 +200,26 @@ Concept | Count | Effect on GDP (1 std negative shock)
 **fiscal** | 3129 | -0.1306
 **regula** | 1986 | -0.3093
 
-### Firm-level regressions
+### Firm-level data
 
-Given the complexity of claiming propositions based on VAR results, we set out to test again the implications of uncertainty on firm level data. We are going to ask whether sectors that are more exposed to public contracts reduce more activity in the face of policy uncertainty. Again, a company profit function may not be a linear function of sales, because of rigities in investment and labor, hence companies facing an increase in uncertainty scale back operations.
+Given the complexity of any propositions based on VAR results, we set out to test again the implications of uncertainty on firm level data. We are going to ask whether sectors that are more exposed to public contracts reduce activity more in the face of policy uncertainty. Again, a company profit function may not be a linear function of sales, because of rigities in investment and labor, hence companies facing an increase in uncertainty scale back operations.
 
-#### Assembling a panel dataset
+#### Assembling a panel
 
 We are going to assemble a panel data for stock quoted companies in the Mercado Continuo of Bolsa de Madrid. We are going to assign them to a sector and find the relevance of public contracts in the sector. We will find stock volatility for each company, and also salary expenses and revenues. We will also include in some regressions government final consumption expenditure over gdp from BDSICE-MinEco.
 
 ##### Company reports
 
-We get H1 and FY accounts from CNMV and for each company we get the salary expenses in the semester and the sales. We use the sector classifications of CNMV.
-The resulting panel has 345 companies, where many do not have a figure for wages and will be excluded. The earliest accounts included are from 2005 and the latest are 2015, and companies reporting usually does not span the full interval.
+We get H1 and FY accounts from CNMV and for each company we get the salary expenses in the semester and sales. We use the sector classifications of CNMV.
+The resulting panel has 345 companies, where many do not have a figure for wages and will be excluded. The earliest accounts included are from 2005 and the latest from 2015. Companies reporting usually does not span the full interval.
 
 ##### Text mining Boletin Oficial del Estado
 
 We download BOE from 2005 to 2015 and find data on public work contracts. We use text mining to extract the value of the contract and the contractor name. Then we write regular expressions for the list of companies in the previous section and add up the volume of public work for each semester and company. Then we calculate the public work awards for each sector, and the fraction that represent over sales for the full time interval.
 
-We manage to match the list of regular expressions against the BOE 9536 times for contracts worth 56.6 billion euro from 2005 to 2015. The largest contractor-year datum detected is Ferrovial in 2005 which received 37 contracts valued at 9 billion, which is probably biased upwards since some works may be split within coalitions of bidders.
+We manage to match the list of regular expressions against the BOE 9536 times for contracts worth 56.6 billion euro from 2005 to 2015. The largest contractor-year datum detected is Ferrovial in 2005. It received 37 contracts valued at 9 billion, which is probably biased upwards since some works may be split within coalitions of bidders.
 
-We find that real estate development has the largest public work weight (6.9% of sales) followed by construction sector (4.7%), communication and transports 2.5% and chemicals 0.8%. On the other side, insurance and trade companies have negligible figures. Numbers are likely to be significantly biased downwards due to the difficulty of extracting company names from unstructured BOE documents, but this bias occurs in all sectors. It will be important to keep in mind that median sectoral public work accounts for 0.25% of total sales.
+We find that real estate development has the largest public work weight (6.9% of sales) followed by construction sector (4.7%), communication and transports 2.5% and chemicals 0.8%. On the other end, insurance and trade companies have negligible figures. Numbers are likely to be significantly biased downwards due to the difficulty of extracting company names from unstructured BOE documents, but this bias occurs in all sectors. It will be important to keep in mind that median sectoral public work accounts for 0.25% of total sales.
 
 #### Conditional volatility
 
@@ -225,11 +227,9 @@ Finally, we get stock market returns for all quoted companies in the Mercado Con
 
 ### Panel regressions
 
-We run two sets of regressions. 
-
 #### EPU index effects on stock volatility
 
-First we use conditional volatility as a dependent variable. As regressors we will choose among the logarithm of the EPU index, the logarithm of the EPU index weighted by sectoral public work, the volatility of the IBEX 35 (again proxied by a GARCH(1,1)), the volatility of the IBEX 35 weighted by sectoral public work, public spending over GDP, and public spending over GDP weighted by sectoral public work.
+First we use volatility as a dependent variable. As regressors we will choose among the logarithm of the EPU index, the logarithm of the EPU index weighted by sectoral public work, the volatility of the IBEX 35 (again proxied by a GARCH(1,1)), the volatility of the IBEX 35 weighted by sectoral public work, public spending over GDP, and public spending over GDP weighted by sectoral public work.
 
 If the EPU index increases, companies more exposed to public contracting should experience a larger increase in stock volatility, reflecting the concern that public contracting may decrease.
 

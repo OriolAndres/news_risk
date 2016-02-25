@@ -241,7 +241,7 @@ def run_regressions():
                     fig = plt.figure(1,[8,6])
                     ax = fig.add_subplot(111)
                     ax.scatter(df['log_epu'],df['log_w'])
-                    ax.set_ylabel("Wage expenses growth") #,{'fontsize': 12}
+                    ax.set_ylabel("Wage expenses growth (logs, semester)") #,{'fontsize': 12}
                     ax.set_xlabel("EPU index (log)")
                     ax.grid()
                     fig.tight_layout()
@@ -250,7 +250,7 @@ def run_regressions():
                     fig2 = plt.figure(2,[8,6])
                     ax2 = fig2.add_subplot(111)
                     ax2.scatter(df['spend_weighted'],df['log_w'])
-                    ax2.set_ylabel("Wage expenses growth") #,{'fontsize': 12}
+                    ax2.set_ylabel("Wage expenses growth (logs, semester)") #,{'fontsize': 12}
                     ax2.set_xlabel("Public exp/gdp * sector public weight (Change in period)")
                     ax2.grid()
                     fig2.tight_layout()
