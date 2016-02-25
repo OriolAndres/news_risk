@@ -13,6 +13,7 @@ import pandas as pd
 import datetime
 import numpy as np
 from Levenshtein import distance
+from matplotlib import pyplot as plt
 
 from pandas.stats.plm import PanelOLS
 
@@ -223,6 +224,7 @@ def run_regressions():
     for v in xcand:
         rownames.extend([v,''])
     rownames += ['lag_expend', '','r2', 'N']
+    scatter_flag = True
     for dependent in ['CV', 'log_w']:
         #print '\n' + '-'*15 + ' Results for %s ' % dependent +  '-'*15 + '\n'
         ph = np.zeros(( (len(xcand)+2)*2, len(reglist)))
@@ -234,6 +236,25 @@ def run_regressions():
                 df[['log_epu','epu_weighted','lag_exp']] = df[['log_epu','epu_weighted','spend_weighted']].shift(1)
                 optional = ['lag_exp']
                 df = df.dropna()
+                if scatter_flag:
+                    scatter_flag = False
+                    fig = plt.figure(1,[8,6])
+                    ax = fig.add_subplot(111)
+                    ax.scatter(df['log_epu'],df['log_w'])
+                    ax.set_ylabel("Wage expenses growth") #,{'fontsize': 12}
+                    ax.set_xlabel("EPU index (log)")
+                    ax.grid()
+                    fig.tight_layout()
+                    plt.savefig(os.path.join(rootdir, 'figures','wage_growth_epu.png'))
+                    
+                    fig2 = plt.figure(2,[8,6])
+                    ax2 = fig2.add_subplot(111)
+                    ax2.scatter(df['spend_weighted'],df['log_w'])
+                    ax2.set_ylabel("Wage expenses growth") #,{'fontsize': 12}
+                    ax2.set_xlabel("Public exp/gdp * sector public weight (Change in period)")
+                    ax2.grid()
+                    fig2.tight_layout()
+                    plt.savefig(os.path.join(rootdir, 'figures','wage_growth_ratio.png'))
             else:
                 df = bigdf
                 optional = []

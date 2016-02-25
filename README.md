@@ -202,18 +202,20 @@ Concept | Count | Effect on GDP (1 std negative shock)
 
 Given the complexity of claiming propositions based on VAR results, we set out to test again the implications of uncertainty on firm level data. We are going to ask whether sectors that are more exposed to public contracts reduce more activity in the face of policy uncertainty. Again, a company profit function may not be a linear function of sales, because of rigities in investment and labor, hence companies facing an increase in uncertainty scale back operations.
 
-#### Preparing the dataset
+#### Assembling a panel dataset
 
 We are going to assemble a panel data for stock quoted companies in the Mercado Continuo of Bolsa de Madrid. We are going to assign them to a sector and find the relevance of public contracts in the sector. We will find stock volatility for each company, and also salary expenses and revenues. We will also include in some regressions government final consumption expenditure over gdp from BDSICE-MinEco.
 
-##### Getting accounts
+##### Company reports
 
 We get H1 and FY accounts from CNMV and for each company we get the salary expenses in the semester and the sales. We use the sector classifications of CNMV.
 The resulting panel has 345 companies, where many do not have a figure for wages and will be excluded. The earliest accounts included are from 2005 and the latest are 2015, and companies reporting usually does not span the full interval.
 
-##### Reading Boletin Oficial del Estado
+##### Text mining Boletin Oficial del Estado
 
 We download BOE from 2005 to 2015 and find data on public work contracts. We use text mining to extract the value of the contract and the contractor name. Then we write regular expressions for the list of companies in the previous section and add up the volume of public work for each semester and company. Then we calculate the public work awards for each sector, and the fraction that represent over sales for the full time interval.
+
+We manage to match the list of regular expressions against the BOE 9536 times for contracts worth 56.6 billion euro from 2005 to 2015. The largest contractor-year datum detected is Ferrovial in 2005 which received 37 contracts valued at 9 billion, which is probably biased upwards since some works may be split within coalitions of bidders.
 
 We find that real estate development has the largest public work weight (6.9% of sales) followed by construction sector (4.7%), communication and transports 2.5% and chemicals 0.8%. On the other side, insurance and trade companies have negligible figures. Numbers are likely to be significantly biased downwards due to the difficulty of extracting company names from unstructured BOE documents, but this bias occurs in all sectors. It will be important to keep in mind that median sectoral public work accounts for 0.25% of total sales.
 
@@ -235,9 +237,9 @@ We report coefficient estimates and p-values right below.
 
 Results show that, although not significatively, a 10% increase in EPU index raises daily stock volatility by 0.13 points. An increase of 1 percent point of public spending over gdp decreases daily stock volatility by 0.93 points although this coefficient is largely picking ommited time-effects. Results are not significative and R2 low when neither time-effects nor firm-effects are included.
 
-The coefficients for spend_weighted, which is very significant, suggest that a relative increase of 1% in public spending decreases daily volatility by 0.055. (The median of public expenditure / gdp * sector public work is 0.00251 and 0.0025*2200*0.01 = 0.055) Similar result if public work in the sector increases by relative 1%.
+The coefficients for spend_weighted, which is very significant, suggest that a relative increase of 1% in public spending decreases daily volatility by 0.055. (The median of public expenditure / gdp \* sector public work is 0.00251 and 0.0025\*2200\*0.01 = 0.055) Similar result if public work in the sector increases by relative 1%.
 
-The epu_weighted coefficient suggests that a 1% increase in either EPU index or public work fraction increases daily volatility by 0.0174 (median of epu_weighted is 0.0277 and 0.0277*0.01*63 = 0.0174), a result that is both important and significant. For instance a shock of 1 standard deviation in EPU index amounts to a 67% increase and an increase of 1.139 in daily volatility.
+The epu_weighted coefficient suggests that a 1% increase in either EPU index or public work fraction increases daily volatility by 0.0174 (median of epu_weighted is 0.0277 and 0.0277\*0.01\*63 = 0.0174), a result that is both important and significant. For instance a shock of 1 standard deviation in EPU index amounts to a 67% increase and an increase of 0.89 in daily volatility (0.0174 * log(1.67) * 100).
 
 Daily volatility | (1) | (2) | (3) | (4)
 --- | :---: | :---: | :---: | :---:
@@ -262,7 +264,13 @@ Daily volatility | (1) | (2) | (3) | (4)
 
 #### EPU index effects on salary expenses growth
 
-In the second set of regressions, we will look at the evolution of variables in time. We use as dependent variable the firm semiannual log change in salary expenses. As regressors we modify slightly the previous variables. We use the first lag of EPU (therefore assuming that salary expenses react with 6 months of delay), the first lag of EPU weighted by sectorial public work, and the first lag of the change in public expenditure over gdp weighted by sector public work.
+In the second set of regressions, we will look at the evolution of variables in time. We use as dependent variable the firm semiannual log change in salary expenses. As regressors we modify slightly the previous variables. We use the first lag of log EPU (therefore assuming that salary expenses react with 6 months of delay), the first lag of log EPU weighted by sectorial public work, and the first lag of the change in public expenditure over gdp weighted by sector public work.
+
+Results show that increasing the EPU by 1% decreases salary expenses in next semester by 0.7% and that's a significative coefficient. Again, an important caveat is that the regressions where this result appears do not include time effects. If time effects were included, there would be colinearity. 
+
+Increasing the EPU index by 1 standard deviation (67%) decreases semester wage growth by 3.52 percent points (median of epu_weighted is 0.0277, 0.0277 \* 3.175 \* log(1.67) = 0.0352). 
+
+Then it appears that companies that are more exposed to the public sector suffer from a large sensitivity of wage growth to public activity. In particular, an increase of 1 standard deviation in the change of public expenses / gdp weighted by sector public work causes a decrease of a whopping 69% in wage growth (standard deviation of the ratio is 0.00137, exp(-0.00137*266)*100 = 69.4%. The effect of the ratio is slightly reversed by its first lag, but it's still significant and may relate to the effects of the crisis in construction and real estate companies in a moment of increasing public spending.
 
 Log salary expense | (1) | (2) | (3) | (4)
 --- | :---: | :---: | :---: | :---:
@@ -285,8 +293,8 @@ Log salary expense | (1) | (2) | (3) | (4)
 **Time&firm eff.** | False | True | False | True
 
 
+![](figures/wage_growth_epu.png?raw=true)
 
-
-118 entities
+![](figures/wage_growth_ratio.png?raw=true)
 
 [1]: http://www.policyuncertainty.com/media/BakerBloomDavis.pdf
