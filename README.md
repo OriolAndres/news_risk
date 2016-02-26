@@ -213,6 +213,10 @@ We are going to assemble a panel data for stock quoted companies in the Mercado 
 We get H1 and FY accounts from CNMV and for each company we get the salary expenses in the semester and sales. We use the sector classifications of CNMV.
 The resulting panel has 345 companies, where many do not have a figure for wages and will be excluded. The earliest accounts included are from 2005 and the latest from 2015. Companies reporting usually does not span the full interval.
 
+We look for consolidated accounts and if absent for individual accounts. We identify wage expenses by the tags EmployeeExpensesByNature or GastoPersonalNIIF in this order and company sales by the tags RevenueTotalByNature or ImporteNetoCifraNegocio for non banking companies and OtherOperatingIncomeTotalFinancialInstitutions for banking institutions.
+
+We remove Ferrovial data prior to 2010 as reports refer to CINTRA accounts and likewise for Caixabank prior to 2011 as they describe CRITERIA.
+
 ##### Text mining Boletin Oficial del Estado
 
 We download BOE from 2005 to 2015 and find data on public work contracts. We use text mining to extract the value of the contract and the contractor name. Then we write regular expressions for the list of companies in the previous section and add up the volume of public work for each semester and company. Then we calculate the public work awards for each sector, and the fraction that represent over sales for the full time interval.
@@ -239,22 +243,22 @@ We report coefficient estimates and p-values right below.
 
 Daily volatility | (1) | (2) | (3) | (4)
 --- | :---: | :---: | :---: | :---:
-**log_epu** | 1.346 |   | 1.454 |  
- | 0.892 |   | 0.890 |  
-**epu_weighted** |   | 64.650 |   | 68.539
+**log_epu** | 1.363 |   | 1.384 |  
+ | 0.891 |   | 0.896 |  
+**epu_weighted** |   | 64.718 |   | 68.596
  |   | 0.000 |   | 0.000
-**ibex35** |   |   | -0.255 |  
- |   |   | 0.977 |  
-**ibex_weighted** |   |   |   | -9.176
- |   |   |   | 0.539
-**spending** | -109.503 |   | -105.663 |  
- | 0.786 |   | 0.804 |  
-**spend_weighted** |   | -2405.487 |   | -2273.595
+**ibex35** |   |   | -0.050 |  
+ |   |   | 0.995 |  
+**ibex_weighted** |   |   |   | -9.147
+ |   |   |   | 0.541
+**spending** | -108.431 |   | -107.682 |  
+ | 0.789 |   | 0.801 |  
+**spend_weighted** |   | -2407.173 |   | -2275.662
  |   | 0.001 |   | 0.002
 **lag_expend** |   |   |   |  
  |   |   |   |  
 **r2** | 0.000 | 0.022 | 0.000 | 0.023
-**N** | 1916 | 1916 | 1916 | 1916
+**N** | 1909 | 1909 | 1909 | 1909
 **Time&firm eff.** | False | True | False | True
 
 
@@ -265,22 +269,22 @@ In the second set of regressions, we will look at the evolution of variables in 
 
 Log salary expense | (1) | (2) | (3) | (4)
 --- | :---: | :---: | :---: | :---:
-**log_epu** | -0.029 |   | -0.030 |  
- | 0.060 |   | 0.056 |  
-**epu_weighted** |   | -0.533 |   | -0.113
- |   | 0.269 |   | 0.844
-**ibex35** |   |   | 0.004 |  
- |   |   | 0.731 |  
+**log_epu** | -0.028 |   | -0.030 |  
+ | 0.053 |   | 0.047 |  
+**epu_weighted** |   | -0.540 |   | -0.130
+ |   | 0.243 |   | 0.814
+**ibex35** |   |   | 0.005 |  
+ |   |   | 0.665 |  
 **ibex_weighted** |   |   |   | -0.815
- |   |   |   | 0.159
-**spending** | -1.034 |   | -1.099 |  
- | 0.136 |   | 0.126 |  
-**spend_weighted** |   | 30.659 |   | 106.283
- |   | 0.598 |   | 0.070
-**lag_expend** | -69.336 | -80.467 | -71.418 | -106.647
- | 0.129 | 0.183 | 0.122 | 0.088
-**r2** | 0.015 | 0.031 | 0.015 | 0.039
-**N** | 1706 | 1706 | 1706 | 1706
+ |   |   |   | 0.144
+**spending** | -1.190 |   | -1.270 |  
+ | 0.075 |   | 0.067 |  
+**spend_weighted** |   | 83.651 |   | 88.754
+ |   | 0.135 |   | 0.117
+**lag_expend** | -65.620 | -133.424 | -68.147 | -105.676
+ | 0.135 | 0.022 | 0.124 | 0.079
+**r2** | 0.018 | 0.038 | 0.018 | 0.040
+**N** | 1699 | 1699 | 1699 | 1699
 **Time&firm eff.** | False | True | False | True
 
 ![](figures/wage_growth_epu.png?raw=true)

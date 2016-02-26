@@ -49,6 +49,8 @@ def parse_xml():
         for fname in os.listdir(os.path.join(unzipdir,folder)):
             if folder == 'FERROVIAL' and fname < '2010': ## previously reported CINTRA only, a spinoff 
                 continue
+            if folder.startswith('CAIXABANK') and fname < '2011104630': ## previously CRITERIA only
+                continue
             fpath = os.path.join(unzipdir,folder, fname)
             full_string = ''
             with open(fpath,'r') as inf:
