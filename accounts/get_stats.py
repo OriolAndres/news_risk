@@ -51,6 +51,8 @@ def parse_xml():
                 continue
             if folder.startswith('CAIXABANK') and fname < '2011104630': ## previously CRITERIA only
                 continue
+            if folder.startswith('REIG') and fname > '2014108941': ## from NATRACEUTICAL to REIG JOFRE, keep the former
+                continue
             fpath = os.path.join(unzipdir,folder, fname)
             full_string = ''
             with open(fpath,'r') as inf:
@@ -113,6 +115,9 @@ def parse_xml():
             if not value_dict.get('Revenues',None) or value_dict.get('Revenues') == '0':
                 continue
             outarray.append(value_dict)
+        
+        if biz_name == "NATRACEUTICAL, S.A.":
+            biz_name = "LABORATORIO REIG JOFRE, S.A."
         short_long_names.append([folder, biz_name])
         outdict[biz_name] = outarray
     with open(os.path.join(rootdir,'accounts','short_long.csv'),'wb') as outf:

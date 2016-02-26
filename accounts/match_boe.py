@@ -176,7 +176,6 @@ def build_data_frame():
             #print  kstar, member
             if entity_id not in datadict:
                 continue
-    
             entity_sector_pairs[entity_id] = s
             public_eur += datadict[entity_id]['Contracts_eur'].sum()
             sector_sales += datadict[entity_id]['Sales'].sum()

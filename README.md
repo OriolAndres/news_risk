@@ -217,6 +217,8 @@ We look for consolidated accounts and if absent for individual accounts. We iden
 
 We remove Ferrovial data prior to 2010 as reports refer to CINTRA accounts and likewise for Caixabank prior to 2011 as they describe CRITERIA.
 
+We remove Reig Jofre starting the second semester of 2014 as it results from the merger with NATRACEUTICAL and introduces an important outlier.
+
 ##### Text mining Boletin Oficial del Estado
 
 We download BOE from 2005 to 2015 and find data on public work contracts. We use text mining to extract the value of the contract and the contractor name. Then we write regular expressions for the list of companies in the previous section and add up the volume of public work for each semester and company. Then we calculate the public work awards for each sector, and the fraction that represent over sales for the full time interval.
@@ -243,22 +245,22 @@ We report coefficient estimates and p-values right below.
 
 Daily volatility | (1) | (2) | (3) | (4)
 --- | :---: | :---: | :---: | :---:
-**log_epu** | 1.363 |   | 1.384 |  
- | 0.891 |   | 0.896 |  
-**epu_weighted** |   | 64.718 |   | 68.596
+**log_epu** | 1.311 |   | 1.384 |  
+ | 0.895 |   | 0.896 |  
+**epu_weighted** |   | 64.736 |   | 68.613
  |   | 0.000 |   | 0.000
-**ibex35** |   |   | -0.050 |  
- |   |   | 0.995 |  
-**ibex_weighted** |   |   |   | -9.147
- |   |   |   | 0.541
-**spending** | -108.431 |   | -107.682 |  
- | 0.789 |   | 0.801 |  
-**spend_weighted** |   | -2407.173 |   | -2275.662
+**ibex35** |   |   | -0.171 |  
+ |   |   | 0.984 |  
+**ibex_weighted** |   |   |   | -9.146
+ |   |   |   | 0.542
+**spending** | -106.016 |   | -103.431 |  
+ | 0.794 |   | 0.809 |  
+**spend_weighted** |   | -2407.812 |   | -2276.290
  |   | 0.001 |   | 0.002
 **lag_expend** |   |   |   |  
  |   |   |   |  
 **r2** | 0.000 | 0.022 | 0.000 | 0.023
-**N** | 1909 | 1909 | 1909 | 1909
+**N** | 1906 | 1906 | 1906 | 1906
 **Time&firm eff.** | False | True | False | True
 
 
@@ -269,22 +271,22 @@ In the second set of regressions, we will look at the evolution of variables in 
 
 Log salary expense | (1) | (2) | (3) | (4)
 --- | :---: | :---: | :---: | :---:
-**log_epu** | -0.028 |   | -0.030 |  
- | 0.053 |   | 0.047 |  
-**epu_weighted** |   | -0.540 |   | -0.130
- |   | 0.243 |   | 0.814
-**ibex35** |   |   | 0.005 |  
- |   |   | 0.665 |  
-**ibex_weighted** |   |   |   | -0.815
- |   |   |   | 0.144
-**spending** | -1.190 |   | -1.270 |  
- | 0.075 |   | 0.067 |  
-**spend_weighted** |   | 83.651 |   | 88.754
- |   | 0.135 |   | 0.117
-**lag_expend** | -65.620 | -133.424 | -68.147 | -105.676
- | 0.135 | 0.022 | 0.124 | 0.079
-**r2** | 0.018 | 0.038 | 0.018 | 0.040
-**N** | 1699 | 1699 | 1699 | 1699
+**log_epu** | -0.026 |   | -0.028 |  
+ | 0.069 |   | 0.058 |  
+**epu_weighted** |   | -0.573 |   | -0.133
+ |   | 0.209 |   | 0.808
+**ibex35** |   |   | 0.006 |  
+ |   |   | 0.585 |  
+**ibex_weighted** |   |   |   | -0.855
+ |   |   |   | 0.120
+**spending** | -1.253 |   | -1.352 |  
+ | 0.057 |   | 0.048 |  
+**spend_weighted** |   | 87.544 |   | 84.601
+ |   | 0.112 |   | 0.129
+**lag_expend** | -63.140 | -133.394 | -66.285 | -95.308
+ | 0.145 | 0.020 | 0.129 | 0.108
+**r2** | 0.018 | 0.039 | 0.018 | 0.041
+**N** | 1696 | 1696 | 1696 | 1696
 **Time&firm eff.** | False | True | False | True
 
 ![](figures/wage_growth_epu.png?raw=true)

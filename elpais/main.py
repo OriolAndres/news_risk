@@ -69,8 +69,9 @@ import os
 
 import pandas as pd
 import numpy as np
-rootdir = os.path.dirname(__file__)#r'C:/users/oriolandres/desktop/news_risk/elpais'
-datadir = os.path.join(rootdir,'data')
+from news_risk.settings import rootdir
+thisdir = os.path.join(rootdir,'elpais')
+datadir = os.path.join(thisdir,'data')
 if not os.path.exists(datadir):
     os.makedirs(datadir)
 
@@ -219,7 +220,7 @@ def build_index(section = 'economia', new_format = True):
             rfile = 'res.txt'
         m_n = 0; a_n = 0; w_n = 0; eu_n = 0;
         
-        if rfile in os.listdir(ddir) and False:
+        if rfile in os.listdir(ddir):
             with open(os.path.join(ddir,rfile),'r') as inf:
                 res = inf.read().split(',')
                 eu_n = int(res[0])
@@ -264,9 +265,9 @@ def build_index(section = 'economia', new_format = True):
         for j in range(c_n + b_n):
             df[(colnames+combo_names)[j]][i] += rest[j]
     if not new_format:
-        df.to_csv('daily_data_{0}.csv'.format(section))
+        df.to_csv(os.path.join(thisdir, 'daily_data_{0}.csv'.format(section)))
     else:
-        df.to_csv('daily_data_{0}_new.csv'.format(section))
+        df.to_csv(os.path.join(thisdir, 'daily_data_{0}_new.csv'.format(section)))
 
 
 def retrieve_old_archive():
