@@ -37,7 +37,7 @@ with open(os.path.join(rootdir,'accounts','biz_meta_regex.csv'),'rb') as inf:
     entity_regex_l = list(instream)
 patterns = map(lambda x: compile(x[1],I|DOTALL).match, entity_regex_l)
 
-
+trim_small = True
 
 def find_work_by_entity():
     wee = []
@@ -187,6 +187,8 @@ def build_data_frame():
 
     macro_df = pd.DataFrame.from_csv(os.path.join(rootdir, 'regressors.csv'))
     bigdict = {}
+    wrongness = 0
+    goodness = 0
     for entity_id in datadict.keys():
         datadict[entity_id] = datadict[entity_id].join(macro_df)
         s = entity_sector_pairs[entity_id]
@@ -196,12 +198,24 @@ def build_data_frame():
         datadict[entity_id]['spend_weighted'] = sector_avg[s]*datadict[entity_id]['spending']
         assert('Wages' in datadict[entity_id])
         datadict[entity_id]['log_w'] = np.log(datadict[entity_id]['Wages'])
+        datadict[entity_id]['dlog_w'] = datadict[entity_id]['log_w'].diff()
+        datadict[entity_id]['dspend_weighted'] = datadict[entity_id]['spend_weighted'].diff()
         if entity_id not in cv_dict: ## exclude entities for which no stock
             continue
         df1 = datadict[entity_id].join(cv_dict[entity_id]).join(cv_dict['ibex35'])
         df1['ibex_weighted'] = df1['ibex35']*sector_avg[s]
-        bigdict[entity_id] = df1
-    
+        
+        df1 = df1[[x[0] or x[1] for x in zip(list(df1['dlog_w'].abs() < 1), list(df1['dlog_w'].isnull()) ) ]]
+        if any(datadict[entity_id]['log_w'].diff().abs() > 1):
+            wrongness +=1
+            print entity_id + 'has wage data issues'
+        else:
+            goodness +=1
+        if trim_small:
+            if len(df1) >3:
+                bigdict[entity_id] = df1
+        else:
+            bigdict[entity_id] = df1
     bigdf = pd.concat(bigdict.values(),keys=bigdict.keys())
         
     for k,v in bigdict.items():
@@ -231,9 +245,9 @@ def run_regressions():
         for ix, regressors in enumerate(reglist):
             if dependent == 'log_w':
                 df = bigdf[bigdf['Wages'] > 0]
-                df[['log_w','spend_weighted']] = df[['log_w','spend_weighted']].diff(periods = 1)
+                df[['log_w','spend_weighted']] = df[['dlog_w','dspend_weighted']].diff()
                 
-                df[['log_epu','epu_weighted','lag_exp']] = df[['log_epu','epu_weighted','spend_weighted']].shift(1)
+                df[['log_epu','epu_weighted','lag_exp']] = df[['log_epu','epu_weighted','dspend_weighted']].shift(1)
                 optional = ['lag_exp']
                 df = df.dropna()
                 if scatter_flag:
