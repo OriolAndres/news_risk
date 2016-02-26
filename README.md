@@ -235,11 +235,7 @@ If the EPU index increases, companies more exposed to public contracting should 
 
 We report coefficient estimates and p-values right below.
 
-Results show that, although not significatively, a 10% increase in EPU index raises daily stock volatility by 0.13 points. An increase of 1 percent point of public spending over gdp decreases daily stock volatility by 0.93 points although this coefficient is largely picking ommited time-effects. Results are not significative and R2 low when neither time-effects nor firm-effects are included.
 
-The coefficients for spend_weighted, which is very significant, suggest that a relative increase of 1% in public spending decreases daily volatility by 0.055. (The median of public expenditure / gdp \* sector public work is 0.00251 and 0.0025\*2200\*0.01 = 0.055) Similar result if public work in the sector increases by relative 1%.
-
-The epu_weighted coefficient suggests that a 1% increase in either EPU index or public work fraction increases daily volatility by 0.0174 (median of epu_weighted is 0.0277 and 0.0277\*0.01\*63 = 0.0174), a result that is both important and significant. For instance a shock of 1 standard deviation in EPU index amounts to a 67% increase and an increase of 0.89 in daily volatility (0.0174 * log(1.67) * 100).
 
 Daily volatility | (1) | (2) | (3) | (4)
 --- | :---: | :---: | :---: | :---:
@@ -266,11 +262,6 @@ Daily volatility | (1) | (2) | (3) | (4)
 
 In the second set of regressions, we will look at the evolution of variables in time. We use as dependent variable the firm semiannual log change in salary expenses. As regressors we modify slightly the previous variables. We use the first lag of log EPU (therefore assuming that salary expenses react with 6 months of delay), the first lag of log EPU weighted by sectorial public work, and the first lag of the change in public expenditure over gdp weighted by sector public work.
 
-Results show that increasing the EPU by 1% decreases salary expenses in next semester by 0.7% and that's a significative coefficient. Again, an important caveat is that the regressions where this result appears do not include time effects. If time effects were included, there would be colinearity. 
-
-Increasing the EPU index by 1 standard deviation (67%) decreases semester wage growth by 3.52 percent points (median of epu_weighted is 0.0277, 0.0277 \* 3.175 \* log(1.67) = 0.0352). 
-
-Then it appears that companies that are more exposed to the public sector suffer from a large sensitivity of wage growth to public activity. In particular, an increase of 1 standard deviation in the change of public expenses / gdp weighted by sector public work causes a decrease of a whopping 69% in wage growth (standard deviation of the ratio is 0.00137, exp(-0.00137*266)*100 = 69.4%. The effect of the ratio is slightly reversed by its first lag, but it's still significant and may relate to the effects of the crisis in construction and real estate companies in a moment of increasing public spending.
 
 Log salary expense | (1) | (2) | (3) | (4)
 --- | :---: | :---: | :---: | :---:
