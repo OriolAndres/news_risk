@@ -37,7 +37,7 @@ with open(os.path.join(rootdir,'accounts','biz_meta_regex.csv'),'rb') as inf:
     entity_regex_l = list(instream)
 patterns = map(lambda x: compile(x[1],I|DOTALL).match, entity_regex_l)
 
-trim_small = True
+trim_small = False
 
 def find_work_by_entity():
     wee = []
@@ -200,17 +200,23 @@ def build_data_frame():
         datadict[entity_id]['log_w'] = np.log(datadict[entity_id]['Wages'])
         datadict[entity_id]['dlog_w'] = datadict[entity_id]['log_w'].diff()
         datadict[entity_id]['dspend_weighted'] = datadict[entity_id]['spend_weighted'].diff()
+        datadict[entity_id][['llog_epu','lepu_weighted','ldspend_weighted']] = datadict[entity_id][['log_epu','epu_weighted','dspend_weighted']].shift(1)
         if entity_id not in cv_dict: ## exclude entities for which no stock
             continue
         df1 = datadict[entity_id].join(cv_dict[entity_id]).join(cv_dict['ibex35'])
         df1['ibex_weighted'] = df1['ibex35']*sector_avg[s]
         
-        df1 = df1[[x[0] or x[1] for x in zip(list(df1['dlog_w'].abs() < 1), list(df1['dlog_w'].isnull()) ) ]]
+        #df1 = df1[[x[0] or x[1] for x in zip(list(df1['dlog_w'].abs() < 1), list(df1['dlog_w'].isnull()) ) ]]
         if any(datadict[entity_id]['log_w'].diff().abs() > 1):
             wrongness +=1
             print entity_id + 'has wage data issues'
         else:
             goodness +=1
+            
+        if len(df1.dropna()) < 2:
+            df1['single'] = 1
+        else: 
+            df1['single'] = 0
         if trim_small:
             if len(df1) >3:
                 bigdict[entity_id] = df1
@@ -245,11 +251,13 @@ def run_regressions():
         for ix, regressors in enumerate(reglist):
             if dependent == 'log_w':
                 df = bigdf[bigdf['Wages'] > 0]
-                df[['log_w','spend_weighted']] = df[['dlog_w','dspend_weighted']].diff()
-                
-                df[['log_epu','epu_weighted','lag_exp']] = df[['log_epu','epu_weighted','dspend_weighted']].shift(1)
+                oldnames = ['llog_epu','lepu_weighted','ldspend_weighted', 'dlog_w','dspend_weighted']
+                newnames = ['log_epu','epu_weighted','lag_exp', 'log_w','spend_weighted']                
+                df[newnames] = df[oldnames]
                 optional = ['lag_exp']
                 df = df.dropna()
+                df = df[df['single'] == 0]
+                df = df[np.isfinite(df)]
                 if scatter_flag:
                     scatter_flag = False
                     fig = plt.figure(1,[8,6])

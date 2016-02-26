@@ -45,6 +45,7 @@ def parse_xml():
         biz_name = folder
         
         seen_dates = set()
+
         for fname in os.listdir(os.path.join(unzipdir,folder)):
             fpath = os.path.join(unzipdir,folder, fname)
             full_string = ''
@@ -63,8 +64,10 @@ def parse_xml():
             #print next(xml.iter('{http://www.xbrl.org/2003/instance}startDate')).text
             #print next(xml.iter('{http://www.xbrl.org/2003/instance}endDate')).text
             sections = ['Revenues','Wages']
+            s_end = ['r_end','w_end']
+            s_tag = ['r_tag','w_tag']
             candidates_list = [['RevenueTotalByNature','ImporteNetoCifraNegocio','OtherOperatingIncomeTotalFinancialInstitutions'],
-                                ['EmployeeExpensesByNature','GastosPersonal','GastoPersonalNIIF']]
+                                ['EmployeeExpensesByNature','GastoPersonalNIIF','GastosPersonal']] #
             value_dict = {'Pub':fname[:fname.rfind('.')]} 
             for section_i, tag_candidates in enumerate(candidates_list):
                 for denom in tag_candidates:
@@ -93,7 +96,7 @@ def parse_xml():
                         if (date_ph.endswith('dci') and ending!='dcc') or date_ph.endswith('dcc'): 
                             value = entry.text
                             ending = date_ph[-3:]
-                value_dict.update({'t':max_t.strftime('%Y%m%d'),sections[section_i]: value})
+                value_dict.update({'t':max_t.strftime('%Y%m%d'),sections[section_i]: value, s_end[section_i]: ending, s_tag[section_i] : denom})
             
             '''
             Annoying repetition of reports for the same period
@@ -114,8 +117,15 @@ def parse_xml():
         outstream  = csv.writer(outf)
         for k, array in outdict.items():
             for entry in array:
-                outstream.writerow([k,entry.get('Pub','NA'),entry.get('t','NA'),entry.get('Wages','NA'),entry.get('Revenues','NA')])
+                outstream.writerow([k,entry.get('Pub','NA'),
+                                    entry.get('t','NA'),
+                                    entry.get('Wages','NA'),
+                                    entry.get('Revenues','NA'),
+                                    entry.get('w_end','NA'),
+                                    entry.get('r_end','NA'),
+                                    entry.get('w_tag','NA'),
+                                    entry.get('r_tag','NA')])
 
 if __name__ == '__main__':
-    unzip()
+    #unzip()
     parse_xml()
