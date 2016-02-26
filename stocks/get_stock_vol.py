@@ -73,12 +73,15 @@ def get_cv_from_file(f):
     vals.reverse()
     df = pd.DataFrame(zip(dates, vals), columns = ['Dates','Prices'])
     df['Returns'] = df.Prices.pct_change()*100
+    df = df[df['Returns'].abs() < 25] ## bad rule of thumb to clean measurement errors
     df.set_index('Dates', inplace = True)
 
     am = arch_model(df.Returns.dropna().tolist(), p=1, o=0, q=1)
     res = am.fit(update_freq=1, disp='off')
-    df['cv'] = np.insert(res.conditional_volatility,0,res.conditional_volatility[0:40].mean())
+
+    df['cv'] = res.conditional_volatility
     d = df.resample("6M", how='mean')
+
     d.index = d.index.map(lambda t: t.replace(year=t.year, month=((t.month -1) // 6 +1)*6, day=1))
     return d
 

@@ -138,5 +138,5 @@ def parse_xml():
                                     entry.get('Name','NA')])
 
 if __name__ == '__main__':
-    #unzip()
+    unzip()
     parse_xml()

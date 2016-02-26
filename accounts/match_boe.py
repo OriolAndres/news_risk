@@ -17,6 +17,8 @@ from matplotlib import pyplot as plt
 
 from pandas.stats.plm import PanelOLS
 
+from news_risk.elpais import get_quarterly_regressors
+
 def lower_case(instring):
     u = 'ÑÁÉÍÓÚÜ'
     l = 'ñáéíóúü'
@@ -179,7 +181,7 @@ def build_data_frame():
     #import operator
     #sorted(zip(sectors,sector_avg), key = operator.itemgetter(1), reverse = True)
 
-    macro_df = pd.DataFrame.from_csv(os.path.join(rootdir, 'regressors.csv'))
+    macro_df = get_quarterly_regressors()#pd.DataFrame.from_csv(os.path.join(rootdir, 'regressors.csv'))
     bigdict = {}
     wrongness = 0
     goodness = 0
@@ -235,7 +237,9 @@ def run_regressions():
         rownames.extend([v,''])
     rownames += ['lag_expend', '','r2', 'N']
     scatter_flag = True
+    cv_scatter_flag = True
     for dependent in ['CV', 'log_w']:
+        
         #print '\n' + '-'*15 + ' Results for %s ' % dependent +  '-'*15 + '\n'
         ph = np.zeros(( (len(xcand)+2)*2, len(reglist)))
         for ix, regressors in enumerate(reglist):
@@ -253,7 +257,7 @@ def run_regressions():
                     fig = plt.figure(1,[8,6])
                     ax = fig.add_subplot(111)
                     ax.scatter(df['log_epu'],df['log_w'])
-                    ax.set_ylabel("Wage expenses growth (logs, semester)") #,{'fontsize': 12}
+                    ax.set_ylabel("Wage expenses growth (logs, semester)")
                     ax.set_xlabel("EPU index (log)")
                     ax.grid()
                     fig.tight_layout()
@@ -262,7 +266,7 @@ def run_regressions():
                     fig2 = plt.figure(2,[8,6])
                     ax2 = fig2.add_subplot(111)
                     ax2.scatter(df['spend_weighted'],df['log_w'])
-                    ax2.set_ylabel("Wage expenses growth (logs, semester)") #,{'fontsize': 12}
+                    ax2.set_ylabel("Wage expenses growth (logs, semester)") 
                     ax2.set_xlabel("Public exp/gdp * sector public weight (Change in period)")
                     ax2.grid()
                     fig2.tight_layout()
@@ -270,6 +274,25 @@ def run_regressions():
             else:
                 df = bigdf
                 optional = []
+                if cv_scatter_flag:
+                    cv_scatter_flag = False
+                    fig = plt.figure(3,[8,6])
+                    ax = fig.add_subplot(111)
+                    ax.scatter(df['log_epu'],df['CV'])
+                    ax.set_ylabel("Conditional volatility")
+                    ax.set_xlabel("EPU index (log)")
+                    ax.grid()
+                    fig.tight_layout()
+                    plt.savefig(os.path.join(rootdir, 'figures','cv_v_epu.png'))
+                    
+                    fig2 = plt.figure(4,[8,6])
+                    ax2 = fig2.add_subplot(111)
+                    ax2.scatter(df['epu_weighted'],df['CV'])
+                    ax2.set_ylabel("Conditional volatility")
+                    ax2.set_xlabel("EPU index * sector public weight")
+                    ax2.grid()
+                    fig2.tight_layout()
+                    plt.savefig(os.path.join(rootdir, 'figures','cv_v_epu_w.png'))
             reg  = PanelOLS(y=df[dependent],x=df[[xcand[i] for i in regressors]+optional],  time_effects=dummies[ix], entity_effects=dummies[ix])
             for v in regressors:
                 ph[v*2, ix] =  reg.beta[xcand[v]]
@@ -290,3 +313,7 @@ def run_regressions():
             print ' | '.join(['**'+rownames[i]+'**' if rownames[i] != '' else ''] + vals)
         print ' | '.join(['**Time&firm eff.**'] + map(str,dummies))
         print '\n'
+        
+        
+if __name__ == '__main__':
+    pass#run_regressions()

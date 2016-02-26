@@ -199,7 +199,10 @@ def build_index():
     df.to_csv(os.path.join(thisdir, 'daily_data.csv'))
 
 
-        
-if __name__ == '__main__':
-    #create_archive()
+def main():
+    create_archive()
     build_index()
+    
+if __name__ == '__main__':
+    pass
+    #main()

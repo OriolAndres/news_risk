@@ -88,8 +88,6 @@ def load_es_uncertainty():
     '''
     return d
 
-
-
 def load_eu_uncertainty():
     with open(os.path.join(rootdir,'euro_news.csv'),'r') as inf:
         lines = [sub(r'\n','',line).split(',') for line in inf.readlines()]

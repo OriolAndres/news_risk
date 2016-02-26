@@ -3,7 +3,7 @@
 
 We construct an economic uncertainty index (EU) and an economic policy uncertainty (EPU) index for Spain following the [policyuncertainty.com methodology](http://www.policyuncertainty.com/methodology.html) exploited in [Baker, Bloom and Davis][1] [BBD].
 
-We base the index on the archives of [El Pais](http://elpais.com/).
+We base the index on the archives of [El Pais](http://elpais.com/) and [Cinco Días](http://cincodias.com/).
 
 Following [BBD][1], we conduct two different exercises to explore the impact of policy uncertainty on economic activity.
 
@@ -71,6 +71,16 @@ from news_risk.elpais import start_from_scratch
 start_from_scratch() # downloads full economy archive from El Pais (1976-2016), matches articles against conditions
 ```
 
+
+#### Download Cinco Días files and find keywords: 
+
+```python
+from news_risk.cincodias import main
+main() # downloads full economy archive from Cinco Dias (2001-2016), matches articles against conditions
+```
+
+
+
 #### Get company Q2 / annual reports from CNMV
 ```python
 from news_risk.accounts import fetch_folder, fetch_list_by_sector, unzip, parse_xml
@@ -122,17 +132,22 @@ run_regressions() ## Counts the projects each entity is awarded. Loads entity ac
 
 We write a script to download the archive of El Pais, that runs from 4th May 1976 to today. The archive is split in two parts. The first system ([May 4th 1976 to February 7th 2012](http://elpais.com/diario/)) divides the daily editions into a handful of sections, including Economía, España and International. We focus on Economía. 71% of the editions contain between 10 and 30 articles in this section. In the second system ([February 7th 2012 to today](http://elpais.com/archivo/)) sections do not exist and instead they carry a number of tags, which we can easily use to filter the archive, and in particular we can filter the articles tagged with "Economía". In 70% of the days between 20 and 60 articles have the tag. We cannot assume that all the articles in the old Economía section would be tagged with "Economía" and that all the tagged articles with "Economía" would be filed in the Economía section. If the propensity to show uncertainty changed the index would be distorted.
 
-We identify an article as showing economic uncertainty if it matches *both* of the following two conditions:
+We run a similar script for Cinco Días by querying all articles tagged as "Economía". The Cinco Días archives start the 1st January of 2001 and end today. Both Cinco Días and El País belong to Prisa and share a similar digital newspaper classification.
+
+We identify an article as showing economic uncertainty (EU) if it matches *both* of the following two conditions:
 
   * Contains *either* one of the regular expressions 'incertidumbre' and '\binciert'.
   * Contains the regular expression 'econ(o|ó)m(i|í)'
 
-We identify an article as showing economic policy uncertainty if it matches both of the conditions above and it satisfies this condition:
+We identify an article as showing economic policy uncertainty (EPU) if it matches both of the conditions above and it satisfies this condition:
 
   * Contains *either* of '\bimp(uesto|ositiv|onib)', '\btarifa', '\bregula(ci|ti|to)', '\bpol(i|í)tica', '\bgast(ar|o|a|os)\b', '\bpresupuest', '\bd(e|é)ficit', '\bbanc(o|a)[s]?[\s]*central', '\bbanco de españa', '\btribut'.
   
-Then for both indices we sum all the matched articles in the month and divide by total number of articles in the month and escale the results to average 100.  
+Then for both indices (EU and EPU) we sum all the matched articles in the month and divide by total number of articles in the month and escale the results to average 100.
+
 The third condition is rather broad and as a result the monthly correlation between both indices is 95.7%.
+
+Articles from El Pais and Cinco Días are treated indifferently, the index will be built by aggregating articles from both sources.
 
 In the figure below we display the EPU index of Spain and of Europe.
 
@@ -157,9 +172,7 @@ We create a number of categories to divide the uncertainty. These require the fu
   * **Regulación**; Match if **Regulación bancaria** and/or **Regulación no bancaria** are a match.
 
 
-### Cinco Días
-
-We use similar scrapers for Cinco Dias archives, that run from 2001 and 2016, and we filter the archive for those articles tagged as "Economía". Both Cinco Días and El País belong to Prisa and share a similar digital newspaper classification. Here is the comparison between the EPU indices:
+#### Cinco Días vs El País
 
 ![](figures/elpais_v_cinco.png?raw=true)
 
@@ -251,28 +264,29 @@ We report coefficient estimates and p-values right below.
 
 First we see that increases in the uncertainty index correlate with increases in volatility. An increase of 1 standard deviation in the EPU increases daily volatility by 0.67 percent points (std of EPU is 67 and log(1.67)*1.31 = 0.67). Coefficient is not significant.
 
-Then we see that increases in the 
 
 Daily volatility | (1) | (2) | (3) | (4)
 --- | :---: | :---: | :---: | :---:
-**log_epu** | 1.311 |   | 1.384 |  
- | 0.895 |   | 0.896 |  
-**epu_weighted** |   | 64.736 |   | 68.613
- |   | 0.000 |   | 0.000
-**ibex35** |   |   | -0.171 |  
- |   |   | 0.984 |  
-**ibex_weighted** |   |   |   | -9.146
- |   |   |   | 0.542
-**spending** | -106.016 |   | -103.431 |  
- | 0.794 |   | 0.809 |  
-**spend_weighted** |   | -2407.812 |   | -2276.290
- |   | 0.001 |   | 0.002
+**log_epu** | 0.234 |   | 0.052 |  
+ | 0.004 |   | 0.523 |  
+**epu_weighted** |   | 3.661 |   | 4.417
+ |   | 0.114 |   | 0.064
+**ibex35** |   |   | 0.583 |  
+ |   |   | 0.000 |  
+**ibex_weighted** |   |   |   | -2.213
+ |   |   |   | 0.187
+**spending** | 14.984 |   | 1.948 |  
+ | 0.000 |   | 0.458 |  
+**spend_weighted** |   | 211.485 |   | 258.530
+ |   | 0.003 |   | 0.001
 **lag_expend** |   |   |   |  
  |   |   |   |  
-**r2** | 0.000 | 0.022 | 0.000 | 0.023
+**r2** | 0.053 | 0.251 | 0.103 | 0.252
 **N** | 1906 | 1906 | 1906 | 1906
 **Time&firm eff.** | False | True | False | True
 
+![](figures/cv_v_epu.png?raw=true)
+![](figures/cv_v_epu_w.png?raw=true)
 
 #### EPU index effects on salary expenses growth
 
@@ -281,21 +295,21 @@ In the second set of regressions, we will look at the evolution of variables in 
 
 Log salary expense | (1) | (2) | (3) | (4)
 --- | :---: | :---: | :---: | :---:
-**log_epu** | -0.026 |   | -0.028 |  
- | 0.069 |   | 0.058 |  
-**epu_weighted** |   | -0.573 |   | -0.133
- |   | 0.209 |   | 0.808
-**ibex35** |   |   | 0.006 |  
- |   |   | 0.585 |  
-**ibex_weighted** |   |   |   | -0.855
- |   |   |   | 0.120
-**spending** | -1.253 |   | -1.352 |  
- | 0.057 |   | 0.048 |  
-**spend_weighted** |   | 87.544 |   | 84.601
- |   | 0.112 |   | 0.129
-**lag_expend** | -63.140 | -133.394 | -66.285 | -95.308
- | 0.145 | 0.020 | 0.129 | 0.108
-**r2** | 0.018 | 0.039 | 0.018 | 0.041
+**log_epu** | -0.065 |   | -0.065 |  
+ | 0.000 |   | 0.000 |  
+**epu_weighted** |   | 0.026 |   | -0.146
+ |   | 0.969 |   | 0.837
+**ibex35** |   |   | 0.001 |  
+ |   |   | 0.926 |  
+**ibex_weighted** |   |   |   | -0.837
+ |   |   |   | 0.090
+**spending** | -0.939 |   | -0.966 |  
+ | 0.078 |   | 0.111 |  
+**spend_weighted** |   | -0.055 |   | 86.000
+ |   | 0.999 |   | 0.123
+**lag_expend** | -88.569 | 0.004 | -88.890 | -99.803
+ | 0.042 | 1.000 | 0.042 | 0.100
+**r2** | 0.025 | 0.016 | 0.025 | 0.041
 **N** | 1696 | 1696 | 1696 | 1696
 **Time&firm eff.** | False | True | False | True
 
