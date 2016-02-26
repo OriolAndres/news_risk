@@ -190,21 +190,23 @@ We run the same specification for the EPU, EU, and each of the uncertainty varia
 
 Concept | Count | Effect on GDP (1 std negative shock)
 --- | --- | ---
-**Econ policy** | 5288 | -0.1915
-**Econ general** | 6758 | -0.2120
-**ingreso** | 1466 | 0.0554
-**gasto** | 2624 | -0.1484
-**money** | 2331 | -0.1737
-**sanidad** | 396 | 0.0098
-**seguridad** | 241 | -0.0230
-**banca** | 292 | -0.3521
-**othregula** | 1842 | -0.2853
-**deuda** | 1491 | -0.0896
-**bienestar** | 549 | -0.0068
-**arancel** | 136 | -0.0049
-**autonomia** | 337 | 0.1405
-**fiscal** | 3129 | -0.1306
-**regula** | 1986 | -0.3093
+**Econ policy** | 8975 | -0.1967
+**Econ general** | 11897 | -0.1982
+**ingreso** | 2636 | -0.0733
+**gasto** | 4430 | -0.1405
+**money** | 3931 | -0.1295
+**sanidad** | 652 | 0.0844
+**seguridad** | 468 | -0.1213
+**banca** | 613 | -0.0163
+**othregula** | 3123 | -0.1591
+**deuda** | 2503 | 0.0672
+**bienestar** | 775 | 0.1387
+**arancel** | 106 | -0.3033
+**autonomia** | 534 | -0.1335
+**fiscal** | 5480 | -0.1108
+**regula** | 3429 | -0.1556
+
+
 
 ### Firm-level data
 

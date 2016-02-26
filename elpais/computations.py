@@ -52,7 +52,10 @@ colnames = ['matches','eumatches','ingreso','gasto','money','sanidad','seguridad
 #test 2
 
 def load_es_uncertainty():
+    '''
+    define policy (aggregate, EPU), economia (aggregate, EU), elpais (El Pais only, EPU), cinco (cinco dias only, EPU)
     
+    '''
     ## load cinco dias data
     df_cd = pd.read_csv(os.path.join(rootdir,'cincodias','daily_data.csv'),parse_dates = True,index_col=0)
     df_cd = df_cd.resample("M", how='sum')
@@ -63,10 +66,22 @@ def load_es_uncertainty():
     df_new = pd.read_csv(os.path.join(rootdir,'elpais','daily_data_economia_new.csv'),parse_dates = True,index_col=0)
     df_ec = pd.concat([df_ec,df_new])
     d = df_ec.resample("M", how='sum')
-    d['economia'] = d.matches / d.articles#d.words
     d.index = d.index.map(lambda t: t.replace(year=t.year, month=t.month, day=1))
+    for x in colnames + ['articles','words']:
+        d['ep_'+x] = d[x]
+        d['cd_'+x] = df_cd[x]
+        d[x] = d[x] + df_cd[x]
+
+    d['economia'] = d.eumatches / d.articles#d.words
+    d['economia'] = d['economia'] /d['economia'].mean()*100
     
+    d['policy'] =  d.matches / d.articles
+    d['policy'] = d['policy'] / d['policy'].mean()*100    
+    
+    d['elpais'] = d['ep_matches'] / d['ep_articles']
+    d['elpais'] = d['elpais'] / d['elpais'].mean()*100
     d['cinco'] = df_cd.matches / df_cd.articles
+    d['cinco'] = d['cinco'] /d['cinco'].mean()*100
     '''
     d.density = d.words  / d.articles
     ax = d.density.plot( title = "articles get longer", figsize = (6,4), grid = True )
@@ -92,24 +107,12 @@ def load_eu_uncertainty():
 
 def plot_index_comparison(nd):
     fig = plt.figure(1,[8,6])
-#    ax = fig.add_subplot(111)
-#    left = ax.plot(nd['economia']/nd['economia'].mean()*100, 'r', label=u'España')
-#    ax2 = ax.twinx()
-#    rite = ax2.plot(nd['euro_news'], 'g', label='Europa')
-#    ax.set_ylabel("Índice Incertidumbre España".decode('utf8')) #,{'fontsize': 12}
-#    ax2.set_ylabel("Índice Incertidumbre Europa".decode('utf8'))
-#    
-#    lns = left + rite
-#    labs = [l.get_label() for l in lns]
-#    ax.legend(lns, labs, loc=0)
-#    ax.grid()
-#    fig.tight_layout()
     ax = fig.add_subplot(211)
-    ax.plot(nd['economia']/nd['economia'].mean()*100, 'r', label=u'España')
+    ax.plot(nd['policy'], 'r', label=u'España')
     ax2 = fig.add_subplot(212)
     ax2.plot(nd['euro_news'], 'b', label='Europa')
-    ax.set_ylabel("Índice Incertidumbre España".decode('utf8'))
-    ax2.set_ylabel("Índice Incertidumbre Europa".decode('utf8'))
+    ax.set_ylabel("EPU España".decode('utf8'))
+    ax2.set_ylabel("EPU Europa".decode('utf8'))
     ax.grid()
     ax2.grid()    
     fig.tight_layout()
@@ -118,26 +121,13 @@ def plot_index_comparison(nd):
     
 def plot_eu_epu(nd):
     fig = plt.figure(2,[8,6])
-    nd['policy'] =  nd.eumatches / nd.articles
-    nd['policy'] = nd['policy'] / nd['policy'].mean()*100
-    nd['econ_based'] = nd['economia']/nd['economia'].mean()*100
-#    ax = fig.add_subplot(111)
-#    left = ax.plot(nd['policy'], 'r', label='Política'.decode('utf8'))
-#    ax2 = ax.twinx()
-#    rite = ax2.plot(nd['econ_based'], 'g', label='General')
-#    ax.set_ylabel("Índice Incertidumbre (Política) España".decode('utf8')) #,{'fontsize': 12}
-#    ax2.set_ylabel("Índice Incertidumbre (General) España".decode('utf8'))
-#    
-#    lns = left + rite
-#    labs = [l.get_label() for l in lns]
-#    ax.legend(lns, labs, loc=0)
 
     ax = fig.add_subplot(211)
-    ax.plot(nd['econ_based'], 'r', label='General'.decode('utf8'))
+    ax.plot(nd['economia'], 'r', label='General'.decode('utf8'))
     ax2 = fig.add_subplot(212)
     ax2.plot(nd['policy'], 'b', label='Política'.decode('utf8'))
-    ax.set_ylabel("Índice Incertidumbre (General) España".decode('utf8')) #,{'fontsize': 12}
-    ax2.set_ylabel("Índice Incertidumbre (Política) España".decode('utf8'))
+    ax.set_ylabel("EU (General) España".decode('utf8')) #,{'fontsize': 12}
+    ax2.set_ylabel("EPU (Política) España".decode('utf8'))
     ax.grid()
     ax2.grid()    
     fig.tight_layout()
@@ -147,8 +137,8 @@ def plot_eu_epu(nd):
 def plot_cinco_elpais(nd):
     fig = plt.figure(3,[8,6])
     ax = fig.add_subplot(211)
-    y1 = nd['economia']/nd['economia'].mean()*100
-    y2 = nd['cinco'] / nd['cinco'].mean()*100
+    y1 = nd['elpais']
+    y2 = nd['cinco'] 
     ax.plot(y1['20010101':], 'r', label=u'El Pais')
     ax2 = fig.add_subplot(212)
     ax2.plot(y2['20010101':], 'b', label=u'Cinco Días')
@@ -168,17 +158,17 @@ def transform_data(nd):
     nd['fedea'] = nd['FEEA.PURE064A.M.ES'].diff(periods = 1)
     '''
     '''
-    result = ols(y=nd['economia'], x=nd[['cv']])
+    result = ols(y=nd['policy'], x=nd[['cv']])
     nd['resid'] = result.resid.diff(periods = 1)
-    nd['raw'] = nd['economia'].diff(periods = 1)
+    nd['raw'] = nd['policy'].diff(periods = 1)
     nd['vol'] = nd['cv'].diff(periods = 1)
     return nd
 
 def get_quarterly_regressors():
     df_eu = load_eu_uncertainty()
     df_es = load_es_uncertainty()
-    df_es['epu'] = df_es.matches / df_es.articles
-    df_es['epu'] = df_es['epu'] / df_es['epu'].mean() *100
+
+    df_es['epu'] = df_es['policy']
     nd = df_eu.join(df_es)
     nd = nd.resample("6M", how='mean')
     
@@ -221,9 +211,8 @@ def estimate_VAR():
     nd = transform_data(nd)
     
     benchmark_subset = ['EPU','europe', 'fedea', 'inflation', 'differential'] 
-    nd['EPU'] = nd['matches'] / nd.articles
-    nd['EPU'] = nd['EPU'] / nd['EPU'].mean() * 100
-    nd['EPU'] = nd['EPU'].diff(periods = 1)
+
+    nd['EPU'] = nd['policy'].diff(periods = 1)
     data = nd.reindex(columns=benchmark_subset)
     data = data.dropna()
     data.describe()
@@ -266,7 +255,7 @@ def estimate_VAR():
         nd['uncert'] = nd['uncert'].diff(periods = 1)
         subset = ['uncert','europe', 'fedea', 'inflation', 'differential' ]
         cum_effect= get_irf(nd, subset)
-        print '%s | %d | %.04f' % (colname, nd[colname].sum(), 100*fedea_on_gdp*cum_effect)
+        print '**%s** | %d | %.04f' % (colname, nd[colname].sum(), 100*fedea_on_gdp*cum_effect)
     
     aa = d.mean()[colnames]
     plt.figure(6)
