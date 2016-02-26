@@ -30,8 +30,6 @@ import os
 
 fig_fmt = 'png'
 
-
-
 def load_external():
     #http://www.policyuncertainty.com/europe_monthly.html
     fedea = 'FEEA.PURE064A.M.ES' #'FEEA.SMOOTH064A.M.ES'
@@ -52,18 +50,30 @@ def load_external():
 colnames = ['matches','eumatches','ingreso','gasto','money','sanidad','seguridad','banca','othregula','deuda','bienestar','arancel','autonomia','fiscal','regula']
 
 #test 2
+
 def load_es_uncertainty():
+    
+    ## load cinco dias data
+    df_cd = pd.read_csv(os.path.join(rootdir,'cincodias','daily_data.csv'),parse_dates = True,index_col=0)
+    df_cd = df_cd.resample("M", how='sum')
+    df_cd.index = df_cd.index.map(lambda t: t.replace(year=t.year, month=t.month, day=1))
+    
+    
     df_ec = pd.read_csv(os.path.join(rootdir,'elpais','daily_data_economia.csv'),parse_dates = True,index_col=0)
     df_new = pd.read_csv(os.path.join(rootdir,'elpais','daily_data_economia_new.csv'),parse_dates = True,index_col=0)
     df_ec = pd.concat([df_ec,df_new])
     d = df_ec.resample("M", how='sum')
     d['economia'] = d.matches / d.articles#d.words
     d.index = d.index.map(lambda t: t.replace(year=t.year, month=t.month, day=1))
+    
+    d['cinco'] = df_cd.matches / df_cd.articles
     '''
     d.density = d.words  / d.articles
     ax = d.density.plot( title = "articles get longer", figsize = (6,4), grid = True )
     '''
     return d
+
+
 
 def load_eu_uncertainty():
     with open(os.path.join(rootdir,'euro_news.csv'),'r') as inf:
@@ -82,38 +92,72 @@ def load_eu_uncertainty():
 
 def plot_index_comparison(nd):
     fig = plt.figure(1,[8,6])
-    ax = fig.add_subplot(111)
-    left = ax.plot(nd['economia']/nd['economia'].mean()*100, 'r', label=u'España')
-    ax2 = ax.twinx()
-    rite = ax2.plot(nd['euro_news'], 'y', label='Europa')
-    ax.set_ylabel("Índice Incertidumbre España".decode('utf8')) #,{'fontsize': 12}
+#    ax = fig.add_subplot(111)
+#    left = ax.plot(nd['economia']/nd['economia'].mean()*100, 'r', label=u'España')
+#    ax2 = ax.twinx()
+#    rite = ax2.plot(nd['euro_news'], 'g', label='Europa')
+#    ax.set_ylabel("Índice Incertidumbre España".decode('utf8')) #,{'fontsize': 12}
+#    ax2.set_ylabel("Índice Incertidumbre Europa".decode('utf8'))
+#    
+#    lns = left + rite
+#    labs = [l.get_label() for l in lns]
+#    ax.legend(lns, labs, loc=0)
+#    ax.grid()
+#    fig.tight_layout()
+    ax = fig.add_subplot(211)
+    ax.plot(nd['economia']/nd['economia'].mean()*100, 'r', label=u'España')
+    ax2 = fig.add_subplot(212)
+    ax2.plot(nd['euro_news'], 'b', label='Europa')
+    ax.set_ylabel("Índice Incertidumbre España".decode('utf8'))
     ax2.set_ylabel("Índice Incertidumbre Europa".decode('utf8'))
-    
-    lns = left + rite
-    labs = [l.get_label() for l in lns]
-    ax.legend(lns, labs, loc=0)
     ax.grid()
+    ax2.grid()    
     fig.tight_layout()
     plt.savefig(os.path.join(rootdir, 'figures','spain_v_europe.%s' % fig_fmt), format=fig_fmt)
     return
     
 def plot_eu_epu(nd):
     fig = plt.figure(2,[8,6])
-    ax = fig.add_subplot(111)
     nd['policy'] =  nd.eumatches / nd.articles
     nd['policy'] = nd['policy'] / nd['policy'].mean()*100
-    left = ax.plot(nd['economia']/nd['economia'].mean()*100, 'r', label='Política'.decode('utf8'))
-    ax2 = ax.twinx()
-    rite = ax2.plot(nd['policy'], 'y', label='General')
-    ax.set_ylabel("Índice Incertidumbre (Política) España".decode('utf8')) #,{'fontsize': 12}
-    ax2.set_ylabel("Índice Incertidumbre (General) España".decode('utf8'))
-    
-    lns = left + rite
-    labs = [l.get_label() for l in lns]
-    ax.legend(lns, labs, loc=0)
+    nd['econ_based'] = nd['economia']/nd['economia'].mean()*100
+#    ax = fig.add_subplot(111)
+#    left = ax.plot(nd['policy'], 'r', label='Política'.decode('utf8'))
+#    ax2 = ax.twinx()
+#    rite = ax2.plot(nd['econ_based'], 'g', label='General')
+#    ax.set_ylabel("Índice Incertidumbre (Política) España".decode('utf8')) #,{'fontsize': 12}
+#    ax2.set_ylabel("Índice Incertidumbre (General) España".decode('utf8'))
+#    
+#    lns = left + rite
+#    labs = [l.get_label() for l in lns]
+#    ax.legend(lns, labs, loc=0)
+
+    ax = fig.add_subplot(211)
+    ax.plot(nd['econ_based'], 'r', label='General'.decode('utf8'))
+    ax2 = fig.add_subplot(212)
+    ax2.plot(nd['policy'], 'b', label='Política'.decode('utf8'))
+    ax.set_ylabel("Índice Incertidumbre (General) España".decode('utf8')) #,{'fontsize': 12}
+    ax2.set_ylabel("Índice Incertidumbre (Política) España".decode('utf8'))
     ax.grid()
+    ax2.grid()    
     fig.tight_layout()
     plt.savefig(os.path.join(rootdir, 'figures','policy_v_general.%s' % fig_fmt), format=fig_fmt)
+    return
+
+def plot_cinco_elpais(nd):
+    fig = plt.figure(3,[8,6])
+    ax = fig.add_subplot(211)
+    y1 = nd['economia']/nd['economia'].mean()*100
+    y2 = nd['cinco'] / nd['cinco'].mean()*100
+    ax.plot(y1['20010101':], 'r', label=u'El Pais')
+    ax2 = fig.add_subplot(212)
+    ax2.plot(y2['20010101':], 'b', label=u'Cinco Días')
+    ax.set_ylabel("EPU El País".decode('utf8')) #,{'fontsize': 12}
+    ax2.set_ylabel("EPU Cinco Días".decode('utf8'))
+    ax.grid()
+    ax2.grid()
+    fig.tight_layout()
+    plt.savefig(os.path.join(rootdir, 'figures','elpais_v_cinco.%s' % fig_fmt), format=fig_fmt)
     return
 
 def transform_data(nd):
@@ -173,6 +217,7 @@ def estimate_VAR():
     nd = d.join(df).join(df1)
     plot_index_comparison(nd)
     plot_eu_epu(nd)
+    plot_cinco_elpais(nd)
     nd = transform_data(nd)
     
     benchmark_subset = ['EPU','europe', 'fedea', 'inflation', 'differential'] 
@@ -224,7 +269,7 @@ def estimate_VAR():
         print '%s | %d | %.04f' % (colname, nd[colname].sum(), 100*fedea_on_gdp*cum_effect)
     
     aa = d.mean()[colnames]
-    plt.figure(1)
+    plt.figure(6)
     h = plt.bar(range(len(aa)),aa,label = list(aa.index) )
     plt.subplots_adjust(bottom=0.3)
     
@@ -244,6 +289,7 @@ def articles_per_day():
         hist, bins = np.histogram(df_ec.articles, bins = 50, density=True)
         center = (bins[:-1] + bins[1:]) / 2
         width = 0.7 * (bins[1] - bins[0])
+        plt.figure(5)        
         plt.bar(center, hist, align='center', width=width)
         plt.show()
         plt.savefig(os.path.join(rootdir, 'figures','articles_day_%s.%s' % (s,fig_fmt)), format=fig_fmt)

@@ -28,16 +28,11 @@ def get_semester(x):
     dt = datetime.datetime.strptime(x,'%Y%m%d')
     dt = datetime.datetime(dt.year, ((dt.month -1) // 6 + 1)*6,1)
     return dt
-
-    
-    
     
 with open(os.path.join(rootdir,'accounts','biz_meta_regex.csv'),'rb') as inf:
     instream = csv.reader(inf)
     entity_regex_l = list(instream)
 patterns = map(lambda x: compile(x[1],I|DOTALL).match, entity_regex_l)
-
-trim_small = False
 
 def find_work_by_entity():
     wee = []
@@ -216,11 +211,7 @@ def build_data_frame():
             df1['single'] = 1
         else: 
             df1['single'] = 0
-        if trim_small:
-            if len(df1) >3:
-                bigdict[entity_id] = df1
-        else:
-            bigdict[entity_id] = df1
+        bigdict[entity_id] = df1
     bigdf = pd.concat(bigdict.values(),keys=bigdict.keys())
         
     for k,v in bigdict.items():

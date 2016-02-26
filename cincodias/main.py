@@ -137,7 +137,7 @@ def build_index():
     rng = pd.date_range(t0.strftime('%m/%d/%Y'), periods=num_days, freq='D')
     df = pd.DataFrame(np.zeros((num_days,4 + c_n + b_n)), index=rng,columns=['eumatches','matches','articles','words'] + colnames + combo_names)
     
-    for i in range(1200,num_days):
+    for i in range(0,num_days):
         t = t0 + datetime.timedelta(days = i)
         d = t.day
         m = t.month

@@ -241,7 +241,9 @@ If the EPU index increases, companies more exposed to public contracting should 
 
 We report coefficient estimates and p-values right below.
 
+First we see that increases in the uncertainty index correlate with increases in volatility. An increase of 1 standard deviation in the EPU increases daily volatility by 0.67 percent points (std of EPU is 67 and log(1.67)*1.31 = 0.67). Coefficient is not significant.
 
+Then we see that increases in the 
 
 Daily volatility | (1) | (2) | (3) | (4)
 --- | :---: | :---: | :---: | :---:
