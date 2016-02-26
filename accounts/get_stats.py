@@ -47,6 +47,8 @@ def parse_xml():
         seen_dates = set()
 
         for fname in os.listdir(os.path.join(unzipdir,folder)):
+            if folder == 'FERROVIAL' and fname < '2010': ## previously reported CINTRA only, a spinoff 
+                continue
             fpath = os.path.join(unzipdir,folder, fname)
             full_string = ''
             with open(fpath,'r') as inf:
@@ -100,7 +102,8 @@ def parse_xml():
             
             '''
             Annoying repetition of reports for the same period
-            '''            
+            '''     
+            value_dict['Name'] = biz_name
             if max_t.strftime('%Y%m%d') in seen_dates:
                 continue
             else:
@@ -124,7 +127,8 @@ def parse_xml():
                                     entry.get('w_end','NA'),
                                     entry.get('r_end','NA'),
                                     entry.get('w_tag','NA'),
-                                    entry.get('r_tag','NA')])
+                                    entry.get('r_tag','NA'),
+                                    entry.get('Name','NA')])
 
 if __name__ == '__main__':
     #unzip()

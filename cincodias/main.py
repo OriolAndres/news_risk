@@ -25,7 +25,7 @@ def create_archive():
     url_tem = 'http://cincodias.com/tag/economia/a/{page}'
     
     newindices = os.path.join(datadir,'newindices')
-    for page in range(5000,num_pages+1):#range(1,num_pages+1):
+    for page in range(5200,num_pages+1):#range(1,num_pages+1):
         fname = '%s.html' % page
         
         if fname not in os.listdir(newindices):
@@ -36,7 +36,7 @@ def create_archive():
             bsoup = BeautifulSoup(inf.read(),'html.parser')
         for article in bsoup.find_all('div',{'class':'article'}):
             dt = datetime.datetime.strptime(article.find('a',{'class','fecha'}).text,'%d/%m/%Y')
-
+            #if dt < datetime.datetime(2010,5,9): continue
             link = article.find('h2').find('a').attrs['href']
             if match('^.*videos|album.*$',link,I):
                 continue
