@@ -155,7 +155,13 @@ We create a number of categories to divide the uncertainty. These require the fu
   * **Territorial**;  '\bdescentraliz', '\bindependent', '\bseparati', '\bsecesi(o|ó)n', '\bibarretx', '\bnacionalis', '\bterritorial'
   * **Política fiscal**; Match if **Ingreso público** and/or **Gasto público** are a match.
   * **Regulación**; Match if **Regulación bancaria** and/or **Regulación no bancaria** are a match.
-  
+
+
+### Cinco Días
+
+We use similar scrapers for Cinco Dias archives, that run from 2001 and 2016, and we filter the archive for those articles tagged as "Economía". Both Cinco Días and El País belong to Prisa and share a similar digital newspaper classification. Here is the comparison between the EPU indices:
+
+![](figures/elpais_v_cinco.png?raw=true)
 
 ### Vector Autoregressions
 
