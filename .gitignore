@@ -15,4 +15,5 @@ settings.py
 !accounts/short_long.csv
 !stocks/cond_vol.csv
 !regressors.csv
+!cincodias/daily_data.csv
 *.pyc

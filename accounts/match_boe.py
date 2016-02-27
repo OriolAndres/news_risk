@@ -316,4 +316,4 @@ def run_regressions():
         
         
 if __name__ == '__main__':
-    pass#run_regressions()
+    run_regressions()

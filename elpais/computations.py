@@ -11,6 +11,18 @@ IBEX 35 ESE.854200259D.M.ES
 
 
 public consumption ESE.991200D259D.Q.ES
+
+
+import os
+
+from re import search, I
+path = r'C:\Users\OriolAndres\Desktop\news_risk\elpais\data\2016\1\18'
+for fname in os.listdir(path):
+    with open(os.path.join(path, fname),'r') as inf: s = inf.read()
+    if search(r'(\binci?ert)',s,I):
+        print fname
+
+
 """
 
 
@@ -70,7 +82,7 @@ def load_es_uncertainty():
     for x in colnames + ['articles','words']:
         d['ep_'+x] = d[x]
         d['cd_'+x] = df_cd[x]
-        d[x] = d[x] + df_cd[x]
+        d[x][d['cd_'+x].notnull()] += d['cd_'+x][d['cd_'+x].notnull()]
 
     d['economia'] = d.eumatches / d.articles#d.words
     d['economia'] = d['economia'] /d['economia'].mean()*100
@@ -106,9 +118,9 @@ def load_eu_uncertainty():
 def plot_index_comparison(nd):
     fig = plt.figure(1,[8,6])
     ax = fig.add_subplot(211)
-    ax.plot(nd['policy'], 'r', label=u'España')
+    ax.plot(nd['policy']['19870101':], 'r', label=u'España')
     ax2 = fig.add_subplot(212)
-    ax2.plot(nd['euro_news'], 'b', label='Europa')
+    ax2.plot(nd['euro_news']['19870101':], 'b', label='Europa')
     ax.set_ylabel("EPU España".decode('utf8'))
     ax2.set_ylabel("EPU Europa".decode('utf8'))
     ax.grid()
@@ -267,16 +279,25 @@ def estimate_VAR():
     
     
 def articles_per_day():
-    for s in ['Old', 'New']:
+    it = 0
+    for s in ['Old', 'New','cincodias']:
+        it+=1
         if s == 'Old':
             a = 10; b = 30
+            fname = 'daily_data_economia.csv'
         else:
             a = 20; b = 60
-        df_ec = pd.read_csv(os.path.join(rootdir,'elpais','daily_data_economia%s.csv' % ('' if s == 'Old' else '_new')),parse_dates = True,index_col=0)
+            fname = 'daily_data_economia_new.csv'
+        if s == 'cincodias':
+            newsp = s
+            fname = 'daily_data.csv'
+        else:
+            newsp = 'elpais'
+        df_ec = pd.read_csv(os.path.join(rootdir,newsp,fname),parse_dates = True,index_col=0)
         hist, bins = np.histogram(df_ec.articles, bins = 50, density=True)
         center = (bins[:-1] + bins[1:]) / 2
         width = 0.7 * (bins[1] - bins[0])
-        plt.figure(5)        
+        plt.figure(10 + it)        
         plt.bar(center, hist, align='center', width=width)
         plt.show()
         plt.savefig(os.path.join(rootdir, 'figures','articles_day_%s.%s' % (s,fig_fmt)), format=fig_fmt)

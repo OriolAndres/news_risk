@@ -143,9 +143,17 @@ We identify an article as showing economic policy uncertainty (EPU) if it matche
 
   * Contains *either* of '\bimp(uesto|ositiv|onib)', '\btarifa', '\bregula(ci|ti|to)', '\bpol(i|í)tica', '\bgast(ar|o|a|os)\b', '\bpresupuest', '\bd(e|é)ficit', '\bbanc(o|a)[s]?[\s]*central', '\bbanco de españa', '\btribut'.
   
-Then for both indices (EU and EPU) we sum all the matched articles in the month and divide by total number of articles in the month and escale the results to average 100.
+Then for both indices (EU and EPU) we sum all the matched articles in the month and divide by total number of articles in the month and escale the result to average 100. To rescale we use the mean value from May 1976 to January 2016.
 
-The third condition is rather broad and as a result the monthly correlation between both indices is 95.7%.
+The EPU has a monthly standard deviation of 62.6, the EU standard deviation is 61.4 and the correlation between both is 0.963.
+
+The maximum of EPU was attained in March 2003 at 424. In January 2016, the index stands at 408, the second largest value in the historical series.
+
+Check for instance 18th January 2016 for example of current hysteria.
+
+“El auge del Black Friday en noviembre, que desincentivó las compras en diciembre, y la incertidumbre generada por la inestabilidad política, que afecta a la confianza del consumidor”
+
+![](figures/policy_v_general.png?raw=true)
 
 Articles from El Pais and Cinco Días are treated indifferently, the index will be built by aggregating articles from both sources.
 
@@ -194,8 +202,9 @@ We run a VAR with these 4 components and the EPU for Spain, adding 6 lags of dat
 
 ![](figures/impulse_response.png?raw=true)
 
-An increase in uncertainty of a standard deviation decreases the FEDEA index by 0.0441 after 12 months, a level which projected on real gdp would decrease growth by 0.0441\*0.043\*100 = 0.1914%. (4.3% is the cumulative effect of a full point shock in FEDEA on quarterly growth, estimated by VAR too.) The impact the shock of uncertainty in 2011 had in gdp growth was hence 0.63 %. ( (323 - 100) / 67 = 3.32; 3.32 \* 0.191 = 0.633 ).  
-In the same setting we find that a 1 std negative shock in uncertainty increases the bond spread by 8.2 basis points and increases inflation by 0.06%, both 12 months after the shock.
+An increase in uncertainty of a standard deviation decreases the FEDEA index by 0.0328 after 12 months, a level which projected on real gdp would decrease growth by 0.0328\*0.043\*100 = 0.1424%. (4.3% is the cumulative effect of a full point shock in FEDEA on quarterly growth, estimated by VAR too.) The estimated impact the shock of uncertainty in January 2016 will have in gdp growth is hence 0.698 %. ( (408 - 100) / 62.6 = 4.92; 4.92 \* 0.1424 = 0.698 ).  
+
+In the same setting we find that a 1 std negative shock in uncertainty increases the bond spread by 8.1 basis points and increases inflation by 0.05%, both 12 months after the shock.
 
 #### Dissecting uncertainty
 
@@ -203,22 +212,21 @@ We run the same specification for the EPU, EU, and each of the uncertainty varia
 
 Concept | Count | Effect on GDP (1 std negative shock)
 --- | --- | ---
-**Econ policy** | 8975 | -0.1967
-**Econ general** | 11897 | -0.1982
-**ingreso** | 2636 | -0.0733
-**gasto** | 4430 | -0.1405
-**money** | 3931 | -0.1295
-**sanidad** | 652 | 0.0844
-**seguridad** | 468 | -0.1213
-**banca** | 613 | -0.0163
-**othregula** | 3123 | -0.1591
-**deuda** | 2503 | 0.0672
-**bienestar** | 775 | 0.1387
-**arancel** | 106 | -0.3033
-**autonomia** | 534 | -0.1335
-**fiscal** | 5480 | -0.1108
-**regula** | 3429 | -0.1556
-
+**Econ policy** | 11043 | -0.1424
+**Econ general** | 14572 | -0.1806
+**ingreso** | 3148 | -0.0376
+**gasto** | 5389 | -0.1758
+**money** | 4737 | -0.1069
+**sanidad** | 757 | 0.0303
+**seguridad** | 548 | -0.0309
+**banca** | 664 | -0.0892
+**othregula** | 3786 | -0.1679
+**deuda** | 2938 | -0.0392
+**bienestar** | 1024 | -0.1153
+**arancel** | 199 | -0.0949
+**autonomia** | 652 | -0.0113
+**fiscal** | 6617 | -0.1775
+**regula** | 4114 | -0.1476
 
 
 ### Firm-level data
@@ -262,7 +270,7 @@ If the EPU index increases, companies more exposed to public contracting should 
 
 We report coefficient estimates and p-values right below.
 
-First we see that increases in the uncertainty index correlate with increases in volatility. An increase of 1 standard deviation in the EPU increases daily volatility by 0.67 percent points (std of EPU is 67 and log(1.67)*1.31 = 0.67). Coefficient is not significant.
+First we see that increases in the uncertainty index correlate with increases in volatility. An increase of 1 standard deviation in the EPU increases daily volatility by 0.112 percent points (std of EPU is 62.6 and log(1.62)*0.234 = 0.112).
 
 
 Daily volatility | (1) | (2) | (3) | (4)
@@ -297,19 +305,19 @@ Log salary expense | (1) | (2) | (3) | (4)
 --- | :---: | :---: | :---: | :---:
 **log_epu** | -0.065 |   | -0.065 |  
  | 0.000 |   | 0.000 |  
-**epu_weighted** |   | 0.026 |   | -0.146
- |   | 0.969 |   | 0.837
+**epu_weighted** |   | -0.596 |   | -0.148
+ |   | 0.367 |   | 0.834
 **ibex35** |   |   | 0.001 |  
  |   |   | 0.926 |  
-**ibex_weighted** |   |   |   | -0.837
- |   |   |   | 0.090
+**ibex_weighted** |   |   |   | -0.829
+ |   |   |   | 0.093
 **spending** | -0.939 |   | -0.966 |  
  | 0.078 |   | 0.111 |  
-**spend_weighted** |   | -0.055 |   | 86.000
- |   | 0.999 |   | 0.123
-**lag_expend** | -88.569 | 0.004 | -88.890 | -99.803
- | 0.042 | 1.000 | 0.042 | 0.100
-**r2** | 0.025 | 0.016 | 0.025 | 0.041
+**spend_weighted** |   | 68.530 |   | 87.956
+ |   | 0.215 |   | 0.115
+**lag_expend** | -88.569 | -124.603 | -88.890 | -100.216
+ | 0.042 | 0.034 | 0.042 | 0.098
+**r2** | 0.025 | 0.039 | 0.025 | 0.041
 **N** | 1696 | 1696 | 1696 | 1696
 **Time&firm eff.** | False | True | False | True
 
