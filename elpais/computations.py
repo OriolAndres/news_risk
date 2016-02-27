@@ -275,7 +275,7 @@ def estimate_VAR():
     xticks_pos = [0.65*patch.get_width() + patch.get_xy()[0] for patch in h]
     
     plt.xticks(xticks_pos, list(aa.index),  ha='right', rotation=45)
-    plt.savefig(os.path.join(rootdir, 'figures','policy_v_general.%s' % fig_fmt), format=fig_fmt)
+    plt.savefig(os.path.join(rootdir, 'figures','frequency_types.%s' % fig_fmt), format=fig_fmt)
     
     
 def articles_per_day():
