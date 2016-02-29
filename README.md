@@ -7,7 +7,7 @@ We base the index on the archives of [El Pais](http://elpais.com/) and [Cinco DÃ
 
 Following [BBD][1], we conduct two different exercises to explore the impact of policy uncertainty on economic activity.
 
-First, we run a Vector Autoregression containing indicators for activity, inflation, sovereign spreads and European EPU index for the period 1987-2015. We see that uncertainty has a negative effect on activity. A one standard deviation shock in EPU decreases GDP growth by 0.18 points after 12 months. Uncertainty related to regulatory and fiscal policy have the largest impact.
+First, we run a Vector Autoregression containing indicators for activity, inflation, sovereign spreads and European EPU index for the period 1987-2015. We see that uncertainty has a negative effect on activity. A one standard deviation shock in EPU decreases GDP growth by 0.18 points after 12 months. Uncertainty related to regulatory and fiscal policy has the largest impact.
 
 Second, in a panel of stock quoted firm data from 2005 to 2016 companies in sectors exposed to public contracting suffer increased correlation between stock volatility and the EPU index, and also between volatility and government expenditure. More exposed companies show less wage expenses growth when  uncertainty increases, although this effect is not signifficant. IBEX 35 volatility decreases wage growth more in sectors exposed to public contracting.
 
