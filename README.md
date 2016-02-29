@@ -9,7 +9,7 @@ Following [BBD][1], we conduct two different exercises to explore the impact of 
 
 First, we run a Vector Autoregression containing indicators for activity, inflation, sovereign spreads and European EPU index for the period 1987-2015. We see that uncertainty has a negative effect on activity. A one standard deviation shock in EPU decreases GDP growth by 0.18 points after 12 months. Uncertainty related to regulatory and fiscal policy have the largest impact.
 
-Second, in a panel of stock quoted firm data from 2005 to 2016 we see that companies in sectors exposed to public contracting suffer increased correlation between stock volatility and the EPU index, and also they show less wage expenses growth when this uncertainty increases compared to less exposed companies, although this effect is not signifficant. IBEX 35 volatility decreases wage growth more in sectors exposed to public works.
+Second, in a panel of stock quoted firm data from 2005 to 2016 companies in sectors exposed to public contracting suffer increased correlation between stock volatility and the EPU index, and also between volatility and government expenditure. More exposed companies show less wage expenses growth when  uncertainty increases, although this effect is not signifficant. IBEX 35 volatility decreases wage growth more in sectors exposed to public contracting.
 
 ---
 
@@ -282,20 +282,18 @@ Contemporaneous increases in public expenditure *increase* volatility in all sec
 
 Daily volatility | (1) | (2) | (3) | (4)
 --- | :---: | :---: | :---: | :---:
-**log_epu** | 0.234 |   | 0.052 |  
+**log_EPU** | 0.234 |   | 0.052 |  
  | 0.004 |   | 0.523 |  
-**epu_weighted** |   | 3.661 |   | 4.417
+**log_EPU_weighted** |   | 3.661 |   | 4.417
  |   | 0.114 |   | 0.064
 **ibex35** |   |   | 0.583 |  
  |   |   | 0.000 |  
-**ibex_weighted** |   |   |   | -2.213
+**ibex35_weighted** |   |   |   | -2.213
  |   |   |   | 0.187
 **spending** | 14.984 |   | 1.948 |  
  | 0.000 |   | 0.458 |  
-**spend_weighted** |   | 211.485 |   | 258.530
+**spending_weighted** |   | 211.485 |   | 258.530
  |   | 0.003 |   | 0.001
-**lag_expend** |   |   |   |  
- |   |   |   |  
 **r2** | 0.053 | 0.251 | 0.103 | 0.252
 **N** | 1906 | 1906 | 1906 | 1906
 **Time&firm eff.** | False | True | False | True
@@ -317,17 +315,17 @@ Log salary expense | (1) | (2) | (3) | (4)
 --- | :---: | :---: | :---: | :---:
 **log_epu** | -0.065 |   | -0.065 |  
  | 0.000 |   | 0.000 |  
-**epu_weighted** |   | -0.596 |   | -0.148
+**log_epu_weighted** |   | -0.596 |   | -0.148
  |   | 0.367 |   | 0.834
 **ibex35** |   |   | 0.001 |  
  |   |   | 0.926 |  
-**ibex_weighted** |   |   |   | -0.829
+**ibex35_weighted** |   |   |   | -0.829
  |   |   |   | 0.093
 **spending** | -0.939 |   | -0.966 |  
  | 0.078 |   | 0.111 |  
-**spend_weighted** |   | 68.530 |   | 87.956
+**spending_weighted** |   | 68.530 |   | 87.956
  |   | 0.215 |   | 0.115
-**lag_expend** | -88.569 | -124.603 | -88.890 | -100.216
+**lag_spending_we** | -88.569 | -124.603 | -88.890 | -100.216
  | 0.042 | 0.034 | 0.042 | 0.098
 **r2** | 0.025 | 0.039 | 0.025 | 0.041
 **N** | 1696 | 1696 | 1696 | 1696
