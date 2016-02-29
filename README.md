@@ -9,7 +9,7 @@ Following [BBD][1], we conduct two different exercises to explore the impact of 
 
 First, we run a Vector Autoregression containing indicators for activity, inflation, sovereign spreads and European EPU index for the period 1987-2015. We see that uncertainty has a negative effect on activity. A one standard deviation shock in EPU decreases GDP growth by 0.18 points after 12 months. Uncertainty related to regulatory and fiscal policy have the largest impact.
 
-Second, in a panel of stock quoted firm data from 2005 to 2016 including sectoral weight of public contracts, firm wage expenses, firm volatility and the EPU index, we see that companies in sectors exposed to public contracting suffer increased correlation between stock volatility and the EPU index, and also they show less wage expenses growth when this uncertainty increases compared to less exposed companies, although this effect is not signifficant. IBEX 35 volatility decreases wage growth more in sectors exposed to public works.
+Second, in a panel of stock quoted firm data from 2005 to 2016 we see that companies in sectors exposed to public contracting suffer increased correlation between stock volatility and the EPU index, and also they show less wage expenses growth when this uncertainty increases compared to less exposed companies, although this effect is not signifficant. IBEX 35 volatility decreases wage growth more in sectors exposed to public works.
 
 ---
 
