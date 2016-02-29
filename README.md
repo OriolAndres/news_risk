@@ -7,7 +7,7 @@ We base the index on the archives of [El Pais](http://elpais.com/) and [Cinco D√
 
 Following [BBD][1], we conduct two different exercises to explore the impact of policy uncertainty on economic activity.
 
-First, we run a Vector Autoregression containing indicators for activity, inflation, sovereign spreads and European EPU index. We see that uncertainty has a negative and prolonged effect on activity. Uncertainty related to financial regulation and monetary policy have the largest impact. 
+First, we run a Vector Autoregression containing indicators for activity, inflation, sovereign spreads and European EPU index. We see that uncertainty has a negative and prolonged effect on activity. Uncertainty related to regulatory and fiscal policy have the largest impact. 
 
 Second, in a panel of stock quoted firm data including sectoral weight of public contracts, firm wage expenses, firm volatility and the EPU index, we see that companies in sectors exposed to policy suffer increased correlation between stock volatility and the EPU index, and also they show less wage expenses growth when this uncertainty increases compared to less exposed companies.
 
@@ -208,7 +208,7 @@ In the same setting we find that a 1 std negative shock in uncertainty increases
 
 #### Dissecting uncertainty
 
-We run the same specification for the EPU, EU, and each of the uncertainty variants. In the next table we display the effects on GDP of an uncertainty shock, and also the number of articles containing the particular terms. We find that regulatory related uncertainty has the largest impact on GDP, while territorial and public revenue issues have a positive impact on activity.
+We run the same specification for the EPU, EU, and each of the uncertainty variants. In the next table we display the effects on GDP of an uncertainty shock, and also the number of articles containing the particular terms. We find that regulatory and fiscal related uncertainty have the largest impact on GDP.
 
 Concept | Count | Effect on GDP (1 std negative shock)
 --- | --- | ---
@@ -231,30 +231,32 @@ Concept | Count | Effect on GDP (1 std negative shock)
 
 ### Firm-level data
 
-Given the complexity of any propositions based on VAR results, we set out to test again the implications of uncertainty on firm level data. We are going to ask whether sectors that are more exposed to public contracts reduce activity more in the face of policy uncertainty. Again, a company profit function may not be a linear function of sales, because of rigities in investment and labor, hence companies facing an increase in uncertainty scale back operations.
+Given the complexity of any propositions based on VAR results, we set out to test the uncertainty implications on firm level data. We ask whether sectors that are more exposed to public contracts reduce activity more in the wake of policy uncertainty. A company profit function may not be a linear function of sales, because of rigities in investment and labor, hence companies facing an increase in uncertainty scale back operations.
 
 #### Assembling a panel
 
-We are going to assemble a panel data for stock quoted companies in the Mercado Continuo of Bolsa de Madrid. We are going to assign them to a sector and find the relevance of public contracts in the sector. We will find stock volatility for each company, and also salary expenses and revenues. We will also include in some regressions government final consumption expenditure over gdp from BDSICE-MinEco.
+We are going to assemble a panel data for stock quoted companies in the Mercado Continuo of Bolsa de Madrid. We assign them to a sector and find the relevance of public contracts in the sector. We find stock volatility, salary expenses and revenues for each company. We include in some regressions government final consumption expenditure over gdp from BDSICE-Ministerio de Econom√≠a.
 
 ##### Company reports
 
-We get H1 and FY accounts from CNMV and for each company we get the salary expenses in the semester and sales. We use the sector classifications of CNMV.
+We download H1 and FY accounts from CNMV and for each company we extract the salary expenses and sales in the semester. We use the sector classifications of CNMV.
 The resulting panel has 345 companies, where many do not have a figure for wages and will be excluded. The earliest accounts included are from 2005 and the latest from 2015. Companies reporting usually does not span the full interval.
 
 We look for consolidated accounts and if absent for individual accounts. We identify wage expenses by the tags EmployeeExpensesByNature or GastoPersonalNIIF in this order and company sales by the tags RevenueTotalByNature or ImporteNetoCifraNegocio for non banking companies and OtherOperatingIncomeTotalFinancialInstitutions for banking institutions.
 
 We remove Ferrovial data prior to 2010 as reports refer to CINTRA accounts and likewise for Caixabank prior to 2011 as they describe CRITERIA.
 
-We remove Reig Jofre starting the second semester of 2014 as it results from the merger with NATRACEUTICAL and introduces an important outlier.
+We remove Reig Jofre starting the second semester of 2014 as it results from the merger with NATRACEUTICAL and introduces an important outlier in wage growth.
 
 ##### Text mining Boletin Oficial del Estado
 
 We download BOE from 2005 to 2015 and find data on public work contracts. We use text mining to extract the value of the contract and the contractor name. Then we write regular expressions for the list of companies in the previous section and add up the volume of public work for each semester and company. Then we calculate the public work awards for each sector, and the fraction that represent over sales for the full time interval.
 
-We manage to match the list of regular expressions against the BOE 9536 times for contracts worth 56.6 billion euro from 2005 to 2015. The largest contractor-year datum detected is Ferrovial in 2005. It received 37 contracts valued at 9 billion, which is probably biased upwards since some works may be split within coalitions of bidders.
+We manage to match the list of regular expressions against the BOE 9536 times for a sum of contracts worth 56.6 billion euro from 2005 to 2015. The largest contractor-year datum detected is Ferrovial in 2005. It received 37 contracts valued at 9 billion, which is probably biased upwards since some works may be split within coalitions of bidders.
 
 We find that real estate development has the largest public work weight (6.9% of sales) followed by construction sector (4.7%), communication and transports 2.5% and chemicals 0.8%. On the other end, insurance and trade companies have negligible figures. Numbers are likely to be significantly biased downwards due to the difficulty of extracting company names from unstructured BOE documents, but this bias occurs in all sectors. It will be important to keep in mind that median sectoral public work accounts for 0.25% of total sales.
+
+![](figures/sector_weights.png?raw=true)
 
 #### Conditional volatility
 
@@ -264,13 +266,15 @@ Finally, we get stock market returns for all quoted companies in the Mercado Con
 
 #### EPU index effects on stock volatility
 
-First we use volatility as a dependent variable. As regressors we will choose among the logarithm of the EPU index, the logarithm of the EPU index weighted by sectoral public work, the volatility of the IBEX 35 (again proxied by a GARCH(1,1)), the volatility of the IBEX 35 weighted by sectoral public work, public spending over GDP, and public spending over GDP weighted by sectoral public work.
+First we use volatility as a dependent variable. As regressors we will choose among the logarithm of the EPU index, the logarithm of the EPU index weighted by sectoral public work, the volatility of the IBEX 35 (period average of a daily GARCH(1,1)), the volatility of the IBEX 35 weighted by sectoral public work, public spending over GDP, and public spending over GDP weighted by sectoral public work.
 
 If the EPU index increases, companies more exposed to public contracting should experience a larger increase in stock volatility, reflecting the concern that public contracting may decrease.
 
 We report coefficient estimates and p-values right below.
 
 First we see that increases in the uncertainty index correlate with increases in volatility. An increase of 1 standard deviation in the EPU increases daily volatility by 0.112 percent points (std of EPU is 62.6 and log(1.62)*0.234 = 0.112).
+
+Second, in a regression with time and firm level effects, we see that EPU causes more volatility the higher public sector weight. An increase of 1 standard deviation in EPU (62 points), evaluated at the median sector weight(0.00251), increases daily volatility by 0.569 (62*3.66*0.00251).
 
 
 Daily volatility | (1) | (2) | (3) | (4)

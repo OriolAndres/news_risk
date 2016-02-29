@@ -178,9 +178,19 @@ def build_data_frame():
             sector_sales += datadict[entity_id]['Sales'].sum()
         sector_avg.append(public_eur / sector_sales if sector_sales > 0 else 0.)
 
-    #import operator
-    #sorted(zip(sectors,sector_avg), key = operator.itemgetter(1), reverse = True)
-
+    import operator
+    sector_weight = sorted(zip(sectors,sector_avg), key = operator.itemgetter(1), reverse = True)
+    plt.figure(1)
+    sect_names = [x[0].decode('utf8') for x in sector_weight]
+    h = plt.bar(range(len(sector_weight)),[x[1] for x in sector_weight],label = sect_names )
+    plt.subplots_adjust(bottom=0.3)
+    
+    xticks_pos = [0.65*patch.get_width() + patch.get_xy()[0] for patch in h]
+    
+    plt.xticks(xticks_pos, sect_names ,  ha='right', rotation=45)
+    plt.savefig(os.path.join(rootdir, 'figures','sector_weights.png'))
+    
+    
     macro_df = get_quarterly_regressors()#pd.DataFrame.from_csv(os.path.join(rootdir, 'regressors.csv'))
     bigdict = {}
     wrongness = 0

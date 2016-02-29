@@ -15,11 +15,16 @@ public consumption ESE.991200D259D.Q.ES
 
 import os
 
-from re import search, I
+from re import search, match, I, DOTALL
 path = r'C:\Users\OriolAndres\Desktop\news_risk\elpais\data\2016\1\18'
 for fname in os.listdir(path):
-    with open(os.path.join(path, fname),'r') as inf: s = inf.read()
-    if search(r'(\binci?ert)',s,I):
+    if not fname.endswith('txt'):
+        continue
+    with open(os.path.join(path, fname),'r') as inf: 
+        s = inf.read()
+    if search(r'\binci?ert',s,I):
+        m = match(r'.*?([^\.\n]*\binci?ert[^\.\n]*).*', s, I|DOTALL)
+        print m.groups()[0]
         print fname
 
 
