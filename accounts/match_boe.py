@@ -278,6 +278,7 @@ def run_regressions():
                     ax2.scatter(df['spend_weighted'],df['log_w'])
                     ax2.set_ylabel("Wage expenses growth (logs, semester)") 
                     ax2.set_xlabel("Public exp/gdp * sector public weight (Change in period)")
+                    ax2.set_xlim([-0.001,0.001])
                     ax2.grid()
                     fig2.tight_layout()
                     plt.savefig(os.path.join(rootdir, 'figures','wage_growth_ratio.png'))
@@ -324,6 +325,6 @@ def run_regressions():
         print ' | '.join(['**Time&firm eff.**'] + map(str,dummies))
         print '\n'
         
-        
+        break
 if __name__ == '__main__':
     run_regressions()

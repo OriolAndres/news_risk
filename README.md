@@ -268,13 +268,15 @@ Finally, we get stock market returns for all quoted companies in the Mercado Con
 
 First we use volatility as a dependent variable. As regressors we will choose among the logarithm of the EPU index, the logarithm of the EPU index weighted by sectoral public work, the volatility of the IBEX 35 (period average of a daily GARCH(1,1)), the volatility of the IBEX 35 weighted by sectoral public work, public spending over GDP, and public spending over GDP weighted by sectoral public work.
 
+The sample period is H12005 to H220015, and it contains data for 114 companies and a total of 1981 firm-semester data points.
+
 If the EPU index increases, companies more exposed to public contracting should experience a larger increase in stock volatility, reflecting the concern that public contracting may decrease.
 
 We report coefficient estimates and p-values right below.
 
-First we see that increases in the uncertainty index correlate with increases in volatility. An increase of 1 standard deviation in the EPU increases daily volatility by 0.112 percent points (std of EPU is 62.6 and log(1.62)*0.234 = 0.112).
+First we see that increases in the uncertainty index correlate with increases in volatility. An increase of 1 standard deviation in the EPU increases daily volatility by 0.112 percent points (std of EPU is 62.6 and log(1.62)\*0.234 = 0.112).
 
-Second, in a regression with time and firm level effects, we see that EPU causes more volatility the higher public sector weight. An increase of 1 standard deviation in EPU (62 points), evaluated at the median sector weight(0.00251), increases daily volatility by 0.569 (62*3.66*0.00251).
+Second, in a regression with time and firm level effects, we see that EPU causes more volatility the higher public sector weight. An increase of 1 standard deviation in EPU (62 points), evaluated at the median sector weight(0.00251), increases daily volatility by 0.569 (62\*3.66\*0.00251).
 
 
 Daily volatility | (1) | (2) | (3) | (4)
@@ -304,6 +306,11 @@ Daily volatility | (1) | (2) | (3) | (4)
 
 In the second set of regressions, we will look at the evolution of variables in time. We use as dependent variable the firm semiannual log change in salary expenses. As regressors we modify slightly the previous variables. We use the first lag of log EPU (therefore assuming that salary expenses react with 6 months of delay), the first lag of log EPU weighted by sectorial public work, and the first lag of the change in public expenditure over gdp weighted by sector public work.
 
+Given that we include a first lag of the difference in weighted public spending, the panel spans from the first semester of 2006 to the second semester of 2015.
+
+We do not find a significative association between exposure to public sector and sensitivity to uncertainty. We do find an association between wage growth and increased sensitivity of public dependent companies to IBEX 35 volatility. A one point increase in IBEX 35 daily volatility reduces wage growth by 0.2% at the median (0.00251\*0.829).
+
+Increases in government purchases predict decreases in wage growth as public exposure increases, perhaps as a result of counter-cyclical spending policies during the crisis.
 
 Log salary expense | (1) | (2) | (3) | (4)
 --- | :---: | :---: | :---: | :---:
