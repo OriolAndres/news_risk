@@ -6,7 +6,7 @@ Created on Tue Feb 09 23:31:15 2016
 
 cement BE.IE_3_3_1402A5.M.ES
 electricity BE.BE_23_6_70257.M.ES
-spain gdp ESE.990000D259D.Q.ES <- nominal ESE.940000D259D.Q.ES <- real
+spain gdp ESE.990000D259D.Q.ES <- nominal ESE.90GV0VTRIENL259D.Q.ES / ESE.940000D259D.Q.ES <- real
 IBEX 35 ESE.854200259D.M.ES
 
 
@@ -165,6 +165,31 @@ def plot_cinco_elpais(nd):
     plt.savefig(os.path.join(rootdir, 'figures','elpais_v_cinco.%s' % fig_fmt), format=fig_fmt)
     return
 
+def plot_epu_gdp(nd):
+    qbuilder = inquisitor.Inquisitor(token)
+    df = qbuilder.series(ticker = ['ESE.90GV0VTRIENL259D.Q.ES','ESE.940000D259D.Q.ES'])
+    df['gdp'] = df['ESE.90GV0VTRIENL259D.Q.ES']
+    df.ix['20110901':,'gdp'] = np.log(df['ESE.940000D259D.Q.ES']).diff(periods = 1)['20110901':]*100
+    
+    tmp = nd.policy.resample("3M",how = 'mean')
+    tmp.index = tmp.index.map(lambda t: t.replace(year=t.year, month=3*((t.month-1)//3+1), day=1))
+    df['epu'] = tmp
+    
+    fig = plt.figure(7,[8,6])
+    ax = fig.add_subplot(211)
+    y1 = df['epu']
+    y2 = df['gdp'] 
+    ax.plot(y1['19760601':'20151201'], 'r', label=u'EPU')
+    ax2 = fig.add_subplot(212)
+    ax2.plot(y2['19760601':'20151201'], 'b', label=u'GDP')
+    ax.set_ylabel("EPU".decode('utf8')) #,{'fontsize': 12}
+    ax2.set_ylabel("Quarterly GDP growth".decode('utf8'))
+    ax.grid()
+    ax2.grid()
+    fig.tight_layout()
+    plt.savefig(os.path.join(rootdir, 'figures','epu_v_gdp.%s' % fig_fmt), format=fig_fmt)
+    return
+
 def transform_data(nd):
     nd['ibex'] = nd['ESE.854200259D.M.ES'].pct_change(periods = 18)
     nd['europe'] = nd['euro_news'].diff(periods = 1)
@@ -204,7 +229,7 @@ def get_fedea_on_gdp():
     df = qbuilder.series(ticker = ['ESE.940000D259D.Q.ES','FEEA.PURE064A.M.ES'])
     df.dropna(inplace = True)
     df['fedea'] = df['FEEA.PURE064A.M.ES'].diff()
-    df['gdp'] = np.log(df['ESE.940000D259D.Q.ES']).diff()
+    df['gdp'] = df['ESE.940000D259D.Q.ES'] / 100
     data1 = df[['fedea','gdp']]
     data1.dropna(inplace = True)
     model1 = VAR(data1)
@@ -224,6 +249,7 @@ def estimate_VAR():
     plot_eu_epu(nd)
     plot_cinco_elpais(nd)
     nd = transform_data(nd)
+    plot_epu_gdp(nd)
     
     benchmark_subset = ['EPU','europe', 'fedea', 'inflation', 'differential'] 
 

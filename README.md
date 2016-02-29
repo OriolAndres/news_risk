@@ -229,6 +229,9 @@ Concept | Count | Effect on GDP (1 std negative shock)
 **regula** | 4114 | -0.1476
 
 
+![](figures/epu_v_gdp.png?raw=true)
+
+
 ### Firm-level data
 
 Given the complexity of any propositions based on VAR results, we set out to test the uncertainty implications on firm level data. We ask whether sectors that are more exposed to public contracts reduce activity more in the wake of policy uncertainty. A company profit function may not be a linear function of sales, because of rigities in investment and labor, hence companies facing an increase in uncertainty scale back operations.
