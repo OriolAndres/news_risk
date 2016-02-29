@@ -249,7 +249,6 @@ def run_regressions():
     scatter_flag = True
     cv_scatter_flag = True
     for dependent in ['CV', 'log_w']:
-        
         ph = np.zeros(( (len(xcand)+2)*2, len(reglist)))
         for ix, regressors in enumerate(reglist):
             if dependent == 'log_w':
@@ -323,6 +322,6 @@ def run_regressions():
             print ' | '.join(['**'+rownames[i]+'**' if rownames[i] != '' else ''] + vals)
         print ' | '.join(['**Time&firm eff.**'] + map(str,dummies))
         print '\n'
-
+        break
 if __name__ == '__main__':
-    run_regressions()
+    pass#run_regressions()

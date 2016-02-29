@@ -276,8 +276,9 @@ We report coefficient estimates and p-values right below.
 
 First we see that increases in the uncertainty index correlate with increases in volatility. An increase of 1 standard deviation in the EPU increases daily volatility by 0.112 percent points (std of EPU is 62.6 and log(1.62)\*0.234 = 0.112).
 
-Second, in a regression with time and firm level effects, we see that EPU causes more volatility the higher public sector weight. An increase of 1 standard deviation in EPU (62 points), evaluated at the median sector weight(0.00251), increases daily volatility by 0.569 (62\*3.66\*0.00251).
+Second, in a regression with time and firm level effects, we see that EPU causes more volatility the higher the public sector weight. An increase of 1 standard deviation in EPU (62 points), evaluated at the median sector weight(0.00251), increases daily volatility by 0.0044 points (log(1.62)\*3.66\*0.00251).
 
+Contemporaneous increases in public expenditure *increase* volatility in all sectors and increasingly in sectors exposed to public contracing.
 
 Daily volatility | (1) | (2) | (3) | (4)
 --- | :---: | :---: | :---: | :---:
